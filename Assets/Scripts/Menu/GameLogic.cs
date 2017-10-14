@@ -10,6 +10,10 @@ public class GameLogic : MonoBehaviour
     private AsyncOperation _sceneOperation;
     private bool _isNewSceneLoading = false;
 
+    public AudioClip MenuSelection;
+    public AudioClip SceneChanging;
+    private AudioSource _audioSource;
+
     private GameObject _menu;
     private GameObject _menuSelector;
     private GameObject _menuItemHolder;
@@ -40,6 +44,7 @@ public class GameLogic : MonoBehaviour
         _menuSelector = GameObject.Find("MenuSelector");
         _logo = GameObject.Find("Logo");
         _blur = GameObject.Find("Blur");
+        _audioSource = GetComponent<AudioSource>();
 
         Material blurMat = _blur.GetComponent<Image>().material;
         blurMat.SetFloat("_Size", 10);
@@ -65,14 +70,16 @@ public class GameLogic : MonoBehaviour
         if (!_isChangingIndex)
 	    {
 	        if (moveVertical > 0)
-	        {
-	            _selectedMenuItemIndex = (_selectedMenuItemIndex + menuItemCount - 1) % menuItemCount;
+            {
+                _audioSource.PlayOneShot(MenuSelection);
+                _selectedMenuItemIndex = (_selectedMenuItemIndex + menuItemCount - 1) % menuItemCount;
 	            _isChangingIndex = true;
 	            _changeStartTime = Time.fixedTime;
 	        }
 	        else if (moveVertical < 0)
-	        {
-	            _selectedMenuItemIndex = (_selectedMenuItemIndex + menuItemCount + 1) % menuItemCount;
+            {
+                _audioSource.PlayOneShot(MenuSelection);
+                _selectedMenuItemIndex = (_selectedMenuItemIndex + menuItemCount + 1) % menuItemCount;
 	            _isChangingIndex = true;
                 _changeStartTime = Time.fixedTime;
             }
@@ -91,7 +98,8 @@ public class GameLogic : MonoBehaviour
 
 	    if (Input.GetButtonDown("Submit") && (_selectedMenuItemIndex >= 0 && _selectedMenuItemIndex < MenuItemScenes.Count))
 	    {
-	        _sceneOperation = SceneManager.LoadSceneAsync(MenuItemScenes[_selectedMenuItemIndex]);
+            _audioSource.PlayOneShot(SceneChanging);
+            _sceneOperation = SceneManager.LoadSceneAsync(MenuItemScenes[_selectedMenuItemIndex]);
 	        _sceneOperation.allowSceneActivation = false;
 	        _isNewSceneLoading = true;
 	    }
