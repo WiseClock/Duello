@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
     private Rigidbody2D rb;
     public float movementSpeed;
@@ -17,50 +17,67 @@ public class PlayerScript : MonoBehaviour {
     private float horizontal=0;
 
     protected Animator animator;
+    private GameObject Player;
 
     // Use this for initialization
     void Start ()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        Player = GameObject.Find("w2s");
 	}
 
     void Update()
     {
         HandleInput();
-        float horizontal = Input.GetAxis("Horizontal");
-        animator.SetFloat("Speed", horizontal);
-        grounded = IsGrounded();
-        HandleMovement(horizontal);
+        if (rb.velocity.y > 0)
+        {
+            animator.SetBool("Jump", false);
+            animator.SetTrigger("JumpDown");
+            //rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+        }
 
-        ResetValues();
+        /*else
+            animator.SetBool("Attack", false);*/
     }
 
     // Update is called once per frame
     void FixedUpdate ()
     {
 
-        
+        float horizontal = Input.GetAxis("Horizontal");
+        animator.SetFloat("Speed", horizontal * horizontal);
+        grounded = IsGrounded();
+        HandleMovement(horizontal);
 
+        ResetValues();
         
     }
 
     private void HandleMovement(float horizontal)
     {
         rb.velocity = new Vector2(horizontal * movementSpeed, rb.velocity.y);
-        
-        
+        if(horizontal > 0)
+        {
+            Player.transform.rotation=Quaternion.Euler(0, 125, 0);
+        }else if(horizontal < 0)
+        {
+            Player.transform.rotation = Quaternion.Euler(0, 235, 0);
+        }
+
+        //Debug.Log(grounded);
         if(grounded && jumping)
         {
             grounded = false;
             rb.AddForce(new Vector2(0.0f, jumpTakeOffSpeed));
-            
         }
         else if (Input.GetButtonUp("Jump"))
         {
-            animator.SetBool("Jump", false);
+            
             if (rb.velocity.y > 0)
             {
+                //animator.SetBool("Jump", false);
+                //animator.SetTrigger("JumpDown");
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
             }
         }
@@ -68,10 +85,20 @@ public class PlayerScript : MonoBehaviour {
 
     private void HandleInput()
     {
-        if(Input.GetButtonDown("Jump"))
+
+        if (Input.GetButtonDown("Fire1"))
+        {
+            animator.SetTrigger("Attack");
+        }
+    
+        if (Input.GetButtonDown("Jump"))
         {
             animator.SetBool("Jump", true);
             jumping = true;
+        }
+        if (Input.GetButtonDown("Fire2"))
+        {
+            animator.SetBool("Jump", true);
         }
     }
 
@@ -87,6 +114,7 @@ public class PlayerScript : MonoBehaviour {
                 {
                     if(colliders[i].gameObject != gameObject)
                     {
+                        //animator.SetBool("Jump", false);
                         return true;
                     }
                 }

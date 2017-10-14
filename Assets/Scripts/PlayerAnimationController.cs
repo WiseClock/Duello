@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerScript : MonoBehaviour {
+public class PlayerAnimationController : MonoBehaviour {
 
     private Rigidbody2D rb;
     public float movementSpeed;
@@ -17,37 +17,49 @@ public class PlayerScript : MonoBehaviour {
     private float horizontal=0;
 
     protected Animator animator;
+    private GameObject Player;
 
     // Use this for initialization
     void Start ()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        Player = GameObject.Find("w2s");
 	}
 
     void Update()
     {
-        HandleInput();
-        float horizontal = Input.GetAxis("Horizontal");
-        animator.SetFloat("Speed", horizontal);
-        grounded = IsGrounded();
-        HandleMovement(horizontal);
-
-        ResetValues();
+        
     }
 
     // Update is called once per frame
     void FixedUpdate ()
     {
 
-        
+        HandleInput();
+        float horizontal = Input.GetAxis("Horizontal");
+        animator.SetFloat("Speed", horizontal*horizontal);
+        grounded = IsGrounded();
+        HandleMovement(horizontal);
 
-        
+        ResetValues();
+
+        if (Input.GetButton("Fire1"))
+            animator.SetBool("Attack", true);
+        else
+            animator.SetBool("Attack", false);
     }
 
     private void HandleMovement(float horizontal)
     {
         rb.velocity = new Vector2(horizontal * movementSpeed, rb.velocity.y);
+        if(horizontal > 0)
+        {
+            Player.transform.rotation=Quaternion.Euler(0, 125, 0);
+        }else if(horizontal < 0)
+        {
+            Player.transform.rotation = Quaternion.Euler(0, 235, 0);
+        }
         
         
         if(grounded && jumping)
