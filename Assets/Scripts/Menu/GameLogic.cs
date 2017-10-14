@@ -65,6 +65,35 @@ public class GameLogic : MonoBehaviour
         if (_isNewSceneLoading || !_menuLoaded)
             return;
 
+        Vector3 mousePositionOrigin = Input.mousePosition;
+        mousePositionOrigin.z = 210;
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(mousePositionOrigin);
+        float menuSelectorWidth = _menuSelector.GetComponent<RectTransform>().sizeDelta.x;
+
+        // mouse navigation
+        for (int i = 0; i < _menuItemHolder.transform.childCount; i++)
+        {
+            RectTransform item = (RectTransform)_menuItemHolder.transform.GetChild(i);
+            float halfWidth = menuSelectorWidth / 2;
+            float halfHeight = item.sizeDelta.y / 2;
+            if (mousePosition.x > item.position.x - halfWidth && mousePosition.x < item.position.x + halfWidth &&
+                mousePosition.y > item.position.y - halfHeight + MENU_SELECTOR_OFFSET_Y && mousePosition.y < item.position.y + halfHeight + MENU_SELECTOR_OFFSET_Y)
+            {
+                if (i != _selectedMenuItemIndex)
+                {
+                    _audioSource.PlayOneShot(MenuSelection);
+                    _selectedMenuItemIndex = i;
+                }
+                else if (Input.GetMouseButtonDown(0))
+                {
+                    _audioSource.PlayOneShot(SceneChanging);
+                    _sceneOperation = SceneManager.LoadSceneAsync(MenuItemScenes[_selectedMenuItemIndex]);
+                    _sceneOperation.allowSceneActivation = false;
+                    _isNewSceneLoading = true;
+                }
+            }
+        }
+
         int timeAfterSelecting = Mathf.RoundToInt((Time.fixedTime - _changeStartTime) * 1000);
         
         if (!_isChangingIndex)
