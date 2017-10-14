@@ -13,10 +13,13 @@ public class GameLogic : MonoBehaviour
     private GameObject _menu;
     private GameObject _menuSelector;
     private GameObject _menuItemHolder;
+    private GameObject _logo;
     private GameObject _blur;
 
     private float _cameraAngleZ = 0;
     private float _cameraAngleZGrow = 0.01f;
+    private float _logoAngleY = 0;
+    private float _logoAngleYGrow = 0.2f;
 
     private bool _menuLoaded = false;
 
@@ -28,12 +31,14 @@ public class GameLogic : MonoBehaviour
     private const int MENU_SELECTOR_OFFSET_Y = 5;
 
     private const int CAMERA_ANGLE_Z_MAX = 1;
+    private const int LOGO_ANGLE_Y_MAX = 10;
 
     void Start ()
 	{
 		_menu = GameObject.Find("MenuCanvas");
         _menuItemHolder = GameObject.Find("MenuSelection");
         _menuSelector = GameObject.Find("MenuSelector");
+        _logo = GameObject.Find("Logo");
         _blur = GameObject.Find("Blur");
 
         Material blurMat = _blur.GetComponent<Image>().material;
@@ -48,6 +53,7 @@ public class GameLogic : MonoBehaviour
         int menuItemCount = _menuItemHolder.transform.childCount;
 
         Camera.main.transform.eulerAngles = new Vector3(moveVertical * 5, moveHorizontal * -5, _cameraAngleZ);
+        _logo.transform.eulerAngles = new Vector3(0, _logoAngleY, 0);
         _menu.transform.eulerAngles = new Vector3(moveVertical * 7, moveHorizontal * -7, 0);
 
         // disable menu item selection during scene loadings
@@ -96,6 +102,10 @@ public class GameLogic : MonoBehaviour
         _cameraAngleZ += _cameraAngleZGrow;
         if (_cameraAngleZ >= CAMERA_ANGLE_Z_MAX || _cameraAngleZ <= -CAMERA_ANGLE_Z_MAX)
             _cameraAngleZGrow *= -1;
+
+        _logoAngleY += _logoAngleYGrow;
+        if (_logoAngleY >= LOGO_ANGLE_Y_MAX || _logoAngleY <= -LOGO_ANGLE_Y_MAX)
+            _logoAngleYGrow *= -1;
 
         if (_isNewSceneLoading)
         {
