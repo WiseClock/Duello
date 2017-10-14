@@ -1,10 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameLogic : MonoBehaviour
 {
+    public List<string> MenuItemScenes = new List<string> { "MainScene", "MainScene", "MainScene", "MainScene" };
+    private AsyncOperation _sceneOperation;
+    private bool _isNewSceneLoading = false;
+
     private GameObject _menu;
     private GameObject _menuSelector;
     private GameObject _menuItemHolder;
@@ -44,8 +49,13 @@ public class GameLogic : MonoBehaviour
 
         Camera.main.transform.eulerAngles = new Vector3(moveVertical * 5, moveHorizontal * -5, _cameraAngleZ);
         _menu.transform.eulerAngles = new Vector3(moveVertical * 7, moveHorizontal * -7, 0);
-	    int timeAfterSelecting = Mathf.RoundToInt((Time.fixedTime - _changeStartTime) * 1000);
 
+        // disable menu item selection during scene loadings
+        if (_isNewSceneLoading || !_menuLoaded)
+            return;
+
+        int timeAfterSelecting = Mathf.RoundToInt((Time.fixedTime - _changeStartTime) * 1000);
+        
         if (!_isChangingIndex)
 	    {
 	        if (moveVertical > 0)
@@ -72,6 +82,13 @@ public class GameLogic : MonoBehaviour
 	        Vector3 menuItemPosition = menuItemTransform.localPosition + menuItemTransform.parent.localPosition;
             _menuSelector.transform.localPosition = menuItemPosition + new Vector3(MENU_SELECTOR_OFFSET_X, MENU_SELECTOR_OFFSET_Y, 0);
 	    }
+
+	    if (Input.GetButtonDown("Submit") && (_selectedMenuItemIndex >= 0 && _selectedMenuItemIndex < MenuItemScenes.Count))
+	    {
+	        _sceneOperation = SceneManager.LoadSceneAsync(MenuItemScenes[_selectedMenuItemIndex]);
+	        _sceneOperation.allowSceneActivation = false;
+	        _isNewSceneLoading = true;
+	    }
 	}
 
     void FixedUpdate()
@@ -80,28 +97,53 @@ public class GameLogic : MonoBehaviour
         if (_cameraAngleZ >= CAMERA_ANGLE_Z_MAX || _cameraAngleZ <= -CAMERA_ANGLE_Z_MAX)
             _cameraAngleZGrow *= -1;
 
-        if (_menuLoaded) return;
+        if (_isNewSceneLoading)
+        {
+            Material blurMat = _blur.GetComponent<Image>().material;
+            float blurSize = blurMat.GetFloat("_Size");
+            Color blurColor = blurMat.GetColor("_Color");
+            if (blurSize < 10) blurSize += 0.1f;
+            float colorR = blurColor.r;
+            float colorG = blurColor.g;
+            float colorB = blurColor.b;
+            if (colorR > 0) colorR -= 0.01f;
+            if (colorG > 0) colorG -= 0.01f;
+            if (colorB > 0) colorB -= 0.01f;
+            if (colorR < 0) colorR = 0;
+            if (colorG < 0) colorG = 0;
+            if (colorB < 0) colorB = 0;
+            blurColor = new Color(colorR, colorG, colorB);
 
-        Material blurMat = _blur.GetComponent<Image>().material;
-        float blurSize = blurMat.GetFloat("_Size");
-        Color blurColor = blurMat.GetColor("_Color");
-        if (blurSize > 0) blurSize -= 0.1f;
-        if (blurSize < 0) blurSize = 0;
-        float colorR = blurColor.r;
-        float colorG = blurColor.g;
-        float colorB = blurColor.b;
-        if (colorR < 1) colorR += 0.01f;
-        if (colorG < 1) colorG += 0.01f;
-        if (colorB < 1) colorB += 0.01f;
-        if (colorR > 1) colorR = 1;
-        if (colorG > 1) colorG = 1;
-        if (colorB > 1) colorB = 1;
-        blurColor = new Color(colorR, colorG, colorB);
+            blurMat.SetFloat("_Size", blurSize);
+            blurMat.SetColor("_Color", blurColor);
 
-        blurMat.SetFloat("_Size", blurSize);
-        blurMat.SetColor("_Color", blurColor);
+            if (colorR.Equals(colorG) && colorG.Equals(colorB) && colorB.Equals(0) && blurSize >= 10)
+                _sceneOperation.allowSceneActivation = true;
+        }
 
-        if (colorR.Equals(colorG) && colorG.Equals(colorB) && colorB.Equals(1) && blurSize.Equals(0))
-            _menuLoaded = true;
+        if (!_menuLoaded)
+        {
+            Material blurMat = _blur.GetComponent<Image>().material;
+            float blurSize = blurMat.GetFloat("_Size");
+            Color blurColor = blurMat.GetColor("_Color");
+            if (blurSize > 0) blurSize -= 0.1f;
+            if (blurSize < 0) blurSize = 0;
+            float colorR = blurColor.r;
+            float colorG = blurColor.g;
+            float colorB = blurColor.b;
+            if (colorR < 1) colorR += 0.01f;
+            if (colorG < 1) colorG += 0.01f;
+            if (colorB < 1) colorB += 0.01f;
+            if (colorR > 1) colorR = 1;
+            if (colorG > 1) colorG = 1;
+            if (colorB > 1) colorB = 1;
+            blurColor = new Color(colorR, colorG, colorB);
+
+            blurMat.SetFloat("_Size", blurSize);
+            blurMat.SetColor("_Color", blurColor);
+
+            if (colorR.Equals(colorG) && colorG.Equals(colorB) && colorB.Equals(1) && blurSize.Equals(0))
+                _menuLoaded = true;
+        }
     }
 }
