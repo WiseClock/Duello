@@ -10,6 +10,8 @@ public class GameLogic : MonoBehaviour
     private AsyncOperation _sceneOperation;
     private bool _isNewSceneLoading = false;
 
+    public Texture2D CursorTexture;
+
     public AudioClip MenuSelection;
     public AudioClip SceneChanging;
     private AudioSource _audioSource;
@@ -49,9 +51,11 @@ public class GameLogic : MonoBehaviour
         Material blurMat = _blur.GetComponent<Image>().material;
         blurMat.SetFloat("_Size", 10);
         blurMat.SetColor("_Color", new Color(128, 0, 0));
+
+        Cursor.SetCursor(CursorTexture, Vector2.zero, CursorMode.Auto);
     }
 
-	void Update ()
+    void Update ()
 	{
 	    float moveHorizontal = Input.GetAxis("Horizontal");
 	    float moveVertical = Input.GetAxis("Vertical");
