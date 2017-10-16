@@ -959,8 +959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a951fc8fee6566b4fa1de65cab4641d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 879661481}
-  oppponent: {fileID: 1427885413}
+  Opponent: {fileID: 1427885410}
 --- !u!1 &1051149698
 GameObject:
   m_ObjectHideFlags: 0
@@ -1139,8 +1138,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a951fc8fee6566b4fa1de65cab4641d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  body: {fileID: 1427885413}
-  oppponent: {fileID: 879661481}
+  Opponent: {fileID: 879661477}
 --- !u!1 &1447379789
 GameObject:
   m_ObjectHideFlags: 0
