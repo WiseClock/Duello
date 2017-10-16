@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        Player = GameObject.Find("w2s");
+        Player = GameObject.Find("Player");
 	}
 
     void Update()
