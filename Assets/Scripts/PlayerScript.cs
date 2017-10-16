@@ -64,7 +64,7 @@ public class PlayerScript : MonoBehaviour {
         }
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         if(rb.velocity.y <= 0)
         {
