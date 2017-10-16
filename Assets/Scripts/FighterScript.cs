@@ -6,7 +6,7 @@ public class FighterScript : MonoBehaviour {
 
     private float damage = 0.0f;
     public Collider[] attacks;
-    private float knockback = 50.0f;
+    private float knockback = 2.5f;
 
 	// Use this for initialization
 	void Start () {
