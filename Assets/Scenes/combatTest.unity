@@ -149,7 +149,6 @@ GameObject:
   - component: {fileID: 78594585}
   - component: {fileID: 78594587}
   - component: {fileID: 78594586}
-  - component: {fileID: 78594588}
   m_Layer: 5
   m_Name: EnemyHealthText
   m_TagString: Untagged
@@ -214,18 +213,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 78594584}
---- !u!114 &78594588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 78594584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddb27b1ffd3353c459cf7076dcdf4efd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  enemyHealthText: {fileID: 78594586}
 --- !u!1 &90051450
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,7 +1022,6 @@ GameObject:
   - component: {fileID: 528262479}
   - component: {fileID: 528262481}
   - component: {fileID: 528262480}
-  - component: {fileID: 528262482}
   m_Layer: 5
   m_Name: PlayerHealthText
   m_TagString: Untagged
@@ -1100,18 +1086,6 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 528262478}
---- !u!114 &528262482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 528262478}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6039136b3bb929249a7186b0dafd0da0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerHealthText: {fileID: 528262480}
 --- !u!1 &661075716
 GameObject:
   m_ObjectHideFlags: 0
@@ -2667,8 +2641,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scorePanel: {fileID: 196016764}
-  timer: 10
+  Player: {fileID: 879661477}
+  Enemy: {fileID: 1427885410}
+  timer: 90
   timerText: {fileID: 1875008510}
+  playerHealthText: {fileID: 528262480}
+  enemyHealthText: {fileID: 78594586}
 --- !u!1 &1880281902
 GameObject:
   m_ObjectHideFlags: 0
