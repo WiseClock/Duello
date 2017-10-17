@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class BlastZone : MonoBehaviour {
-
+    //handling for the killfield below the map.
     private float damage = 100;
     private Collider self;
 
