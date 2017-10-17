@@ -21,9 +21,16 @@ public class EnemyController : MonoBehaviour {
 
     bool jumping = false;
     bool readyToJump = true;
+    public bool attacking = false;
 
     public GameObject navMesh;
     private NavigationScript navScript;
+
+    public GameObject enemyAttacks;
+    public GameObject enemyColliders;
+
+    public float attackRate = 0.5f;
+    private float nextAttack = 0.0f;
 
     // Use this for initialization
     void Start()
@@ -42,6 +49,7 @@ public class EnemyController : MonoBehaviour {
     void FixedUpdate()
     {
         grounded = IsGrounded();
+        attacking = false;
 
         if (navScript.targetNode != null)
         {
@@ -49,12 +57,31 @@ public class EnemyController : MonoBehaviour {
 
             if(distance > collisionBuffer)
             {
+                if (navScript.targetNodeDirection < 0)
+                {
+                    transform.rotation = Quaternion.Euler(0, -125, 0);
+                    enemyColliders.transform.rotation = Quaternion.Euler(0, -125, 0);
+                    enemyAttacks.transform.rotation = Quaternion.Euler(0, -125, 0);
+                }
+                else
+                {
+                    transform.rotation = Quaternion.Euler(0, 125, 0);
+                    enemyColliders.transform.rotation = Quaternion.Euler(0, 55, 0);
+                    enemyAttacks.transform.rotation = Quaternion.Euler(0, 55, 0);
+                }
+
+
                 MoveToTargetNode();
             }
             else
             {
                 StopMoving();
-                Debug.Log("Attacking");
+                if (Time.time > nextAttack)
+                {
+                    nextAttack = Time.time + attackRate;
+                    attacking = true;
+                    Debug.Log("Attacking");
+                }
             }
 
         }

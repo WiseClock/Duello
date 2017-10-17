@@ -19,6 +19,9 @@ public class PlayerController : MonoBehaviour {
     protected Animator animator;
     private GameObject Player;
 
+    public GameObject playerAttacks;
+    public GameObject playerColliders;
+
     // Use this for initialization
     void Start ()
     {
@@ -60,9 +63,16 @@ public class PlayerController : MonoBehaviour {
         if(horizontal > 0)
         {
             Player.transform.rotation=Quaternion.Euler(0, 125, 0);
-        }else if(horizontal < 0)
+            playerColliders.transform.rotation = Quaternion.Euler(0, 125, 0);
+            playerAttacks.transform.rotation = Quaternion.Euler(0, 125, 0);
+
+        }
+        else if(horizontal < 0)
         {
+            //Player.transform.rotation = Quaternion.Euler(0, 235, 0);
             Player.transform.rotation = Quaternion.Euler(0, 235, 0);
+            playerColliders.transform.rotation = Quaternion.Euler(0,-55, 0);
+            playerAttacks.transform.rotation = Quaternion.Euler(0, -55, 0);
         }
 
         //Debug.Log(grounded);
