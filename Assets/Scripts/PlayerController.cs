@@ -78,7 +78,7 @@ public class PlayerController : MonoBehaviour {
             {
                 //animator.SetBool("Jump", false);
                 //animator.SetTrigger("JumpDown");
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);   
             }
         }
     }

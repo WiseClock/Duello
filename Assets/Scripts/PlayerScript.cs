@@ -16,33 +16,33 @@ public class PlayerScript : MonoBehaviour {
     private float jumpTakeOffSpeed = 400.0f;
     private float horizontal=0;
 
-    protected Animator animator;
+    //protected Animator animator;
 
     // Use this for initialization
     void Start ()
     {
         rb = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
+        //animator = GetComponent<Animator>();
 	}
 
     void Update()
     {
-        HandleInput();
-        float horizontal = Input.GetAxis("Horizontal");
-        animator.SetFloat("Speed", horizontal);
-        grounded = IsGrounded();
-        HandleMovement(horizontal);
 
-        ResetValues();
     }
 
     // Update is called once per frame
     void FixedUpdate ()
     {
 
-        
+        HandleInput();
+        float horizontal = Input.GetAxis("Horizontal");
+        //animator.SetFloat("Speed", horizontal);
+        grounded = IsGrounded();
+        HandleMovement(horizontal);
 
-        
+        ResetValues();
+
+
     }
 
     private void HandleMovement(float horizontal)
@@ -58,7 +58,7 @@ public class PlayerScript : MonoBehaviour {
         }
         else if (Input.GetButtonUp("Jump"))
         {
-            animator.SetBool("Jump", false);
+           // animator.SetBool("Jump", false);
             if (rb.velocity.y > 0)
             {
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
@@ -70,12 +70,12 @@ public class PlayerScript : MonoBehaviour {
     {
         if(Input.GetButtonDown("Jump"))
         {
-            animator.SetBool("Jump", true);
+           // animator.SetBool("Jump", true);
             jumping = true;
         }
     }
 
-    private bool IsGrounded()
+    public bool IsGrounded()
     {
         if(rb.velocity.y <= 0)
         {
