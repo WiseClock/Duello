@@ -8,6 +8,7 @@ public class DamageHandler : MonoBehaviour {
     public GameObject Opponent;
     private Rigidbody2D body;
     private Rigidbody2D oppponent;
+    private int health = 100;
 	// Use this for initialization
 	void Start () {
         body = gameObject.GetComponent<Rigidbody2D>();
@@ -19,10 +20,19 @@ public class DamageHandler : MonoBehaviour {
 		
 	}
 
-    public void TakeDamage(float damage) {
-        Debug.Log("Took damage: " + damage);
+    //public access for the health variable
+    public int getHealth() { return health; }
+
+    //Health updater from an attack.
+    public void TakeDamage(int damage) {
+        health -= damage;
+        if (health < 0) {
+            health = 0;
+            TimerScript.timerIsActive = false;
+        }
     }
 
+    //Kockback effect upon getting hit.
     public void TakeKnockback(float knockback) {
         Debug.Log("Body position: " + body.position);
         Debug.Log("Opponent position: " + oppponent.position);
@@ -30,7 +40,5 @@ public class DamageHandler : MonoBehaviour {
         direction.Normalize();
         ForceMode2D mode = ForceMode2D.Impulse;
         body.AddForce(direction * -knockback, mode);
-        Debug.Log(direction);
-        
     }
 }
