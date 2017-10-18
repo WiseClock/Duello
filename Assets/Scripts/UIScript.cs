@@ -53,9 +53,16 @@ public class UIScript : MonoBehaviour
         if (!_scorePanel.activeSelf)
             return;
 
+        // disable enemy
+        // todo: disable player too
 	    EnemyFighterScript enemyAI = _enemy.GetComponent<EnemyFighterScript>();
 	    if (enemyAI.enabled)
 	        enemyAI.enabled = false;
+        EnemyController enemyAnimation = _enemy.GetComponent<EnemyController>();
+	    if (enemyAnimation.enabled)
+	        enemyAnimation.enabled = false;
+        if (_enemy.activeSelf)
+            _enemy.SetActive(false);
 
         float moveVertical = Input.GetAxis("Vertical");
 
