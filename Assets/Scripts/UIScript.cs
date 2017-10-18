@@ -11,6 +11,7 @@ public class UIScript : MonoBehaviour
     private GameObject _btnRestart;
     private GameObject _btnMainMenu;
     private GameObject _selectionIndicator;
+    private GameObject _enemy;
 
     private int _currentSelection = 0;
     private bool _isChangingIndex = false;
@@ -28,6 +29,7 @@ public class UIScript : MonoBehaviour
         _btnRestart = GameObject.Find("ButtonRestart");
         _btnMainMenu = GameObject.Find("ButtonMainMenu");
         _selectionIndicator = GameObject.Find("ScoreButtonIndicator");
+        _enemy = GameObject.Find("Enemy");
 
         switch (_currentSelection)
         {
@@ -50,6 +52,10 @@ public class UIScript : MonoBehaviour
 	{
         if (!_scorePanel.activeSelf)
             return;
+
+	    EnemyFighterScript enemyAI = _enemy.GetComponent<EnemyFighterScript>();
+	    if (enemyAI.enabled)
+	        enemyAI.enabled = false;
 
         float moveVertical = Input.GetAxis("Vertical");
 
