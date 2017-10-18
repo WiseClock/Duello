@@ -19,6 +19,8 @@ public class EnemyController : MonoBehaviour {
     private Collider2D playerCollider;
     private float collisionBuffer = 1.5f;
 
+    protected Animator animator;
+
     bool jumping = false;
     bool readyToJump = true;
     public bool attacking = false;
@@ -37,13 +39,15 @@ public class EnemyController : MonoBehaviour {
     {
         rb = GetComponent<Rigidbody2D>();
         collider = GetComponent<Collider2D>();
+        animator = GetComponent<Animator>();
         playerCollider = player.GetComponent<Collider2D>();
         navScript = navMesh.GetComponent<NavigationScript>();
+
     }
 
-    void Update()
+    /*void Update()
     {
-    }
+    }*/
 
     // Update is called once per frame
     void FixedUpdate()
@@ -76,10 +80,13 @@ public class EnemyController : MonoBehaviour {
             else
             {
                 StopMoving();
+                animator.SetFloat("Speed", 0);
+                Debug.Log("stopMoving");
                 if (Time.time > nextAttack)
                 {
                     nextAttack = Time.time + attackRate;
                     attacking = true;
+                    animator.SetTrigger("Attack");
                     Debug.Log("Attacking");
                 }
             }
@@ -98,11 +105,15 @@ public class EnemyController : MonoBehaviour {
         {
             if (transform.position.x > navScript.targetNode.transform.position.x)
             {
+                Debug.Log("LeftMoving");
                 MoveLeft();
+                animator.SetFloat("Speed", 1);
             }
             else if (transform.position.x < navScript.targetNode.transform.position.x)
             {
+                Debug.Log("RightMoving");
                 MoveRight();
+                animator.SetFloat("Speed", 1);
             }
         }
         else 
@@ -218,7 +229,7 @@ public class EnemyController : MonoBehaviour {
             StopMoving();
             readyToJump = false;
             rb.velocity = new Vector2(-1.0f * movementSpeed, rb.velocity.y);
-            rb.AddForce(new Vector2(0.0f, 150.0f));
+            rb.AddForce(new Vector2(0.0f, 160.0f));
         }
     }
     private void JumpRight()
@@ -228,7 +239,7 @@ public class EnemyController : MonoBehaviour {
             StopMoving();
             readyToJump = false;
             rb.velocity = new Vector2(1.0f * movementSpeed, rb.velocity.y);
-            rb.AddForce(new Vector2(0.0f, 150.0f));
+            rb.AddForce(new Vector2(0.0f, 160.0f));
         }
     }
 
