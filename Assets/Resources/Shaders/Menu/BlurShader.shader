@@ -36,7 +36,7 @@ Shader "Duello/Menu/BlurShader" {
 	};
 
 	struct v2f {
-		float4 vertex : POSITION;
+		float4 vertex : SV_POSITION;
 		float4 uvgrab : TEXCOORD0;
 	};
 
@@ -96,7 +96,7 @@ Shader "Duello/Menu/BlurShader" {
 	};
 
 	struct v2f {
-		float4 vertex : POSITION;
+		float4 vertex : SV_POSITION;
 		float4 uvgrab : TEXCOORD0;
 	};
 
@@ -159,7 +159,7 @@ Shader "Duello/Menu/BlurShader" {
 	};
 
 	struct v2f {
-		float4 vertex : POSITION;
+		float4 vertex : SV_POSITION;
 		float4 uvgrab : TEXCOORD0;
 		float2 uvbump : TEXCOORD1;
 		float2 uvmain : TEXCOORD2;
@@ -190,7 +190,7 @@ Shader "Duello/Menu/BlurShader" {
 	sampler2D _BumpMap;
 	sampler2D _MainTex;
 
-	half4 frag(v2f i) : COLOR{
+	half4 frag(v2f i) : SV_Target{
 		// calculate perturbed coordinates
 		half2 bump = UnpackNormal(tex2D(_BumpMap, i.uvbump)).rg; // we could optimize this by just reading the x  y without reconstructing the Z
 		float2 offset = bump * _BumpAmt * _GrabTexture_TexelSize.xy;
