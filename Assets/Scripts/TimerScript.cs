@@ -38,7 +38,7 @@ public class TimerScript : MonoBehaviour {
         if(!timerIsActive)
         {
             StopCoroutine("LoseTime");
-
+            
             if(timer > 0 && timer <= 90)
             {
                 // Tell ScoreManager the score
@@ -53,8 +53,11 @@ public class TimerScript : MonoBehaviour {
                 ScoreManager.healthScore = 0;
             }
 
+            ScoreManager.UpdateScore();
+
             // Show End Game Panel
             scorePanel.SetActive(true);
+            enabled = false;
         }
 	}
 

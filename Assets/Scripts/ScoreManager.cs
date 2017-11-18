@@ -6,10 +6,10 @@ public class ScoreManager : MonoBehaviour {
     public static int healthScore;
     public static int timerScore;
     public static int totalScore;
-    private string highScoreTag;
+    private static string highScoreTag;
     //private string highScorerTag;
     private int highScore;
-    private int checkHighScore;
+    private static int checkHighScore = 0;
     //private string highScorer;
     public Text scoreText;
     public Text highScoreText;
@@ -32,31 +32,9 @@ public class ScoreManager : MonoBehaviour {
         totalScore = 0;
     }
 
-
     void Update()
     {
-        totalScore = healthScore + timerScore;
-        int currentScore = totalScore;
-
-        // Go through all saved high scores
-        for (int i = 1; i <= 5; i++)
-        {
-            // Get High Score
-            highScoreTag = "highscore" + i.ToString();
-            checkHighScore = PlayerPrefs.GetInt(highScoreTag, 0);
-
-            // Get High Scorer Initials
-            //highScorerTag = "highscorer" + i;
-            //highScorer = PlayerPrefs.GetString(highScorerTag);
-
-            // Check for a new high score, set if needed
-            if (currentScore > checkHighScore)
-            {
-                PlayerPrefs.SetInt(highScoreTag, currentScore);
-                //PlayerPrefs.SetString(highScorerTag, tempScorer);
-                currentScore = checkHighScore;
-            }
-        }
+        
         
         // Set the display text when the game ends
         if (totalScore > 0)
@@ -80,5 +58,40 @@ public class ScoreManager : MonoBehaviour {
                                         , "CURRENT HIGH SCORE:"
                                         , highScorer
                                         , highScore);*/
+    }
+
+    public static void UpdateScore()
+    {
+        totalScore = healthScore + timerScore;
+        int currentScore = totalScore;
+
+        // Go through all saved high scores
+        for (int i = 1; i <= 5; i++)
+        {
+            // Debug Log
+            Debug.Log("i = " + i + "; highscore1 = " + PlayerPrefs.GetInt("highscore1") + "; highscore2 = " + PlayerPrefs.GetInt("highscore2") + "; highscore3 = " + PlayerPrefs.GetInt("highscore3") + "; highscore4 = " + PlayerPrefs.GetInt("highscore4") + "; highscore5 = " + PlayerPrefs.GetInt("highscore5") + "; currentScore = " + currentScore + "; checkHighScore = " + checkHighScore);
+
+            // Get High Score
+            highScoreTag = "highscore" + i.ToString();
+            checkHighScore = PlayerPrefs.GetInt(highScoreTag, 0);
+
+            // Get High Scorer Initials
+            //highScorerTag = "highscorer" + i;
+            //highScorer = PlayerPrefs.GetString(highScorerTag);
+
+            // Debug Log
+            Debug.Log("i = " + i + "; highscore1 = " + PlayerPrefs.GetInt("highscore1") + "; highscore2 = " + PlayerPrefs.GetInt("highscore2") + "; highscore3 = " + PlayerPrefs.GetInt("highscore3") + "; highscore4 = " + PlayerPrefs.GetInt("highscore4") + "; highscore5 = " + PlayerPrefs.GetInt("highscore5") + "; currentScore = " + currentScore + "; checkHighScore = " + checkHighScore);
+
+            // Check for a new high score, set if needed
+            if (currentScore > checkHighScore)
+            {
+                PlayerPrefs.SetInt(highScoreTag, currentScore);
+                //PlayerPrefs.SetString(highScorerTag, tempScorer);
+                currentScore = checkHighScore;
+
+                // Debug Log
+                Debug.Log("i = " + i + "; highscore1 = " + PlayerPrefs.GetInt("highscore1") + "; highscore2 = " + PlayerPrefs.GetInt("highscore2") + "; highscore3 = " + PlayerPrefs.GetInt("highscore3") + "; highscore4 = " + PlayerPrefs.GetInt("highscore4") + "; highscore5 = " + PlayerPrefs.GetInt("highscore5") + "; currentScore = " + currentScore + "; checkHighScore = " + checkHighScore);
+            }
+        }
     }
 }
