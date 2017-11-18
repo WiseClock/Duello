@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class DamageHandler : MonoBehaviour {
 
-    
+    public AudioClip damageSound;
+    private AudioSource _audioSource;
     public GameObject Opponent;
     private Rigidbody2D body;
     private Rigidbody2D oppponent;
@@ -13,6 +14,7 @@ public class DamageHandler : MonoBehaviour {
 	void Start () {
         body = gameObject.GetComponent<Rigidbody2D>();
         oppponent = Opponent.GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -26,7 +28,8 @@ public class DamageHandler : MonoBehaviour {
     //Health updater from an attack.
     public void TakeDamage(int damage) {
         health -= damage;
-        if (health < 0) {
+        _audioSource.PlayOneShot(damageSound);
+        if (health <= 0) {
             health = 0;
             TimerScript.timerIsActive = false;
         }
