@@ -12,7 +12,8 @@ public class ItemDropHandler : MonoBehaviour
     private int _rotateDirection = 1;
     private string _type;
 
-    private Action _onDestroyCallback;
+    private Action<bool> _onDestroyCallback;
+    private Action _onLanded;
     private Action<GameObject> _onCollisionCallback;
 
 	void Start ()
@@ -76,9 +77,14 @@ public class ItemDropHandler : MonoBehaviour
         }
     }
 
-    public void SetOnDestroyCallback(Action action)
+    public void SetOnDestroyCallback(Action<bool> action)
     {
         _onDestroyCallback = action;
+    }
+
+    public void SetOnLandedCallback(Action action)
+    {
+        _onLanded = action;
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -86,12 +92,16 @@ public class ItemDropHandler : MonoBehaviour
         GameObject targetObject = collision.gameObject;
 
         if (targetObject != _player && targetObject != _enemy && targetObject != _blastZone)
+        {
+            // should be landed on ground
+            _onLanded();
             return;
+        }
 
         if (targetObject == _player || targetObject == _enemy)
             _onCollisionCallback(collision.gameObject);
 
         Destroy(gameObject);
-        _onDestroyCallback();
+        _onDestroyCallback(targetObject == _blastZone);
     }
 }
