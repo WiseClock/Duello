@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour {
     private bool jumping;
     private float jumpTakeOffSpeed = 400.0f;
     private float horizontal=0;
+    private float attackColdDown;
+    private bool attackFreeze;
 
     protected Animator animator;
     private GameObject Player;
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         Player = GameObject.Find("Player");
+        attackFreeze = false;
 	}
 
     void Update()
@@ -64,7 +67,7 @@ public class PlayerController : MonoBehaviour {
         {
             Player.transform.rotation=Quaternion.Euler(0, 125, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0, 125, 0);
-            playerAttacks.transform.rotation = Quaternion.Euler(0, 125, 0);
+            //playerAttacks.transform.rotation = Quaternion.Euler(0, 125, 0);
 
         }
         else if(horizontal < 0)
@@ -72,7 +75,7 @@ public class PlayerController : MonoBehaviour {
             //Player.transform.rotation = Quaternion.Euler(0, 235, 0);
             Player.transform.rotation = Quaternion.Euler(0, 235, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0,-55, 0);
-            playerAttacks.transform.rotation = Quaternion.Euler(0, -55, 0);
+            //playerAttacks.transform.rotation = Quaternion.Euler(0, -55, 0);
         }
 
         //Debug.Log(grounded);
@@ -96,9 +99,17 @@ public class PlayerController : MonoBehaviour {
     private void HandleInput()
     {
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && attackFreeze==false)
         {
+            attackColdDown = Time.time;
             animator.SetTrigger("Attack");
+            attackFreeze = true;
+            Debug.Log("attack on");
+        }
+        if (Time.time - attackColdDown >= 0.6f && attackFreeze==true)
+        {
+            attackFreeze = false;
+            Debug.Log("attack freeze");
         }
     
         if (Input.GetButtonDown("Jump"))
