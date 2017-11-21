@@ -6,7 +6,7 @@ public class FighterScript : MonoBehaviour {
 
     private int damage = 0;
     public Collider[] attacks; //set array size in editor, can hold many attacks colliders.
-    private float knockback = 2.5f; //feel free to change value
+    private float knockback = 1.5f; //feel free to change value
 
 	// Use this for initialization
 	void Start () { }
@@ -28,7 +28,6 @@ public class FighterScript : MonoBehaviour {
             }
             c.SendMessageUpwards("TakeDamage", damage);
             c.SendMessageUpwards("TakeKnockback", knockback);
-            
         }
     }
 }

@@ -22,6 +22,15 @@ public class PlayerController : MonoBehaviour {
     public GameObject playerAttacks;
     public GameObject playerColliders;
 
+    public bool isHit = false;
+
+    private float currentPlatformYPos = 0f;
+    private bool isFalling = false;
+    private int currentLayer = 0;
+
+    const int playerLayer = 8;
+    const int platformLayer = 9;
+
     // Use this for initialization
     void Start ()
     {
@@ -32,34 +41,51 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
-        HandleInput();
-        if (rb.velocity.y > 0)
+        // if the player is hit freeze all controls
+        if (!isHit)
         {
-            animator.SetBool("Jump", false);
-            animator.SetTrigger("JumpDown");
-            //rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
+            HandleInput();
+            if (rb.velocity.y > 0)
+            {
+                animator.SetBool("Jump", false);
+                animator.SetTrigger("JumpDown");
+            }
         }
-
-        /*else
-            animator.SetBool("Attack", false);*/
     }
 
     // Update is called once per frame
     void FixedUpdate ()
     {
-
         float horizontal = Input.GetAxis("Horizontal");
         animator.SetFloat("Speed", horizontal * horizontal);
-        grounded = IsGrounded();
-        HandleMovement(horizontal);
 
+        // check if player is grounded
+        grounded = IsGrounded();
+
+        // once player has fallen below the platform, re-enable collisions with that platform
+        if (isFalling && (gameObject.transform.position.y + (GetComponent<BoxCollider2D>().size.y / 2)) < currentPlatformYPos)
+        {
+            Physics2D.IgnoreLayerCollision(playerLayer, platformLayer, false);
+            currentPlatformYPos = 0f;
+            isFalling = false;
+        }
+
+        // do not allow the player to move while hit
+        if (!isHit)
+        {
+            HandleMovement(horizontal);
+        }
+        
         ResetValues();
         
     }
 
     private void HandleMovement(float horizontal)
     {
+        // determine movement speed based on horizontal input
         rb.velocity = new Vector2(horizontal * movementSpeed, rb.velocity.y);
+
+        // check direction and rotate player & weapon hitboxes accordingly
         if(horizontal > 0)
         {
             Player.transform.rotation=Quaternion.Euler(0, 125, 0);
@@ -69,26 +95,24 @@ public class PlayerController : MonoBehaviour {
         }
         else if(horizontal < 0)
         {
-            //Player.transform.rotation = Quaternion.Euler(0, 235, 0);
             Player.transform.rotation = Quaternion.Euler(0, 235, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0,-55, 0);
             playerAttacks.transform.rotation = Quaternion.Euler(0, -55, 0);
         }
 
-        //Debug.Log(grounded);
+        // if player is on ground and has pressed the jump button add vertical force
         if(grounded && jumping)
         {
             grounded = false;
             rb.AddForce(new Vector2(0.0f, jumpTakeOffSpeed));
         }
-        else if (Input.GetButtonUp("Jump"))
+        else if (Input.GetButtonUp("Jump")) // if player is in the air and not holding the jump button
         {
-            
             if (rb.velocity.y > 0)
             {
-                //animator.SetBool("Jump", false);
-                //animator.SetTrigger("JumpDown");
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);   
+                animator.SetBool("Jump", false);
+                animator.SetTrigger("JumpDown");
+                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);  // divide vertical velocity in half making character fall
             }
         }
     }
@@ -110,8 +134,19 @@ public class PlayerController : MonoBehaviour {
         {
             animator.SetBool("Jump", true);
         }
+
+        // if player presses down on keyboard/joystick, check if on a "fallthrough" platform and disable collision
+        if (Input.GetAxis("Vertical") < 0 && currentLayer == platformLayer)
+        {
+            Physics2D.IgnoreLayerCollision(playerLayer, platformLayer, true);
+            currentPlatformYPos = groundPoints[0].transform.position.y;
+            isFalling = true;
+            grounded = false;
+        }
     }
 
+    // checks if groundPoints are colliding with the ground
+    // groundPoints are empty game objects located at the players feet
     private bool IsGrounded()
     {
         if(rb.velocity.y <= 0)
@@ -122,9 +157,10 @@ public class PlayerController : MonoBehaviour {
 
                 for(int i = 0; i < colliders.Length; i++)
                 {
-                    if(colliders[i].gameObject != gameObject)
+                    
+                    if (colliders[i].gameObject != gameObject)
                     {
-                        //animator.SetBool("Jump", false);
+                        currentLayer = colliders[i].gameObject.layer;
                         return true;
                     }
                 }
@@ -138,4 +174,17 @@ public class PlayerController : MonoBehaviour {
     {
         jumping = false;
     }
+
+    // when the player is hit apply horizontal force in the direction they were attacked from
+    // when isHit is true the players controls are frozen
+    public IEnumerator GetHit(Vector2 knockback)
+    {
+        animator.SetTrigger("Hit");
+        isHit = true;
+        rb.AddForce(knockback, ForceMode2D.Impulse);
+        yield return new WaitForSeconds(1f);
+        isHit = false;
+
+    }
+
 }

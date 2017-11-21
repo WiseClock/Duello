@@ -8,20 +8,22 @@ public class EnemyFighterScript : MonoBehaviour {
     public Collider[] attacks; //set array size in editor, can hold many attacks colliders.
     private float knockback = 2.5f; //feel free to change value
 
-    public EnemyController enemyController;
+    private EnemyScript enemyScript;
 
-	// Use this for initialization
-	void Start () {
-        enemyController = GetComponent<EnemyController>();
 
+    // Use this for initialization
+    void Start () {
+        enemyScript = GetComponent<EnemyScript>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-		if (enemyController.attacking) {
+		if (enemyScript.attacking) {
             damage = 10;
             attack(attacks[0]);
         }
+
+
 	}
 
     //attack method. Checks for any colliders on the "Hitbox" layer that overlap the selected attacks collider, and sends method calls.
@@ -33,7 +35,6 @@ public class EnemyFighterScript : MonoBehaviour {
             }
             c.SendMessageUpwards("TakeDamage", damage);
             c.SendMessageUpwards("TakeKnockback", knockback);
-            
         }
     }
 }

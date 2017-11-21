@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageHandler : MonoBehaviour {
+public class EnemyDamageHandler : MonoBehaviour {
 
     
     public GameObject Opponent;
     private Rigidbody2D body;
     private Rigidbody2D oppponent;
     private int health = 100;
-    private PlayerController pc;
+    private EnemyScript es;
 
-    // Use this for initialization
-    void Start () {
+	// Use this for initialization
+	void Start () {
         body = gameObject.GetComponent<Rigidbody2D>();
         oppponent = Opponent.GetComponent<Rigidbody2D>();
-        pc = gameObject.GetComponent<PlayerController>();
+        es = GetComponent<EnemyScript>();
     }
 	
 	// Update is called once per frame
@@ -42,9 +42,10 @@ public class DamageHandler : MonoBehaviour {
         Vector2 direction = oppponent.position - body.position;
         direction.Normalize();
         ForceMode2D mode = ForceMode2D.Impulse;
-        pc.StartCoroutine(pc.GetHit(direction * -knockback));
         //body.AddForce(direction * -knockback, mode);
-        //body.AddForce(test, mode);
-        //Debug.Log(direction * -knockback);
+        //body.MovePosition((body.position + (direction * -knockback)) * Time.deltaTime);
+        es.StartCoroutine(es.GetHit(direction * -knockback));
+        //body.AddForce(direction * -knockback, mode);
+        
     }
 }
