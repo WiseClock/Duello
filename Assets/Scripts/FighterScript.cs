@@ -9,9 +9,8 @@ public class FighterScript : MonoBehaviour {
     private float knockback = 2.5f; //feel free to change value
     private bool damagedFlag;
     private float inAction;
-
-	// Use this for initialization
-	void Start () { }
+    // Use this for initialization
+    void Start () { }
 
     // Update is called once per frame
     void Update()
@@ -21,7 +20,7 @@ public class FighterScript : MonoBehaviour {
             inAction = Time.time;
             damagedFlag = false;
         }
-        if (damagedFlag == false && Time.time - inAction < 0.6f)
+        if (damagedFlag == false && Time.time - inAction > 0.15f && Time.time - inAction < 0.6f)
         {
             damage = 10;
             attack(attacks[0]);

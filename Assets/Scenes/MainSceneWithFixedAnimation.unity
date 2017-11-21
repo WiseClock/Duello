@@ -451,6 +451,11 @@ MonoBehaviour:
   seekingNextNode: 0
   targetNodeDirection: -1
   drawNodes: 0
+--- !u!137 &281780275 stripped
+SkinnedMeshRenderer:
+  m_PrefabParentObject: {fileID: 13700000, guid: a0179be775d865349b2c4bbbd6f83177,
+    type: 2}
+  m_PrefabInternal: {fileID: 1013702944}
 --- !u!1 &323381668 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1056208372871112, guid: 93d67bc290764d84c87b7beb575a0321,
@@ -1130,6 +1135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Opponent: {fileID: 1353293781}
+  bodyRend: {fileID: 1058076868}
 --- !u!114 &879661485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1340,6 +1346,10 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 9166a76dcd38f5a45997a13cf96f5cb2, type: 2}
+    - target: {fileID: 13700000, guid: a0179be775d865349b2c4bbbd6f83177, type: 2}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 11400000, guid: a0179be775d865349b2c4bbbd6f83177, type: 2}
     - {fileID: 11100000, guid: a0179be775d865349b2c4bbbd6f83177, type: 2}
@@ -1373,6 +1383,11 @@ Transform:
   m_Father: {fileID: 879661480}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!137 &1058076868 stripped
+SkinnedMeshRenderer:
+  m_PrefabParentObject: {fileID: 13700000, guid: a0179be775d865349b2c4bbbd6f83177,
+    type: 2}
+  m_PrefabInternal: {fileID: 1183249190}
 --- !u!1 &1096354707
 GameObject:
   m_ObjectHideFlags: 0
@@ -2165,6 +2180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Opponent: {fileID: 879661477}
+  bodyRend: {fileID: 281780275}
 --- !u!114 &1353293788
 MonoBehaviour:
   m_ObjectHideFlags: 0
