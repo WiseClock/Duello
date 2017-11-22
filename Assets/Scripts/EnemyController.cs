@@ -33,6 +33,9 @@ public class EnemyController : MonoBehaviour {
 
     public float attackRate = 0.5f;
     private float nextAttack = 0.0f;
+    
+    private float _jumpBonusFactor = 0;
+    private float _jumpBonusEnd = -1;
 
     // Use this for initialization
     void Start()
@@ -45,9 +48,20 @@ public class EnemyController : MonoBehaviour {
 
     }
 
-    /*void Update()
+    void Update()
     {
-    }*/
+        // jump bonus end
+        if (_jumpBonusFactor != 0 && _jumpBonusEnd != -1 && _jumpBonusEnd < Time.realtimeSinceStartup)
+            _jumpBonusFactor = 0;
+    }
+
+    public void SetJumpBuff(object[] arguments)
+    {
+        float zeroBasedFactor = (float)arguments[0];
+        float buffEndTime = (float)arguments[1];
+        _jumpBonusFactor = zeroBasedFactor;
+        _jumpBonusEnd = buffEndTime;
+    }
 
     // Update is called once per frame
     void FixedUpdate()
@@ -206,7 +220,7 @@ public class EnemyController : MonoBehaviour {
         {
             grounded = false;
             jumping = false;
-            rb.AddForce(new Vector2(0.0f, 400.0f));
+            rb.AddForce(new Vector2(0.0f, 400.0f * (1 + _jumpBonusFactor)));
         }
 
     }
@@ -217,7 +231,7 @@ public class EnemyController : MonoBehaviour {
         {
             grounded = false;
             jumping = false;
-            rb.AddForce(new Vector2(0.0f, 350.0f));
+            rb.AddForce(new Vector2(0.0f, 350.0f * (1 + _jumpBonusFactor)));
         }
 
     }
@@ -229,7 +243,7 @@ public class EnemyController : MonoBehaviour {
             StopMoving();
             readyToJump = false;
             rb.velocity = new Vector2(-1.0f * movementSpeed, rb.velocity.y);
-            rb.AddForce(new Vector2(0.0f, 160.0f));
+            rb.AddForce(new Vector2(0.0f, 160.0f * (1 + _jumpBonusFactor)));
         }
     }
     private void JumpRight()
@@ -239,7 +253,7 @@ public class EnemyController : MonoBehaviour {
             StopMoving();
             readyToJump = false;
             rb.velocity = new Vector2(1.0f * movementSpeed, rb.velocity.y);
-            rb.AddForce(new Vector2(0.0f, 160.0f));
+            rb.AddForce(new Vector2(0.0f, 160.0f * (1 + _jumpBonusFactor)));
         }
     }
 

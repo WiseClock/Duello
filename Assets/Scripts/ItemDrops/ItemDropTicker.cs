@@ -14,7 +14,10 @@ public class ItemDropTicker : MonoBehaviour
     private AudioClip _itemCollected;
     private AudioClip _itemLanded;
 
-    private static readonly string[] ITEM_TYPES = { "Speed", "Damage", "Jump", "Regeneration", "Resistance" };
+    private System.Random _rand = new System.Random();
+
+    // private static readonly string[] ITEM_TYPES = { "Speed", "Damage", "Jump", "Regeneration", "Resistance" };
+    private static readonly string[] ITEM_TYPES = { "Jump", "Regeneration" };
 
     void Start ()
     {
@@ -36,7 +39,7 @@ public class ItemDropTicker : MonoBehaviour
             itemDrop.transform.position = new Vector3(xPos, 10, 0);
 	        ItemDropHandler handler = itemDrop.GetComponent<ItemDropHandler>();
             handler.SetOnLandedCallback(OnItemLanded);
-            handler.SetType(ITEM_TYPES[Mathf.FloorToInt((ITEM_TYPES.Length - 1) * Random.value)]);
+            handler.SetType(ITEM_TYPES[_rand.Next(ITEM_TYPES.Length)]);
             handler.SetOnDestroyCallback(OnItemDropDestroyCallback);
             Debug.Log("dropping item");
 	    }

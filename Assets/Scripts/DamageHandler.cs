@@ -23,6 +23,13 @@ public class DamageHandler : MonoBehaviour {
     //public access for the health variable
     public int getHealth() { return health; }
 
+    public void RestoreHealth(int amount)
+    {
+        int healthAfter = health + amount;
+        if (healthAfter > 100) healthAfter = 100;
+        health = healthAfter;
+    }
+
     //Health updater from an attack.
     public void TakeDamage(int damage) {
         health -= damage;

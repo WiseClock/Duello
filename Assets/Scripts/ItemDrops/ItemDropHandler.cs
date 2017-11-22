@@ -16,6 +16,10 @@ public class ItemDropHandler : MonoBehaviour
     private Action _onLanded;
     private Action<GameObject> _onCollisionCallback;
 
+    public const int REGENERATION_AMOUNT = 20;
+    public const float JUMP_BONUS_FACTOR = 0.3f;
+    public const int JUMP_BONUS_LAST_SECONDS = 10;
+
 	void Start ()
     {
         _player = GameObject.Find("Player");
@@ -42,6 +46,21 @@ public class ItemDropHandler : MonoBehaviour
 
         switch (materialName)
         {
+            case "Jump":
+                _onCollisionCallback = o =>
+                {
+                    Debug.Log(o.name + " gets the " + _type + " buff!");
+                    o.SendMessage("SetJumpBuff", new object[] { JUMP_BONUS_FACTOR, Time.realtimeSinceStartup + JUMP_BONUS_LAST_SECONDS });
+                };
+                break;
+            case "Regeneration":
+                _onCollisionCallback = o =>
+                {
+                    Debug.Log(o.name + " gets the " + _type + " buff!");
+                    o.SendMessage("RestoreHealth", REGENERATION_AMOUNT);
+                };
+                break;
+            /*
             case "Speed":
                 _onCollisionCallback = o =>
                 {
@@ -72,6 +91,7 @@ public class ItemDropHandler : MonoBehaviour
                     Debug.Log(o.name + " gets the " + _type + " buff!");
                 };
                 break;
+                */
             default:
                 break;
         }

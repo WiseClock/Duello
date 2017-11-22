@@ -22,6 +22,9 @@ public class PlayerController : MonoBehaviour {
     public GameObject playerAttacks;
     public GameObject playerColliders;
 
+    private float _jumpBonusFactor = 0;
+    private float _jumpBonusEnd = -1;
+
     // Use this for initialization
     void Start ()
     {
@@ -42,6 +45,18 @@ public class PlayerController : MonoBehaviour {
 
         /*else
             animator.SetBool("Attack", false);*/
+
+        // jump bonus end
+        if (_jumpBonusFactor != 0 && _jumpBonusEnd != -1 && _jumpBonusEnd < Time.realtimeSinceStartup)
+            _jumpBonusFactor = 0;
+    }
+
+    public void SetJumpBuff(object[] arguments)
+    {
+        float zeroBasedFactor = (float)arguments[0];
+        float buffEndTime = (float)arguments[1];
+        _jumpBonusFactor = zeroBasedFactor;
+        _jumpBonusEnd = buffEndTime;
     }
 
     // Update is called once per frame
@@ -54,7 +69,6 @@ public class PlayerController : MonoBehaviour {
         HandleMovement(horizontal);
 
         ResetValues();
-        
     }
 
     private void HandleMovement(float horizontal)
@@ -79,7 +93,7 @@ public class PlayerController : MonoBehaviour {
         if(grounded && jumping)
         {
             grounded = false;
-            rb.AddForce(new Vector2(0.0f, jumpTakeOffSpeed));
+            rb.AddForce(new Vector2(0.0f, jumpTakeOffSpeed * (1 + _jumpBonusFactor)));
         }
         else if (Input.GetButtonUp("Jump"))
         {
