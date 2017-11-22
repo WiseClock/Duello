@@ -59,8 +59,11 @@ public class finalLevelUIScript : MonoBehaviour
         if (enemyAI.enabled)
             enemyAI.enabled = false;
         EnemyController enemyAnimation = _enemy.GetComponent<EnemyController>();
-        if (enemyAnimation.enabled)
+        if (enemyAnimation != null && enemyAnimation.enabled)
             enemyAnimation.enabled = false;
+        EnemyScript enemyScript = _enemy.GetComponent<EnemyScript>();
+        if (enemyScript != null && enemyScript.enabled)
+            enemyScript.enabled = false;
         if (_enemy.activeSelf)
             _enemy.SetActive(false);
 
