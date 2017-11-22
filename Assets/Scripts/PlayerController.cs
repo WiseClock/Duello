@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject playerAttacks;
     public GameObject playerColliders;
-    public GameObject jumpJudge;
+    private float highter;
+    private bool isOnAir;
 
     // Use this for initialization
     void Start ()
@@ -37,9 +38,21 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
         HandleInput();
-
-        //Zhe Li!-------------------!if(jumpJudge)
-
+        if (grounded)
+        {
+            highter = Player.transform.position.y;
+            Debug.Log("High get");
+        }
+        else if (grounded == false && Player.transform.position.y - highter > 0.4f)
+        {
+            isOnAir = true;
+        }
+        if (Player.transform.position.y - highter < 0.3f && isOnAir == true)
+        {
+            animator.SetBool("Jump", false);
+            Debug.Log("Hittt");
+            isOnAir = false;
+        }
         /*if (rb.velocity.y > 0)
         {
             //animator.SetBool("Jump", false);
@@ -139,7 +152,6 @@ public class PlayerController : MonoBehaviour {
                 {
                     if(colliders[i].gameObject != gameObject)
                     {
-                        animator.SetBool("Jump", false);
                         return true;
                     }
                 }
