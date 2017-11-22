@@ -35,10 +35,10 @@ public class TimerScript : MonoBehaviour {
         //Health text updates;
         updateHealthDisplays();
         // What happens when the timer is stopped
-        if(!timerIsActive)
+        if(!timerIsActive || timer == 0)
         {
             StopCoroutine("LoseTime");
-
+            
             if(timer > 0 && timer <= 90)
             {
                 // Tell ScoreManager the score
@@ -46,15 +46,23 @@ public class TimerScript : MonoBehaviour {
                 ScoreManager.healthScore = player.getHealth() * 200;
             }
 
-            if(timer <= 0 || player.getHealth() <= 0)
+            if (timer <= 0 )
             {
                 // Losing End Game Logic Here
                 ScoreManager.timerScore = 0;
+            }
+
+            if (player.getHealth() <= 0)
+            {
+                // Losing End Game Logic Here
                 ScoreManager.healthScore = 0;
             }
 
+            ScoreManager.UpdateScore();
+
             // Show End Game Panel
             scorePanel.SetActive(true);
+            enabled = false;
         }
 	}
 
