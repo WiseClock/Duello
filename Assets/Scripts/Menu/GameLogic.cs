@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameLogic : MonoBehaviour
 {
     public List<string> MenuItemScenes = new List<string> { "MainScene", "MainScene", "MainScene", "MainScene" };
+    public bool HighScoreScene = false;
     private AsyncOperation _sceneOperation;
     private bool _isNewSceneLoading = false;
 
@@ -83,7 +84,7 @@ public class GameLogic : MonoBehaviour
             if (mousePosition.x > item.position.x - halfWidth && mousePosition.x < item.position.x + halfWidth &&
                 mousePosition.y > item.position.y - halfHeight + MENU_SELECTOR_OFFSET_Y && mousePosition.y < item.position.y + halfHeight + MENU_SELECTOR_OFFSET_Y)
             {
-                if (i != _selectedMenuItemIndex)
+                if (!HighScoreScene && i != _selectedMenuItemIndex)
                 {
                     _audioSource.PlayOneShot(MenuSelection);
                     _selectedMenuItemIndex = i;
@@ -100,7 +101,7 @@ public class GameLogic : MonoBehaviour
 
         int timeAfterSelecting = Mathf.RoundToInt((Time.fixedTime - _changeStartTime) * 1000);
         
-        if (!_isChangingIndex)
+        if (!HighScoreScene && !_isChangingIndex)
 	    {
 	        if (moveVertical > 0)
             {
@@ -122,7 +123,7 @@ public class GameLogic : MonoBehaviour
 	        _isChangingIndex = false;
 	    }
 
-        if (_selectedMenuItemIndex >= 0 && _selectedMenuItemIndex < menuItemCount)
+        if (!HighScoreScene && _selectedMenuItemIndex >= 0 && _selectedMenuItemIndex < menuItemCount)
 	    {
 	        Transform menuItemTransform = _menuItemHolder.transform.GetChild(_selectedMenuItemIndex);
 	        Vector3 menuItemPosition = menuItemTransform.localPosition + menuItemTransform.parent.localPosition;
