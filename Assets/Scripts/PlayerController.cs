@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour {
 
     public GameObject playerAttacks;
     public GameObject playerColliders;
+    public GameObject jumpJudge;
 
     // Use this for initialization
     void Start ()
@@ -36,10 +37,13 @@ public class PlayerController : MonoBehaviour {
     void Update()
     {
         HandleInput();
-        if (rb.velocity.y > 0)
+
+        //Zhe Li!-------------------!if(jumpJudge)
+
+        /*if (rb.velocity.y > 0)
         {
-            animator.SetBool("Jump", false);
-            animator.SetTrigger("JumpDown");
+            //animator.SetBool("Jump", false);
+            //animator.SetTrigger("JumpDown");
             //rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);
         }
 
@@ -65,7 +69,7 @@ public class PlayerController : MonoBehaviour {
         rb.velocity = new Vector2(horizontal * movementSpeed, rb.velocity.y);
         if(horizontal > 0)
         {
-            Player.transform.rotation=Quaternion.Euler(0, 125, 0);
+            Player.transform.rotation=Quaternion.Euler(0, 120, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0, 125, 0);
             //playerAttacks.transform.rotation = Quaternion.Euler(0, 125, 0);
 
@@ -135,7 +139,7 @@ public class PlayerController : MonoBehaviour {
                 {
                     if(colliders[i].gameObject != gameObject)
                     {
-                        //animator.SetBool("Jump", false);
+                        animator.SetBool("Jump", false);
                         return true;
                     }
                 }

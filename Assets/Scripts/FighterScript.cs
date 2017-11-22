@@ -20,7 +20,7 @@ public class FighterScript : MonoBehaviour {
             inAction = Time.time;
             damagedFlag = false;
         }
-        if (damagedFlag == false && Time.time - inAction > 0.15f && Time.time - inAction < 0.6f)
+        if (damagedFlag == false && Time.time - inAction > 0.15f && Time.time - inAction < 0.65f)
         {
             damage = 10;
             attack(attacks[0]);
