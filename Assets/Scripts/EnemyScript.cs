@@ -293,7 +293,7 @@ public class EnemyScript : MonoBehaviour {
         // when we are hit save the knockback force amount
         vKnockback = knockback * 1000; // knockback is increased due to large mass
         isHit = true; // triggers stun effect in update methos
-        anim.SetTrigger("Hit");
+        //anim.SetTrigger("Hit");
         yield return new WaitForSeconds(1f); 
         isHit = false;
         yield return null;

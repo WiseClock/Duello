@@ -38,11 +38,11 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.4964127, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657868, g: 0.49641263, b: 0.57481706, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 11
   m_GIWorkflowMode: 0
   m_GISettings:
     serializedVersion: 2
@@ -54,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 1
     m_EnableRealtimeLightmaps: 1
   m_LightmapEditorSettings:
-    serializedVersion: 8
+    serializedVersion: 9
     m_Resolution: 2
     m_BakeResolution: 40
     m_TextureWidth: 1024
@@ -87,7 +87,7 @@ LightmapSettings:
     m_PVRFilteringAtrousNormalSigma: 1
     m_PVRFilteringAtrousPositionSigma: 1
   m_LightingDataAsset: {fileID: 0}
-  m_ShadowMaskMode: 2
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -950,7 +950,7 @@ Transform:
   - {fileID: 1751064963}
   - {fileID: 1317766735}
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &229221255
 MonoBehaviour:
@@ -1249,7 +1249,7 @@ Prefab:
         type: 2}
       propertyPath: Opponent
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1596560239}
     - target: {fileID: 1772995430479536, guid: 897f0cf96b1be66419311111cf60eed9, type: 2}
       propertyPath: m_Name
       value: Enemy
@@ -1268,7 +1268,7 @@ Prefab:
         type: 2}
       propertyPath: player
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1596560239}
     - target: {fileID: 114238745820535758, guid: 897f0cf96b1be66419311111cf60eed9,
         type: 2}
       propertyPath: ground
@@ -1306,11 +1306,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 897f0cf96b1be66419311111cf60eed9, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &374692844 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1301334471707034, guid: 897f0cf96b1be66419311111cf60eed9,
-    type: 2}
-  m_PrefabInternal: {fileID: 374692843}
 --- !u!1 &387252737
 GameObject:
   m_ObjectHideFlags: 0
@@ -2710,6 +2705,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 998665610}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1060717626 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1772995430479536, guid: 897f0cf96b1be66419311111cf60eed9,
+    type: 2}
+  m_PrefabInternal: {fileID: 374692843}
 --- !u!1 &1096354707
 GameObject:
   m_ObjectHideFlags: 0
@@ -4428,7 +4428,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4538172509575896, guid: e72dc11d3d2b3cb4aa594fc6e8c31d30, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4823575289685508, guid: e72dc11d3d2b3cb4aa594fc6e8c31d30, type: 2}
       propertyPath: m_LocalRotation.x
@@ -4450,7 +4450,7 @@ Prefab:
         type: 2}
       propertyPath: Opponent
       value: 
-      objectReference: {fileID: 374692844}
+      objectReference: {fileID: 1060717626}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e72dc11d3d2b3cb4aa594fc6e8c31d30, type: 2}
   m_IsPrefabParent: 0
@@ -6330,7 +6330,7 @@ Prefab:
         type: 2}
       propertyPath: Enemy
       value: 
-      objectReference: {fileID: 374692844}
+      objectReference: {fileID: 1060717626}
     - target: {fileID: 1250668390788390, guid: c5567022b0fbd0349a395c8e5441adca, type: 2}
       propertyPath: m_IsActive
       value: 1
