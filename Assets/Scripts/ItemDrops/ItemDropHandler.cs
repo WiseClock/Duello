@@ -57,7 +57,7 @@ public class ItemDropHandler : MonoBehaviour
                 {
                     // Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetJumpBuff", new object[] { JUMP_BONUS_FACTOR, Time.realtimeSinceStartup + JUMP_BONUS_LAST_SECONDS });
-                    AddEffect(o, JUMP_BONUS_LAST_SECONDS, new Color(0, 0, 255, 0.4f));
+                    AddEffect(o, JUMP_BONUS_LAST_SECONDS, 0, new Color(0, 0, 255));
                 };
                 break;
             case "Regeneration":
@@ -72,7 +72,7 @@ public class ItemDropHandler : MonoBehaviour
                 {
                     // Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetResistanceBuff", new object[] { RESISTANCE_FACTOR, Time.realtimeSinceStartup + RESISTANCE_LAST_SECONDS });
-                    AddEffect(o, RESISTANCE_LAST_SECONDS, new Color(255, 255, 0, 0.4f));
+                    AddEffect(o, RESISTANCE_LAST_SECONDS, 1, new Color(255, 255, 0));
                 };
                 break;
             case "Speed":
@@ -80,7 +80,7 @@ public class ItemDropHandler : MonoBehaviour
                 {
                     // Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetSpeedBuff", new object[] { SPEED_BUFF_FACTOR, Time.realtimeSinceStartup + SPEED_BUFF_LAST_SECONDS });
-                    AddEffect(o, SPEED_BUFF_LAST_SECONDS, new Color(0, 255, 0, 0.4f));
+                    AddEffect(o, SPEED_BUFF_LAST_SECONDS, 2, new Color(0, 255, 0));
                 };
                 break;
             case "Damage":
@@ -88,7 +88,7 @@ public class ItemDropHandler : MonoBehaviour
                 {
                     // Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetAttackBuff", new object[] { ATTACK_BUFF_FACTOR, Time.realtimeSinceStartup + ATTACK_BUFF_LAST_SECONDS });
-                    AddEffect(o, ATTACK_BUFF_LAST_SECONDS, new Color(255, 0, 0, 0.4f));
+                    AddEffect(o, ATTACK_BUFF_LAST_SECONDS, 3, new Color(255, 0, 0));
                 };
                 break;
             default:
@@ -96,16 +96,20 @@ public class ItemDropHandler : MonoBehaviour
         }
     }
 
-    private void AddEffect(GameObject owner, float duration, Color color)
+    private void AddEffect(GameObject owner, float duration, int position, Color color)
     {
         GameObject effectParticle = (GameObject)Instantiate(Resources.Load("Prefabs/ItemDrops/EffectParticle"));
         ParticleSystem ps = effectParticle.GetComponent<ParticleSystem>();
         ps.Stop();
         effectParticle.AddComponent<EffectTicker>();
         effectParticle.SendMessage("SetOwner", owner);
-        ParticleSystem.MainModule settings = ps.main;
-        settings.startColor = color;
-        settings.duration = duration;
+        effectParticle.SendMessage("SetPosition", position);
+        ParticleSystem.ColorOverLifetimeModule col = ps.colorOverLifetime;
+        Gradient gradientColor = new Gradient();
+        gradientColor.SetKeys(new []{ new GradientColorKey(color, 0), new GradientColorKey(new Color(color.r, color.g, color.b, 0), 1) }, new []{ new GradientAlphaKey(1, 0), new GradientAlphaKey(0, 1) });
+        col.color = gradientColor;
+        ParticleSystem.MainModule main = ps.main;
+        main.duration = duration;
         ps.Play();
     }
 

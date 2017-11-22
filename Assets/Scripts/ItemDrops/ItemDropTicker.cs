@@ -14,10 +14,9 @@ public class ItemDropTicker : MonoBehaviour
     private AudioClip _itemCollected;
     private AudioClip _itemLanded;
 
-    private System.Random _rand = new System.Random();
+    private readonly System.Random _rand = new System.Random();
 
-    // private static readonly string[] ITEM_TYPES = { "Speed", "Damage", "Jump", "Regeneration", "Resistance" };
-    private static readonly string[] ITEM_TYPES = { "Jump", "Regeneration", "Resistance" };
+    private static readonly string[] ITEM_TYPES = { "Jump", "Regeneration", "Resistance", "Speed", "Damage" };
 
     void Start ()
     {
