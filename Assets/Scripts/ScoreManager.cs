@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour {
@@ -7,25 +8,15 @@ public class ScoreManager : MonoBehaviour {
     public static int timerScore;
     public static int totalScore;
     private static string highScoreTag;
-    //private string highScorerTag;
+    private static string highScoreDateTag;
     private int highScore;
     private static int checkHighScore = 0;
-    //private string highScorer;
+    private static string highScoreDate;
     public Text scoreText;
     public Text highScoreText;
 
     void Awake()
-    {
-        // Get current high score
-        //highScore = PlayerPrefs.GetInt("highscore1", 0);
-        //highScorer = PlayerPrefs.GetString("highscorer1", "AAA");
-
-        /*PlayerPrefs.SetInt("highscore1", 0);
-        PlayerPrefs.SetInt("highscore2", 0);
-        PlayerPrefs.SetInt("highscore3", 0);
-        PlayerPrefs.SetInt("highscore4", 0);
-        PlayerPrefs.SetInt("highscore5", 0);*/
-
+    {        
         // Reset the scores
         healthScore = 0;
         timerScore = 0;
@@ -34,8 +25,6 @@ public class ScoreManager : MonoBehaviour {
 
     void Update()
     {
-        
-        
         // Set the display text when the game ends
         if (totalScore > 0)
         {
@@ -53,45 +42,47 @@ public class ScoreManager : MonoBehaviour {
 
         // Display the current high score
         highScore = PlayerPrefs.GetInt("highscore1");
-        highScoreText.text = "CURRENT HIGH SCORE: " + highScore;
-        /*highScoreText.text = string.Format("{0} {1} {2,10}"
+        //highScoreText.text = "CURRENT HIGH SCORE: " + highScore;
+        highScoreText.text = string.Format("{0} {1} ({2})"
                                         , "CURRENT HIGH SCORE:"
-                                        , highScorer
-                                        , highScore);*/
+                                        , highScore
+                                        , highScoreDate);
     }
 
     public static void UpdateScore()
     {
         totalScore = healthScore + timerScore;
+        updateCurrentScore(totalScore);
         int currentScore = totalScore;
 
         // Go through all saved high scores
         for (int i = 1; i <= 5; i++)
         {
-            // Debug Log
-            Debug.Log("i = " + i + "; highscore1 = " + PlayerPrefs.GetInt("highscore1") + "; highscore2 = " + PlayerPrefs.GetInt("highscore2") + "; highscore3 = " + PlayerPrefs.GetInt("highscore3") + "; highscore4 = " + PlayerPrefs.GetInt("highscore4") + "; highscore5 = " + PlayerPrefs.GetInt("highscore5") + "; currentScore = " + currentScore + "; checkHighScore = " + checkHighScore);
 
             // Get High Score
             highScoreTag = "highscore" + i.ToString();
             checkHighScore = PlayerPrefs.GetInt(highScoreTag, 0);
 
-            // Get High Scorer Initials
-            //highScorerTag = "highscorer" + i;
-            //highScorer = PlayerPrefs.GetString(highScorerTag);
+            // Get High Score Date
+            highScoreDateTag = "highscoredate" + i;
+            highScoreDate = PlayerPrefs.GetString(highScoreDateTag, "1-Jan-2000 12:00:00 AM");
 
-            // Debug Log
-            Debug.Log("i = " + i + "; highscore1 = " + PlayerPrefs.GetInt("highscore1") + "; highscore2 = " + PlayerPrefs.GetInt("highscore2") + "; highscore3 = " + PlayerPrefs.GetInt("highscore3") + "; highscore4 = " + PlayerPrefs.GetInt("highscore4") + "; highscore5 = " + PlayerPrefs.GetInt("highscore5") + "; currentScore = " + currentScore + "; checkHighScore = " + checkHighScore);
 
             // Check for a new high score, set if needed
             if (currentScore > checkHighScore)
             {
+                DateTime thisDate = DateTime.Now;
+                PlayerPrefs.SetString(highScoreDateTag, thisDate.ToString("d-MMM-yyyy h:mm:ss tt"));
                 PlayerPrefs.SetInt(highScoreTag, currentScore);
                 //PlayerPrefs.SetString(highScorerTag, tempScorer);
                 currentScore = checkHighScore;
-
-                // Debug Log
-                Debug.Log("i = " + i + "; highscore1 = " + PlayerPrefs.GetInt("highscore1") + "; highscore2 = " + PlayerPrefs.GetInt("highscore2") + "; highscore3 = " + PlayerPrefs.GetInt("highscore3") + "; highscore4 = " + PlayerPrefs.GetInt("highscore4") + "; highscore5 = " + PlayerPrefs.GetInt("highscore5") + "; currentScore = " + currentScore + "; checkHighScore = " + checkHighScore);
             }
         }
+    }
+
+    private static void updateCurrentScore(int score)
+    {
+        int currentScore = PlayerPrefs.GetInt("currentscore", 0) + score;
+        PlayerPrefs.SetInt("currentscore", currentScore);
     }
 }
