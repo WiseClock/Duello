@@ -7,7 +7,7 @@ public class FighterScript : MonoBehaviour {
     private int damage = 0;
     public Collider[] attacks; //set array size in editor, can hold many attacks colliders.
     private float knockback = 2.5f; //feel free to change value
-    private bool damagedFlag;
+    private bool damagedFlag, pressFlag;
     private float inAction;
     // Use this for initialization
     void Start () { }
@@ -15,15 +15,22 @@ public class FighterScript : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1")&&pressFlag==true)
         {
             inAction = Time.time;
             damagedFlag = false;
+            pressFlag=false;
         }
-        if (damagedFlag == false && Time.time - inAction > 0.15f && Time.time - inAction < 0.65f)
+        if (Time.time - inAction > 0.2f && Time.time - inAction < 0.65f)
         {
-            damage = 10;
-            attack(attacks[0]);
+            if (damagedFlag == false)
+            {
+                damage = 10;
+                attack(attacks[0]);
+            }
+        }else if(Time.time - inAction > 0.8f)
+        {
+            pressFlag = true;
         }
     }
 

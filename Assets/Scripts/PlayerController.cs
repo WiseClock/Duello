@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
     private float attackColdDown;
     private bool attackFreeze;
 
-    protected Animator animator;
+    private Animator animator;
     private GameObject Player;
 
     public GameObject playerAttacks;
@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour {
         if (grounded)
         {
             highter = Player.transform.position.y;
-            Debug.Log("High get");
+            //Debug.Log("High get");
         }
         else if (grounded == false && Player.transform.position.y - highter > 0.4f)
         {
@@ -50,7 +50,7 @@ public class PlayerController : MonoBehaviour {
         if (Player.transform.position.y - highter < 0.3f && isOnAir == true)
         {
             animator.SetBool("Jump", false);
-            Debug.Log("Hittt");
+            //Debug.Log("Hittt");
             isOnAir = false;
         }
         /*if (rb.velocity.y > 0)
@@ -128,16 +128,20 @@ public class PlayerController : MonoBehaviour {
             attackFreeze = false;
             Debug.Log("attack freeze");
         }
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Standing Melee Attack Horizontal"))
+        {
+            //Debug.Log("FUCK!");
+        }
     
         if (Input.GetButtonDown("Jump"))
         {
             animator.SetBool("Jump", true);
             jumping = true;
         }
-        if (Input.GetButtonDown("Fire2"))
+        /*if (Input.GetButtonDown("Fire2"))
         {
             animator.SetBool("Jump", true);
-        }
+        }*/
     }
 
     private bool IsGrounded()

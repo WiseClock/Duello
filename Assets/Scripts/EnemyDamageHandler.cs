@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageHandler : MonoBehaviour {
+public class EnemyDamageHandler : MonoBehaviour {
 
     
     public GameObject Opponent;
@@ -23,7 +23,6 @@ public class DamageHandler : MonoBehaviour {
 	void Update () {
         if (isHit == true)
         {
-            Debug.Log(" 111");
             damageHitTime = Time.time;
             isHit = false;
             Hitted = true;
@@ -34,11 +33,11 @@ public class DamageHandler : MonoBehaviour {
             Debug.Log("newTime:" + newTime);
             if (newTime < 0.1f || (newTime > 0.3f && newTime < 0.5f))
             {
-                bodyRend.material.SetColor("_Specular", Color.red); //.material.SetColor("_Color", Color.red);
+                bodyRend.material.SetColor("_Color", Color.red); //.material.SetColor("_Color", Color.red);
             }
             else
             {
-                bodyRend.material.SetColor("_Specular", Color.cyan);
+                bodyRend.material.SetColor("_Color", Color.cyan);
                 if (newTime > 0.7f)
                 {
                     isHit = false;
