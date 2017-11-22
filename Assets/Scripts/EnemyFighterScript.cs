@@ -8,6 +8,9 @@ public class EnemyFighterScript : MonoBehaviour {
     public Collider[] attacks; //set array size in editor, can hold many attacks colliders.
     private float knockback = 2.5f; //feel free to change value
 
+    private float _attackBonusFactor = 0;
+    private float _attackBonusEnd = -1;
+
     public EnemyController enemyController;
 
 	// Use this for initialization
@@ -17,12 +20,25 @@ public class EnemyFighterScript : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-		if (enemyController.attacking) {
+	void Update ()
+    {
+        // bonus end
+        if (_attackBonusFactor != 0 && _attackBonusEnd != -1 && _attackBonusEnd < Time.realtimeSinceStartup)
+            _attackBonusFactor = 0;
+
+        if (enemyController.attacking) {
             damage = 10;
             attack(attacks[0]);
         }
-	}
+    }
+
+    public void SetAttackBuff(object[] arguments)
+    {
+        float zeroBasedFactor = (float)arguments[0];
+        float buffEndTime = (float)arguments[1];
+        _attackBonusFactor = zeroBasedFactor;
+        _attackBonusEnd = buffEndTime;
+    }
 
     //attack method. Checks for any colliders on the "Hitbox" layer that overlap the selected attacks collider, and sends method calls.
     void attack(Collider col) {

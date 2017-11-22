@@ -9,16 +9,30 @@ public class DamageHandler : MonoBehaviour {
     private Rigidbody2D body;
     private Rigidbody2D oppponent;
     private int health = 100;
-	// Use this for initialization
-	void Start () {
+
+    private float _resistanceFactor = 0;
+    private float _resistanceEnd = -1;
+
+    // Use this for initialization
+    void Start () {
         body = gameObject.GetComponent<Rigidbody2D>();
         oppponent = Opponent.GetComponent<Rigidbody2D>();
     }
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+        // resistance bonus end
+        if (_resistanceFactor != 0 && _resistanceEnd != -1 && _resistanceEnd < Time.realtimeSinceStartup)
+            _resistanceFactor = 0;
+    }
+
+    public void SetResistanceBuff(object[] arguments)
+    {
+        float zeroBasedFactor = (float)arguments[0];
+        float buffEndTime = (float)arguments[1];
+        _resistanceFactor = zeroBasedFactor;
+        _resistanceEnd = buffEndTime;
+    }
 
     //public access for the health variable
     public int getHealth() { return health; }
@@ -32,7 +46,7 @@ public class DamageHandler : MonoBehaviour {
 
     //Health updater from an attack.
     public void TakeDamage(int damage) {
-        health -= damage;
+        health -= Mathf.FloorToInt((float)damage * (1 - _resistanceFactor));
         if (health < 0) {
             health = 0;
             TimerScript.timerIsActive = false;

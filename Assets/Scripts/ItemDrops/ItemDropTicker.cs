@@ -17,7 +17,7 @@ public class ItemDropTicker : MonoBehaviour
     private System.Random _rand = new System.Random();
 
     // private static readonly string[] ITEM_TYPES = { "Speed", "Damage", "Jump", "Regeneration", "Resistance" };
-    private static readonly string[] ITEM_TYPES = { "Jump", "Regeneration" };
+    private static readonly string[] ITEM_TYPES = { "Jump", "Regeneration", "Resistance" };
 
     void Start ()
     {

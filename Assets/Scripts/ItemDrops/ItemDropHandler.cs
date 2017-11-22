@@ -18,9 +18,15 @@ public class ItemDropHandler : MonoBehaviour
 
     public const int REGENERATION_AMOUNT = 20;
     public const float JUMP_BONUS_FACTOR = 0.3f;
-    public const int JUMP_BONUS_LAST_SECONDS = 10;
+    public const int JUMP_BONUS_LAST_SECONDS = 5;
+    public const float RESISTANCE_FACTOR = 0.5f;
+    public const int RESISTANCE_LAST_SECONDS = 5;
+    public const float SPEED_BUFF_FACTOR = 0.5f;
+    public const int SPEED_BUFF_LAST_SECONDS = 10;
+    public const float ATTACK_BUFF_FACTOR = 0.3f;
+    public const int ATTACK_BUFF_LAST_SECONDS = 5;
 
-	void Start ()
+    void Start ()
     {
         _player = GameObject.Find("Player");
         _enemy = GameObject.Find("Enemy");
@@ -60,38 +66,27 @@ public class ItemDropHandler : MonoBehaviour
                     o.SendMessage("RestoreHealth", REGENERATION_AMOUNT);
                 };
                 break;
-            /*
+            case "Resistance":
+                _onCollisionCallback = o =>
+                {
+                    Debug.Log(o.name + " gets the " + _type + " buff!");
+                    o.SendMessage("SetResistanceBuff", new object[] { RESISTANCE_FACTOR, Time.realtimeSinceStartup + RESISTANCE_LAST_SECONDS });
+                };
+                break;
             case "Speed":
                 _onCollisionCallback = o =>
                 {
                     Debug.Log(o.name + " gets the " + _type + " buff!");
+                    o.SendMessage("SetSpeedBuff", new object[] { SPEED_BUFF_FACTOR, Time.realtimeSinceStartup + SPEED_BUFF_LAST_SECONDS });
                 };
                 break;
             case "Damage":
                 _onCollisionCallback = o =>
                 {
                     Debug.Log(o.name + " gets the " + _type + " buff!");
+                    o.SendMessage("SetAttackBuff", new object[] { ATTACK_BUFF_FACTOR, Time.realtimeSinceStartup + ATTACK_BUFF_LAST_SECONDS });
                 };
                 break;
-            case "Jump":
-                _onCollisionCallback = o =>
-                {
-                    Debug.Log(o.name + " gets the " + _type + " buff!");
-                };
-                break;
-            case "Regeneration":
-                _onCollisionCallback = o =>
-                {
-                    Debug.Log(o.name + " gets the " + _type + " buff!");
-                };
-                break;
-            case "Resistance":
-                _onCollisionCallback = o =>
-                {
-                    Debug.Log(o.name + " gets the " + _type + " buff!");
-                };
-                break;
-                */
             default:
                 break;
         }

@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour {
 
     private float _jumpBonusFactor = 0;
     private float _jumpBonusEnd = -1;
+    private float _speedBonusFactor = 0;
+    private float _speedBonusEnd = -1;
 
     // Use this for initialization
     void Start ()
@@ -46,9 +48,11 @@ public class PlayerController : MonoBehaviour {
         /*else
             animator.SetBool("Attack", false);*/
 
-        // jump bonus end
+        // bonus end
         if (_jumpBonusFactor != 0 && _jumpBonusEnd != -1 && _jumpBonusEnd < Time.realtimeSinceStartup)
             _jumpBonusFactor = 0;
+        if (_speedBonusFactor != 0 && _speedBonusEnd != -1 && _speedBonusEnd < Time.realtimeSinceStartup)
+            _speedBonusFactor = 0;
     }
 
     public void SetJumpBuff(object[] arguments)
@@ -57,6 +61,14 @@ public class PlayerController : MonoBehaviour {
         float buffEndTime = (float)arguments[1];
         _jumpBonusFactor = zeroBasedFactor;
         _jumpBonusEnd = buffEndTime;
+    }
+
+    public void SetSpeedBuff(object[] arguments)
+    {
+        float zeroBasedFactor = (float)arguments[0];
+        float buffEndTime = (float)arguments[1];
+        _speedBonusFactor = zeroBasedFactor;
+        _speedBonusEnd = buffEndTime;
     }
 
     // Update is called once per frame
@@ -73,7 +85,7 @@ public class PlayerController : MonoBehaviour {
 
     private void HandleMovement(float horizontal)
     {
-        rb.velocity = new Vector2(horizontal * movementSpeed, rb.velocity.y);
+        rb.velocity = new Vector2(horizontal * movementSpeed * (1 + _speedBonusFactor), rb.velocity.y);
         if(horizontal > 0)
         {
             Player.transform.rotation=Quaternion.Euler(0, 125, 0);
