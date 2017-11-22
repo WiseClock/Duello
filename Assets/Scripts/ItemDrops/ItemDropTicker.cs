@@ -41,7 +41,7 @@ public class ItemDropTicker : MonoBehaviour
             handler.SetOnLandedCallback(OnItemLanded);
             handler.SetType(ITEM_TYPES[_rand.Next(ITEM_TYPES.Length)]);
             handler.SetOnDestroyCallback(OnItemDropDestroyCallback);
-            Debug.Log("dropping item");
+            // Debug.Log("dropping item");
 	    }
 	}
 

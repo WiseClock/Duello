@@ -55,7 +55,7 @@ public class ItemDropHandler : MonoBehaviour
             case "Jump":
                 _onCollisionCallback = o =>
                 {
-                    Debug.Log(o.name + " gets the " + _type + " buff!");
+                    // Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetJumpBuff", new object[] { JUMP_BONUS_FACTOR, Time.realtimeSinceStartup + JUMP_BONUS_LAST_SECONDS });
                     AddEffect(o, JUMP_BONUS_LAST_SECONDS, new Color(0, 0, 255, 0.4f));
                 };
@@ -63,14 +63,14 @@ public class ItemDropHandler : MonoBehaviour
             case "Regeneration":
                 _onCollisionCallback = o =>
                 {
-                    Debug.Log(o.name + " gets the " + _type + " buff!");
+                    // Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("RestoreHealth", REGENERATION_AMOUNT);
                 };
                 break;
             case "Resistance":
                 _onCollisionCallback = o =>
                 {
-                    Debug.Log(o.name + " gets the " + _type + " buff!");
+                    // Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetResistanceBuff", new object[] { RESISTANCE_FACTOR, Time.realtimeSinceStartup + RESISTANCE_LAST_SECONDS });
                     AddEffect(o, RESISTANCE_LAST_SECONDS, new Color(255, 255, 0, 0.4f));
                 };
@@ -78,7 +78,7 @@ public class ItemDropHandler : MonoBehaviour
             case "Speed":
                 _onCollisionCallback = o =>
                 {
-                    Debug.Log(o.name + " gets the " + _type + " buff!");
+                    // Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetSpeedBuff", new object[] { SPEED_BUFF_FACTOR, Time.realtimeSinceStartup + SPEED_BUFF_LAST_SECONDS });
                     AddEffect(o, SPEED_BUFF_LAST_SECONDS, new Color(0, 255, 0, 0.4f));
                 };
@@ -86,7 +86,7 @@ public class ItemDropHandler : MonoBehaviour
             case "Damage":
                 _onCollisionCallback = o =>
                 {
-                    Debug.Log(o.name + " gets the " + _type + " buff!");
+                    // Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetAttackBuff", new object[] { ATTACK_BUFF_FACTOR, Time.realtimeSinceStartup + ATTACK_BUFF_LAST_SECONDS });
                     AddEffect(o, ATTACK_BUFF_LAST_SECONDS, new Color(255, 0, 0, 0.4f));
                 };
@@ -99,14 +99,14 @@ public class ItemDropHandler : MonoBehaviour
     private void AddEffect(GameObject owner, float duration, Color color)
     {
         GameObject effectParticle = (GameObject)Instantiate(Resources.Load("Prefabs/ItemDrops/EffectParticle"));
-        var ps = effectParticle.GetComponent<ParticleSystem>().emission;
-        ps.enabled = false;
+        ParticleSystem ps = effectParticle.GetComponent<ParticleSystem>();
+        ps.Stop();
         effectParticle.AddComponent<EffectTicker>();
         effectParticle.SendMessage("SetOwner", owner);
-        ParticleSystem.MainModule settings = effectParticle.GetComponent<ParticleSystem>().main;
+        ParticleSystem.MainModule settings = ps.main;
         settings.startColor = color;
         settings.duration = duration;
-        ps.enabled = true;
+        ps.Play();
     }
 
     public void SetOnDestroyCallback(Action<bool> action)
