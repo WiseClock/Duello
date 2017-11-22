@@ -38,26 +38,19 @@ public class DamageHandler : MonoBehaviour {
         // resistance bonus end
         if (_resistanceFactor != 0 && _resistanceEnd != -1 && _resistanceEnd < Time.realtimeSinceStartup)
             _resistanceFactor = 0;
-    }
-
-    public void SetResistanceBuff(object[] arguments)
-    {
-        float zeroBasedFactor = (float)arguments[0];
-        float buffEndTime = (float)arguments[1];
-        _resistanceFactor = zeroBasedFactor;
-        _resistanceEnd = buffEndTime;
 
         if (isHit == true)
         {
-            Debug.Log(" 111");
+            // Debug.Log(" 111");
             damageHitTime = Time.time;
             isHit = false;
             Hitted = true;
         }
-        if (Hitted == true) { 
+        if (Hitted == true)
+        {
             newTime = Time.time - damageHitTime;
-            Debug.Log("Time:" + damageHitTime);
-            Debug.Log("newTime:" + newTime);
+            // Debug.Log("Time:" + damageHitTime);
+            // Debug.Log("newTime:" + newTime);
             /*if (newTime < 0.1f || (newTime > 0.3f && newTime < 0.5f))
             {
                 bodyRend.material.SetColor("_Specular", Color.red); //.material.SetColor("_Color", Color.red);
@@ -72,6 +65,14 @@ public class DamageHandler : MonoBehaviour {
                 }
             }*/
         }
+    }
+
+    public void SetResistanceBuff(object[] arguments)
+    {
+        float zeroBasedFactor = (float)arguments[0];
+        float buffEndTime = (float)arguments[1];
+        _resistanceFactor = zeroBasedFactor;
+        _resistanceEnd = buffEndTime;
     }
 
     //public access for the health variable

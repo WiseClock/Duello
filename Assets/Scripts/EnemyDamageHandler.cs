@@ -14,6 +14,9 @@ public class EnemyDamageHandler : MonoBehaviour {
     private AudioSource _audioSource;
     public AudioClip damageSound;
 
+    private float _resistanceFactor = 0;
+    private float _resistanceEnd = -1;
+
 
     private bool isHit = false, Hitted=false;
     public Renderer bodyRend;
@@ -32,7 +35,11 @@ public class EnemyDamageHandler : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update ()
+    {
+        // resistance bonus end
+        if (_resistanceFactor != 0 && _resistanceEnd != -1 && _resistanceEnd < Time.realtimeSinceStartup)
+            _resistanceFactor = 0;
 
         if (isHit == true)
         {
@@ -42,8 +49,8 @@ public class EnemyDamageHandler : MonoBehaviour {
         }
         if (Hitted == true) { 
             newTime = Time.time - damageHitTime;
-            Debug.Log("Time:" + damageHitTime);
-            Debug.Log("newTime:" + newTime);
+            // Debug.Log("Time:" + damageHitTime);
+            // Debug.Log("newTime:" + newTime);
            /* if (newTime < 0.1f || (newTime > 0.3f && newTime < 0.5f))
             {
                 bodyRend.material.SetColor("_Color", Color.red); //.material.SetColor("_Color", Color.red);
@@ -69,6 +76,14 @@ public class EnemyDamageHandler : MonoBehaviour {
         int healthAfter = health + amount;
         if (healthAfter > 100) healthAfter = 100;
         health = healthAfter;
+    }
+
+    public void SetResistanceBuff(object[] arguments)
+    {
+        float zeroBasedFactor = (float)arguments[0];
+        float buffEndTime = (float)arguments[1];
+        _resistanceFactor = zeroBasedFactor;
+        _resistanceEnd = buffEndTime;
     }
 
     //Health updater from an attack.

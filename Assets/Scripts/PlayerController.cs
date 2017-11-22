@@ -176,12 +176,12 @@ public class PlayerController : MonoBehaviour {
             attackColdDown = Time.time;
             animator.SetTrigger("Attack");
             attackFreeze = true;
-            Debug.Log("attack on");
+            // Debug.Log("attack on");
         }
         if (Time.time - attackColdDown >= 0.6f && attackFreeze==true)
         {
             attackFreeze = false;
-            Debug.Log("attack freeze");
+            // Debug.Log("attack freeze");
         }
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Standing Melee Attack Horizontal"))
         {

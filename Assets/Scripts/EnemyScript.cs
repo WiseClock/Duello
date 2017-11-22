@@ -48,6 +48,11 @@ public class EnemyScript : MonoBehaviour {
     public LayerMask groundLayerMask;
     private bool grounded;
 
+    private float _jumpBonusFactor = 0;
+    private float _jumpBonusEnd = -1;
+    private float _speedBonusFactor = 0;
+    private float _speedBonusEnd = -1;
+
     // Use this for initialization
     IEnumerator Start () {
         anim = GetComponent<Animator>();
@@ -124,6 +129,12 @@ public class EnemyScript : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
+        // bonus end
+        if (_jumpBonusFactor != 0 && _jumpBonusEnd != -1 && _jumpBonusEnd < Time.realtimeSinceStartup)
+            _jumpBonusFactor = 0;
+        if (_speedBonusFactor != 0 && _speedBonusEnd != -1 && _speedBonusEnd < Time.realtimeSinceStartup)
+            _speedBonusFactor = 0;
+
         // check if we are on a platform
         grounded = IsGrounded();
 
@@ -184,6 +195,23 @@ public class EnemyScript : MonoBehaviour {
             }
 
         }
+    }
+
+    public void SetSpeedBuff(object[] arguments)
+    {
+        float zeroBasedFactor = (float)arguments[0];
+        float buffEndTime = (float)arguments[1];
+        _speedBonusFactor = zeroBasedFactor;
+        _speedBonusEnd = buffEndTime;
+
+    }
+
+    public void SetJumpBuff(object[] arguments)
+    {
+        float zeroBasedFactor = (float)arguments[0];
+        float buffEndTime = (float)arguments[1];
+        _jumpBonusFactor = zeroBasedFactor;
+        _jumpBonusEnd = buffEndTime;
     }
 
     Quaternion GetDirectionAngle()

@@ -74,7 +74,7 @@ public class FighterScript : MonoBehaviour {
                 continue;
             }
             c.SendMessageUpwards("TakeDamage", damage);
-            Debug.Log("TakeDamage");
+            // Debug.Log("TakeDamage");
             damagedFlag = true;
             c.SendMessageUpwards("TakeKnockback", knockback);
         }
