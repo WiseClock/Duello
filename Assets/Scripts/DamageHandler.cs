@@ -91,7 +91,6 @@ public class DamageHandler : MonoBehaviour {
         health -= Mathf.FloorToInt((float)damage * (1 - _resistanceFactor));
         _audioSource.PlayOneShot(damageSound);
 
-        health -= damage;
         isHit = true;
 
         if (health < 0) {
