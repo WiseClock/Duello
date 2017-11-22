@@ -34,7 +34,7 @@ public class UIScript : MonoBehaviour
         _btnNextLevel = GameObject.Find("ButtonContinue");
         _selectionIndicator = GameObject.Find("ScoreButtonIndicator");
         _enemy = GameObject.Find("Enemy");
-        
+
 
         switch (_currentSelection)
         {

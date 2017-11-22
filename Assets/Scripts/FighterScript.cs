@@ -15,8 +15,12 @@ public class FighterScript : MonoBehaviour {
 
     private PlayerController pc;
 
-	// Use this for initialization
-	void Start () {
+    //private float knockback = 2.5f; //feel free to change value
+    private bool damagedFlag, pressFlag;
+    private float inAction;
+
+    // Use this for initialization
+    void Start () {
         _audioSource = GetComponent<AudioSource>();
         pc = GetComponent<PlayerController>();
     }
@@ -28,12 +32,31 @@ public class FighterScript : MonoBehaviour {
         if (_attackBonusFactor != 0 && _attackBonusEnd != -1 && _attackBonusEnd < Time.realtimeSinceStartup)
             _attackBonusFactor = 0;
 
-        if (Input.GetButtonDown("Fire1") && !pc.isHit) {
+        if (Input.GetButtonDown("Fire1") && !pc.isHit)
+        {
             damage = Mathf.RoundToInt(10 * (1 + _attackBonusFactor));
-             _audioSource.PlayOneShot(attack1);
+            _audioSource.PlayOneShot(attack1);
             attack(attacks[0]);
         }
-	}
+        if (Input.GetButtonDown("Fire1")&&pressFlag==true)
+        {
+            inAction = Time.time;
+            damagedFlag = false;
+            pressFlag=false;
+
+        }
+        if (Time.time - inAction > 0.2f && Time.time - inAction < 0.65f)
+        {
+            if (damagedFlag == false)
+            {
+                damage = 10;
+                attack(attacks[0]);
+            }
+        }else if(Time.time - inAction > 0.8f)
+        {
+            pressFlag = true;
+        }
+    }
 
     public void SetAttackBuff(object[] arguments)
     {
@@ -51,6 +74,8 @@ public class FighterScript : MonoBehaviour {
                 continue;
             }
             c.SendMessageUpwards("TakeDamage", damage);
+            Debug.Log("TakeDamage");
+            damagedFlag = true;
             c.SendMessageUpwards("TakeKnockback", knockback);
         }
     }

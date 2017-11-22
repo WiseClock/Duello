@@ -13,10 +13,11 @@ public class TimerScript : MonoBehaviour {
     public Text enemyHealthText;
     public static bool timerIsActive = true;
     private DamageHandler player;
+   // private EnemyScript enemy;
     private EnemyDamageHandler enemy;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         timer = 90;
         player = Player.GetComponent<DamageHandler>();
         enemy = Enemy.GetComponent<EnemyDamageHandler>();

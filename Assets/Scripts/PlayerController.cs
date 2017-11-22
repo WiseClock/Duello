@@ -15,12 +15,16 @@ public class PlayerController : MonoBehaviour {
     private bool jumping;
     private float jumpTakeOffSpeed = 400.0f;
     private float horizontal=0;
+    private float attackColdDown;
+    private bool attackFreeze;
 
-    protected Animator animator;
+    private Animator animator;
     private GameObject Player;
 
     public GameObject playerAttacks;
     public GameObject playerColliders;
+    private float highter;
+    private bool isOnAir;
 
 
     public bool isHit = false;
@@ -44,6 +48,7 @@ public class PlayerController : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         Player = GameObject.Find("Player");
+        attackFreeze = false;
 	}
 
     void Update()
@@ -54,8 +59,24 @@ public class PlayerController : MonoBehaviour {
             HandleInput();
             if (rb.velocity.y > 0)
             {
+                //animator.SetBool("Jump", false);
+                //animator.SetTrigger("JumpDown");
+            }
+
+            if (grounded)
+            {
+                highter = Player.transform.position.y;
+                //Debug.Log("High get");
+            }
+            else if (grounded == false && Player.transform.position.y - highter > 0.4f)
+            {
+                isOnAir = true;
+            }
+            if (Player.transform.position.y - highter < 0.3f && isOnAir == true)
+            {
                 animator.SetBool("Jump", false);
-                animator.SetTrigger("JumpDown");
+                //Debug.Log("Hittt");
+                isOnAir = false;
             }
         }
 
@@ -119,16 +140,16 @@ public class PlayerController : MonoBehaviour {
         // check direction and rotate player & weapon hitboxes accordingly
         if (horizontal > 0)
         {
-            Player.transform.rotation=Quaternion.Euler(0, 125, 0);
+            Player.transform.rotation=Quaternion.Euler(0, 120, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0, 125, 0);
-            playerAttacks.transform.rotation = Quaternion.Euler(0, 125, 0);
+            //playerAttacks.transform.rotation = Quaternion.Euler(0, 125, 0);
 
         }
         else if(horizontal < 0)
         {
             Player.transform.rotation = Quaternion.Euler(0, 235, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0,-55, 0);
-            playerAttacks.transform.rotation = Quaternion.Euler(0, -55, 0);
+            //playerAttacks.transform.rotation = Quaternion.Euler(0, -55, 0);
         }
 
         // if player is on ground and has pressed the jump button add vertical force
@@ -142,7 +163,6 @@ public class PlayerController : MonoBehaviour {
             if (rb.velocity.y > 0)
             {
                 animator.SetBool("Jump", false);
-                animator.SetTrigger("JumpDown");
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);  // divide vertical velocity in half making character fall
             }
         }
@@ -151,9 +171,20 @@ public class PlayerController : MonoBehaviour {
     private void HandleInput()
     {
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && attackFreeze==false)
         {
+            attackColdDown = Time.time;
             animator.SetTrigger("Attack");
+            attackFreeze = true;
+            Debug.Log("attack on");
+        }
+        if (Time.time - attackColdDown >= 0.6f && attackFreeze==true)
+        {
+            attackFreeze = false;
+            Debug.Log("attack freeze");
+        }
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Standing Melee Attack Horizontal"))
+        {
         }
     
         if (Input.GetButtonDown("Jump"))
@@ -161,11 +192,13 @@ public class PlayerController : MonoBehaviour {
             animator.SetBool("Jump", true);
             jumping = true;
         }
-        if (Input.GetButtonDown("Fire2"))
+        /*if (Input.GetButtonDown("Fire2"))
         {
             animator.SetBool("Jump", true);
+=
         }
 
+        */
         // if player presses down on keyboard/joystick, check if on a "fallthrough" platform and disable collision
         if (Input.GetAxis("Vertical") < 0 && currentLayer == platformLayer)
         {
@@ -192,6 +225,7 @@ public class PlayerController : MonoBehaviour {
                     if (colliders[i].gameObject != gameObject)
                     {
                         currentLayer = colliders[i].gameObject.layer;
+
                         return true;
                     }
                 }
@@ -210,7 +244,6 @@ public class PlayerController : MonoBehaviour {
     // when isHit is true the players controls are frozen
     public IEnumerator GetHit(Vector2 knockback)
     {
-        animator.SetTrigger("Hit");
         isHit = true;
         rb.AddForce(knockback, ForceMode2D.Impulse);
         yield return new WaitForSeconds(1f);
