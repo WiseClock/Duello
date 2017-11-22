@@ -26,7 +26,7 @@ public class ScoreManager : MonoBehaviour {
     void Update()
     {
         // Set the display text when the game ends
-        if (totalScore > 0)
+        if (healthScore != 0 && timerScore != 0)
         {
             scoreText.text = string.Format("{0,-20}{1,5}\n{2,-20}{3,7}\n\n{4,-20}{5,7}"
                                         , "HEALTH REMAINING:"
@@ -35,9 +35,16 @@ public class ScoreManager : MonoBehaviour {
                                         , timerScore
                                         , "TOTAL SCORE:"
                                         , totalScore);
-        } else
+        }
+
+        if (healthScore == 0)
         {
-            scoreText.text = "YOU LOSE!!\n\nGAME OVER";
+            scoreText.text = "YOU DIED!!\n\nGAME OVER";
+        }
+
+        if (timerScore == 0)
+        {
+            scoreText.text = "YOU RAN OUT OF TIME!!\n\nGAME OVER";
         }
 
         // Display the current high score

@@ -35,7 +35,7 @@ public class TimerScript : MonoBehaviour {
         //Health text updates;
         updateHealthDisplays();
         // What happens when the timer is stopped
-        if(!timerIsActive)
+        if(!timerIsActive || timer == 0)
         {
             StopCoroutine("LoseTime");
             
@@ -46,10 +46,15 @@ public class TimerScript : MonoBehaviour {
                 ScoreManager.healthScore = player.getHealth() * 200;
             }
 
-            if(timer <= 0 || player.getHealth() <= 0)
+            if (timer <= 0 )
             {
                 // Losing End Game Logic Here
                 ScoreManager.timerScore = 0;
+            }
+
+            if (player.getHealth() <= 0)
+            {
+                // Losing End Game Logic Here
                 ScoreManager.healthScore = 0;
             }
 
