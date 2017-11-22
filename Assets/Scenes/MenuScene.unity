@@ -1724,10 +1724,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MenuItemScenes:
-  - LevelThree
-  - MainScene
+  - LevelZero
+  - LevelZero
   - HighScoreScene
-  - MainScene
+  - HighScoreScene
   CursorTexture: {fileID: 2800000, guid: 3db1dcce04b7139428fa6d85dc60dae8, type: 3}
   MenuSelection: {fileID: 8300000, guid: 280aaba9a8149b94189fb71fce259660, type: 3}
   SceneChanging: {fileID: 8300000, guid: 4207094a9a4cf1f498d0df6d2b7637a1, type: 3}

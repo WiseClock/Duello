@@ -45,7 +45,7 @@ public class EnemyDamageHandler : MonoBehaviour {
         //Debug.Log("Opponent position: " + oppponent.position);
         Vector2 direction = oppponent.position - body.position;
         direction.Normalize();
-        ForceMode2D mode = ForceMode2D.Impulse;
+        //ForceMode2D mode = ForceMode2D.Impulse;
         //body.AddForce(direction * -knockback, mode);
         //body.MovePosition((body.position + (direction * -knockback)) * Time.deltaTime);
         es.StartCoroutine(es.GetHit(direction * -knockback));

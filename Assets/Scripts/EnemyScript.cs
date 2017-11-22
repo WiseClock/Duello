@@ -115,7 +115,8 @@ public class EnemyScript : MonoBehaviour {
                 if (method == OffMeshLinkMoveMethod.LevelTwoDownJump)
                     yield return StartCoroutine(Parabola(agent, 1.5f, 1.0f));
 
-                agent.CompleteOffMeshLink();
+                if(agent.enabled)
+                    agent.CompleteOffMeshLink();
             }
             yield return null;
         }
@@ -147,7 +148,7 @@ public class EnemyScript : MonoBehaviour {
 
         attacking = false; // set this to false to avoid multiple attacks in a short period of time
 
-        // if within striking ditance of player attack
+        // if within striking distance of player, attack
         if (Vector3.Distance(agent.destination, agent.transform.position) <= stoppingDistance + 0.1f && !isHit)
         {
             //wait until it has been long enough since the last attack
