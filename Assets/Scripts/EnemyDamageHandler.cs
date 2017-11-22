@@ -10,12 +10,15 @@ public class EnemyDamageHandler : MonoBehaviour {
     private Rigidbody2D oppponent;
     private int health = 100;
     private EnemyScript es;
+    private AudioSource _audioSource;
+    public AudioClip damageSound;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         body = gameObject.GetComponent<Rigidbody2D>();
         oppponent = Opponent.GetComponent<Rigidbody2D>();
         es = GetComponent<EnemyScript>();
+        _audioSource = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -29,6 +32,7 @@ public class EnemyDamageHandler : MonoBehaviour {
     //Health updater from an attack.
     public void TakeDamage(int damage) {
         health -= damage;
+        _audioSource.PlayOneShot(damageSound);
         if (health < 0) {
             health = 0;
             TimerScript.timerIsActive = false;
