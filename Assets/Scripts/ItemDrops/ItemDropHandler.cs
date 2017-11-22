@@ -34,6 +34,8 @@ public class ItemDropHandler : MonoBehaviour
         
         gameObject.layer = 31;
         Physics2D.IgnoreLayerCollision(gameObject.layer, gameObject.layer);
+
+        Invoke("DestroyNoCollision", 5f);
     }
 
     void Update ()
@@ -130,6 +132,7 @@ public class ItemDropHandler : MonoBehaviour
         if (targetObject != _player && targetObject != _enemy && targetObject != _blastZone)
         {
             // should be landed on ground
+            CancelInvoke("DestroyNoCollision");
             _onLanded();
             return;
         }
@@ -138,6 +141,15 @@ public class ItemDropHandler : MonoBehaviour
         _onDestroyCallback(targetObject == _blastZone);
 
         if (targetObject == _player || targetObject == _enemy)
+        {
+            CancelInvoke("DestroyNoCollision");
             _onCollisionCallback(collision.gameObject);
+        }
+    }
+
+    private void DestroyNoCollision()
+    {
+        Destroy(gameObject);
+        _onDestroyCallback(true);
     }
 }
