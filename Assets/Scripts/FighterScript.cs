@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FighterScript : MonoBehaviour {
-
+    public AudioClip attack1;
+    private AudioSource _audioSource;
     private int damage = 0;
     public Collider[] attacks; //set array size in editor, can hold many attacks colliders.
     private float knockback = 1.5f; //feel free to change value
 
 	// Use this for initialization
-	void Start () { }
+	void Start () {
+        _audioSource = GetComponent<AudioSource>();
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetButtonDown("Fire1")) {
             damage = 10;
+            _audioSource.PlayOneShot(attack1);
             attack(attacks[0]);
         }
 	}

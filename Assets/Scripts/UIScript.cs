@@ -10,6 +10,7 @@ public class UIScript : MonoBehaviour
     private GameObject _blurMask;
     private GameObject _btnRestart;
     private GameObject _btnMainMenu;
+    private GameObject _btnNextLevel;
     private GameObject _selectionIndicator;
     private GameObject _enemy;
 
@@ -22,21 +23,28 @@ public class UIScript : MonoBehaviour
 
     private AsyncOperation _sceneOperation;
 
+    public string nextLevel;
+
     void Start ()
 	{
         _scorePanel = GameObject.Find("ScorePanel");
         _blurMask = GameObject.Find("BlurMask");
         _btnRestart = GameObject.Find("ButtonRestart");
         _btnMainMenu = GameObject.Find("ButtonMainMenu");
+        _btnNextLevel = GameObject.Find("ButtonContinue");
         _selectionIndicator = GameObject.Find("ScoreButtonIndicator");
         _enemy = GameObject.Find("Enemy");
+        
 
         switch (_currentSelection)
         {
             case 0:
-                _selectionIndicator.transform.position = _btnRestart.transform.position + new Vector3(0, 5, 0);
+                _selectionIndicator.transform.position = _btnNextLevel.transform.position + new Vector3(0, 5, 0);
                 break;
             case 1:
+                _selectionIndicator.transform.position = _btnRestart.transform.position + new Vector3(0, 5, 0);
+                break;
+            case 2:
                 _selectionIndicator.transform.position = _btnMainMenu.transform.position + new Vector3(0, 5, 0);
                 break;
         }
@@ -72,14 +80,17 @@ public class UIScript : MonoBehaviour
         {
             if (moveVertical > 0)
             {
-                _currentSelection = (_currentSelection + 2 - 1) % 2;
+                _currentSelection = (_currentSelection + 3 - 1) % 3;
 
                 switch (_currentSelection)
                 {
                     case 0:
-                        _selectionIndicator.transform.position = _btnRestart.transform.position + new Vector3(0, 5, 0);
+                        _selectionIndicator.transform.position = _btnNextLevel.transform.position + new Vector3(0, 5, 0);
                         break;
                     case 1:
+                        _selectionIndicator.transform.position = _btnRestart.transform.position + new Vector3(0, 5, 0);
+                        break;
+                    case 2:
                         _selectionIndicator.transform.position = _btnMainMenu.transform.position + new Vector3(0, 5, 0);
                         break;
                 }
@@ -89,14 +100,17 @@ public class UIScript : MonoBehaviour
             }
             else if (moveVertical < 0)
             {
-                _currentSelection = (_currentSelection + 2 + 1) % 2;
+                _currentSelection = (_currentSelection + 3 + 1) % 3;
 
                 switch (_currentSelection)
                 {
                     case 0:
-                        _selectionIndicator.transform.position = _btnRestart.transform.position + new Vector3(0, 5, 0);
+                        _selectionIndicator.transform.position = _btnNextLevel.transform.position + new Vector3(0, 5, 0);
                         break;
                     case 1:
+                        _selectionIndicator.transform.position = _btnRestart.transform.position + new Vector3(0, 5, 0);
+                        break;
+                    case 2:
                         _selectionIndicator.transform.position = _btnMainMenu.transform.position + new Vector3(0, 5, 0);
                         break;
                 }
@@ -112,12 +126,16 @@ public class UIScript : MonoBehaviour
 
 	    if (!_changingScene && Input.GetButtonDown("Submit"))
 	    {
+            Debug.Log(nextLevel);
             switch (_currentSelection)
 	        {
                 case 0:
-                    _sceneOperation = SceneManager.LoadSceneAsync("MainScene", LoadSceneMode.Single);
+                    _sceneOperation = SceneManager.LoadSceneAsync(nextLevel, LoadSceneMode.Single);
                     break;
                 case 1:
+                    _sceneOperation = SceneManager.LoadSceneAsync("LevelZero", LoadSceneMode.Single);
+                    break;
+                case 2:
                     _sceneOperation = SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Single);
                     break;
 	        }
