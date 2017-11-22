@@ -42,6 +42,7 @@ public class DamageHandler : MonoBehaviour {
         Vector2 direction = oppponent.position - body.position;
         direction.Normalize();
         ForceMode2D mode = ForceMode2D.Impulse;
+       
         pc.StartCoroutine(pc.GetHit(direction * -knockback));
         //body.AddForce(direction * -knockback, mode);
         //body.AddForce(test, mode);

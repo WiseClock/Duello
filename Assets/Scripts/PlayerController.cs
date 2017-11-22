@@ -179,6 +179,7 @@ public class PlayerController : MonoBehaviour {
     // when isHit is true the players controls are frozen
     public IEnumerator GetHit(Vector2 knockback)
     {
+
         animator.SetTrigger("Hit");
         isHit = true;
         rb.AddForce(knockback, ForceMode2D.Impulse);
