@@ -49,7 +49,7 @@ public class ItemDropHandler : MonoBehaviour
         _type = materialName;
         Material newMat = Resources.Load<Material>("Materials/ItemDrops/" + materialName);
         GetComponent<Renderer>().material = newMat;
-
+        
         switch (materialName)
         {
             case "Jump":
@@ -57,6 +57,7 @@ public class ItemDropHandler : MonoBehaviour
                 {
                     Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetJumpBuff", new object[] { JUMP_BONUS_FACTOR, Time.realtimeSinceStartup + JUMP_BONUS_LAST_SECONDS });
+                    AddEffect(o, JUMP_BONUS_LAST_SECONDS, new Color(0, 0, 255, 0.4f));
                 };
                 break;
             case "Regeneration":
@@ -71,6 +72,7 @@ public class ItemDropHandler : MonoBehaviour
                 {
                     Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetResistanceBuff", new object[] { RESISTANCE_FACTOR, Time.realtimeSinceStartup + RESISTANCE_LAST_SECONDS });
+                    AddEffect(o, RESISTANCE_LAST_SECONDS, new Color(255, 255, 0, 0.4f));
                 };
                 break;
             case "Speed":
@@ -78,6 +80,7 @@ public class ItemDropHandler : MonoBehaviour
                 {
                     Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetSpeedBuff", new object[] { SPEED_BUFF_FACTOR, Time.realtimeSinceStartup + SPEED_BUFF_LAST_SECONDS });
+                    AddEffect(o, SPEED_BUFF_LAST_SECONDS, new Color(0, 255, 0, 0.4f));
                 };
                 break;
             case "Damage":
@@ -85,11 +88,22 @@ public class ItemDropHandler : MonoBehaviour
                 {
                     Debug.Log(o.name + " gets the " + _type + " buff!");
                     o.SendMessage("SetAttackBuff", new object[] { ATTACK_BUFF_FACTOR, Time.realtimeSinceStartup + ATTACK_BUFF_LAST_SECONDS });
+                    AddEffect(o, ATTACK_BUFF_LAST_SECONDS, new Color(255, 0, 0, 0.4f));
                 };
                 break;
             default:
                 break;
         }
+    }
+
+    private void AddEffect(GameObject owner, float duration, Color color)
+    {
+        GameObject effectParticle = (GameObject)Instantiate(Resources.Load("Prefabs/ItemDrops/EffectParticle"));
+        effectParticle.AddComponent<EffectTicker>();
+        effectParticle.SendMessage("SetOwner", owner);
+        ParticleSystem.MainModule settings = effectParticle.GetComponent<ParticleSystem>().main;
+        settings.startColor = color;
+        settings.duration = duration;
     }
 
     public void SetOnDestroyCallback(Action<bool> action)
@@ -113,10 +127,10 @@ public class ItemDropHandler : MonoBehaviour
             return;
         }
 
-        if (targetObject == _player || targetObject == _enemy)
-            _onCollisionCallback(collision.gameObject);
-
         Destroy(gameObject);
         _onDestroyCallback(targetObject == _blastZone);
+
+        if (targetObject == _player || targetObject == _enemy)
+            _onCollisionCallback(collision.gameObject);
     }
 }
