@@ -9,8 +9,8 @@ public class TimerScript : MonoBehaviour {
     public GameObject Enemy;
     public int timer;
     public Text timerText;
-    public Text playerHealthText;
-    public Text enemyHealthText;
+    // public Text playerHealthText;
+    // public Text enemyHealthText;
     public static bool timerIsActive = true;
     private DamageHandler player;
    // private EnemyScript enemy;
@@ -34,7 +34,7 @@ public class TimerScript : MonoBehaviour {
         timerText.text = timer.ToString();
 
         //Health text updates;
-        updateHealthDisplays();
+        // updateHealthDisplays();
         // What happens when the timer is stopped
         if(!timerIsActive || timer == 0)
         {
@@ -78,6 +78,7 @@ public class TimerScript : MonoBehaviour {
     }
 
     //sub method that sorts out the health display logic
+    /*
     void updateHealthDisplays() {
         //Player health
         playerHealthText.text = "Player Health: " + player.getHealth() + "%";
@@ -92,5 +93,5 @@ public class TimerScript : MonoBehaviour {
         {
             enemyHealthText.text = "Enemy Health: <color=red>" + enemy.getHealth() + "%</color>";
         }
-    }
+    }*/
 }
