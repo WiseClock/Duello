@@ -1693,11 +1693,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4682549913324742, guid: 897f0cf96b1be66419311111cf60eed9, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 69.32
+      value: -26.91
       objectReference: {fileID: 0}
     - target: {fileID: 4682549913324742, guid: 897f0cf96b1be66419311111cf60eed9, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -1.9
+      value: 0.08
       objectReference: {fileID: 0}
     - target: {fileID: 4682549913324742, guid: 897f0cf96b1be66419311111cf60eed9, type: 2}
       propertyPath: m_LocalPosition.z
@@ -5851,8 +5851,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2cce843b0c2816439ddf70cf9412872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RangeXMin: 0
-  RangeXMax: 15
+  RangeXMin: -36
+  RangeXMax: 106
   MaxAllowedItems: 3
   CheckIntervalSeconds: 3
   Possibility: 0.3
@@ -7818,7 +7818,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4538172509575896, guid: e72dc11d3d2b3cb4aa594fc6e8c31d30, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 59.12
+      value: -34.88
       objectReference: {fileID: 0}
     - target: {fileID: 4538172509575896, guid: e72dc11d3d2b3cb4aa594fc6e8c31d30, type: 2}
       propertyPath: m_LocalPosition.y
