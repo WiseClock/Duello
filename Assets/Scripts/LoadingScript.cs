@@ -1,21 +1,23 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LoadingScript : MonoBehaviour
 {
-    private string[] _captions = { "A", "B", "CCC" };
-    private string _nextSceneName = "";
+    private readonly List<AudioClip> _audioClips = new List<AudioClip>();
 
     private Image _cover;
     private float _progressBarWidth;
     private RectTransform _progressBar;
     private Text _captionText;
+    private AudioSource _audioSource;
 
     private State _currentState = State.FadeIn;
     private State _currentSubstate = State.FadeIn;
     private int _currentCaptionIndex = 0;
-    private int _captionCountUp = 0;
-    private float _progress = 0;
+
+    private AsyncOperation _sceneLoading = null;
 
     void Start ()
     {
@@ -23,9 +25,15 @@ public class LoadingScript : MonoBehaviour
         _progressBarWidth = ((RectTransform)GameObject.Find("ProgressBg").transform).rect.width;
         _progressBar = (RectTransform)GameObject.Find("ProgressBar").transform;
         _captionText = GameObject.Find("CaptionText").GetComponent<Text>();
+        _audioSource = GetComponent<AudioSource>();
 
         _cover.color = new Color(0, 0, 0, 1);
         _captionText.color = new Color(1, 1, 1, 0);
+
+        foreach (string audioFile in LoadingParameters.Speeches)
+        {
+            _audioClips.Add(Resources.Load<AudioClip>("Audios/Scenes/" + audioFile));
+        }
     }
 
     void Update()
@@ -33,10 +41,14 @@ public class LoadingScript : MonoBehaviour
         if (_currentState == State.FadeIn)
             return;
 
+        if (_sceneLoading == null)
+        {
+            _sceneLoading = SceneManager.LoadSceneAsync(LoadingParameters.NextSceneName);
+            _sceneLoading.allowSceneActivation = false;
+        }
+
         // update progress bar
-        if (_progress < 100)
-	        _progress += 0.1f;
-        float progressValue = _progressBarWidth * _progress / 100;
+        float progressValue = _progressBarWidth * _sceneLoading.progress / 0.9f;
         _progressBar.sizeDelta = new Vector2(progressValue, _progressBar.sizeDelta.y);
     }
 
@@ -60,8 +72,9 @@ public class LoadingScript : MonoBehaviour
 
 	        if (_currentSubstate == State.FadeIn && captionAlpha.Equals(0f))
 	        {
-	            _captionText.text = _captions[_currentCaptionIndex];
-	        }
+	            _captionText.text = LoadingParameters.Captions[_currentCaptionIndex];
+                _audioSource.PlayOneShot(_audioClips[_currentCaptionIndex]);
+            }
 
             if (_currentSubstate == State.FadeIn && captionAlpha < 1)
 	        {
@@ -72,12 +85,8 @@ public class LoadingScript : MonoBehaviour
 	        }
 	        else if (_currentSubstate == State.FadeIn && captionAlpha >= 1)
 	        {
-	            if (_captionCountUp < 200)
-	                _captionCountUp++;
-	            else
-	            {
-	                _currentSubstate = State.FadeOut;
-	            }
+                if (!_audioSource.isPlaying)
+                    _currentSubstate = State.FadeOut;
 	        }
             else if (_currentSubstate == State.FadeOut && captionAlpha > 0)
 	        {
@@ -90,8 +99,7 @@ public class LoadingScript : MonoBehaviour
             {
                 _currentSubstate = State.FadeIn;
                 _currentCaptionIndex++;
-                _captionCountUp = 0;
-                if (_currentCaptionIndex >= _captions.Length)
+                if (_currentCaptionIndex >= LoadingParameters.Captions.Length)
                     _currentState = State.FadeOut;
             }
         }
@@ -103,6 +111,9 @@ public class LoadingScript : MonoBehaviour
             if (coverAlpha >= 1)
                 coverAlpha = 1;
             _cover.color = new Color(0, 0, 0, coverAlpha);
+
+            if (coverAlpha >= 1)
+                _sceneLoading.allowSceneActivation = true;
         }
     }
 

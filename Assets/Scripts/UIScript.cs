@@ -24,6 +24,8 @@ public class UIScript : MonoBehaviour
     private AsyncOperation _sceneOperation;
 
     public string nextLevel;
+    public string[] Captions;
+    public string[] Speeches;
 
     void Start ()
 	{
@@ -129,14 +131,16 @@ public class UIScript : MonoBehaviour
 
 	    if (!_changingScene && Input.GetButtonDown("Submit"))
 	    {
-            Debug.Log(nextLevel);
             switch (_currentSelection)
 	        {
                 case 0:
-                    _sceneOperation = SceneManager.LoadSceneAsync(nextLevel, LoadSceneMode.Single);
+	                LoadingParameters.Captions = Captions;
+	                LoadingParameters.Speeches = Speeches;
+	                LoadingParameters.NextSceneName = nextLevel;
+                    _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Single);
                     break;
                 case 1:
-                    _sceneOperation = SceneManager.LoadSceneAsync("LevelZero", LoadSceneMode.Single);
+                    _sceneOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
                     break;
                 case 2:
                     _sceneOperation = SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Single);

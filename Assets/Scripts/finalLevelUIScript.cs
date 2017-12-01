@@ -118,7 +118,7 @@ public class finalLevelUIScript : MonoBehaviour
             switch (_currentSelection)
             {
                 case 0:
-                    _sceneOperation = SceneManager.LoadSceneAsync("LevelZero", LoadSceneMode.Single);
+                    _sceneOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
                     break;
                 case 1:
                     _sceneOperation = SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Single);

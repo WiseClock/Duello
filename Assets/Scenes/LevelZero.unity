@@ -7540,6 +7540,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextLevel: LevelOne
+  Captions:
+  - The young hero defeated his opponent,
+  - and the aliens tried to flee
+  Speeches:
+  - one_1
+  - one_2
 --- !u!4 &1935147337
 Transform:
   m_ObjectHideFlags: 0

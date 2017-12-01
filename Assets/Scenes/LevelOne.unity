@@ -10808,6 +10808,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nextLevel: LevelTwo
+  Captions:
+  - A winning streak!
+  - Our hero then chased them into the space.
+  Speeches:
+  - two_1
+  - two_2
 --- !u!4 &1935147337
 Transform:
   m_ObjectHideFlags: 0
