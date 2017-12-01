@@ -92,7 +92,10 @@ public class GameLogic : MonoBehaviour
                 else if (Input.GetMouseButtonDown(0))
                 {
                     _audioSource.PlayOneShot(SceneChanging);
-                    _sceneOperation = SceneManager.LoadSceneAsync(MenuItemScenes[_selectedMenuItemIndex]);
+                    LoadingParameters.Captions = new[] { "Loading..." };
+                    LoadingParameters.Speeches = new string[] {};
+                    LoadingParameters.NextSceneName = MenuItemScenes[_selectedMenuItemIndex];
+                    _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene");
                     _sceneOperation.allowSceneActivation = false;
                     _isNewSceneLoading = true;
                 }
@@ -132,9 +135,11 @@ public class GameLogic : MonoBehaviour
 
 	    if (Input.GetButtonDown("Submit") && (_selectedMenuItemIndex >= 0 && _selectedMenuItemIndex < MenuItemScenes.Count))
 	    {
-            _audioSource.PlayOneShot(SceneChanging);
-            _sceneOperation = SceneManager.LoadSceneAsync(MenuItemScenes[_selectedMenuItemIndex]);
-	        _sceneOperation.allowSceneActivation = false;
+            _audioSource.PlayOneShot(SceneChanging); LoadingParameters.Captions = new[] { "Loading..." };
+            LoadingParameters.Speeches = new string[] { };
+            LoadingParameters.NextSceneName = MenuItemScenes[_selectedMenuItemIndex];
+            _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene");
+            _sceneOperation.allowSceneActivation = false;
 	        _isNewSceneLoading = true;
 	    }
 	}

@@ -73,7 +73,8 @@ public class LoadingScript : MonoBehaviour
 	        if (_currentSubstate == State.FadeIn && captionAlpha.Equals(0f))
 	        {
 	            _captionText.text = LoadingParameters.Captions[_currentCaptionIndex];
-                _audioSource.PlayOneShot(_audioClips[_currentCaptionIndex]);
+                if (_audioClips.Count > _currentCaptionIndex)
+                    _audioSource.PlayOneShot(_audioClips[_currentCaptionIndex]);
             }
 
             if (_currentSubstate == State.FadeIn && captionAlpha < 1)
