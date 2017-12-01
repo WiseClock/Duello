@@ -4276,12 +4276,12 @@ Prefab:
     - target: {fileID: 224171438407163492, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 509.5
+      value: 518
       objectReference: {fileID: 0}
     - target: {fileID: 224171438407163492, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 286.5
+      value: 291.5
       objectReference: {fileID: 0}
     - target: {fileID: 224059830181308802, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
@@ -4306,22 +4306,22 @@ Prefab:
     - target: {fileID: 224920872874517800, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 193.7885
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 224435981427586510, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 193.7885
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 224994022769317350, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 193.7885
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 224059830181308802, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 193.7885
+      value: -15
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e66032aa09741d4ea4c57b975dd166f, type: 2}
@@ -4959,6 +4959,7 @@ GameObject:
   - component: {fileID: 757800567}
   - component: {fileID: 757800566}
   - component: {fileID: 757800571}
+  - component: {fileID: 757800572}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5043,6 +5044,18 @@ Skybox:
   m_GameObject: {fileID: 757800565}
   m_Enabled: 1
   m_CustomSkybox: {fileID: 2100000, guid: 18b6bf7c06173654ead94eda5ab1abee, type: 2}
+--- !u!114 &757800572
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 757800565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff26db721962cdf4a8edcdfa9a767d2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 11400000, guid: 7a565ffec45c7ca4fb00d771dcdb8912, type: 2}
 --- !u!1 &766627031
 GameObject:
   m_ObjectHideFlags: 0
@@ -7365,7 +7378,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4156107070090512, guid: 69ff45cdcc817464495e23de3db05cef, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 1.21
+      value: 2.47
       objectReference: {fileID: 0}
     - target: {fileID: 4156107070090512, guid: 69ff45cdcc817464495e23de3db05cef, type: 2}
       propertyPath: m_LocalPosition.y
@@ -7394,6 +7407,10 @@ Prefab:
     - target: {fileID: 4156107070090512, guid: 69ff45cdcc817464495e23de3db05cef, type: 2}
       propertyPath: m_RootOrder
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4156107070090512, guid: 69ff45cdcc817464495e23de3db05cef, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 82.615974
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 69ff45cdcc817464495e23de3db05cef, type: 2}
@@ -11831,7 +11848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   RangeXMin: -8
-  RangeXMax: 8
+  RangeXMax: 10
   MaxAllowedItems: 3
   CheckIntervalSeconds: 3
   Possibility: 0.3
@@ -13699,12 +13716,12 @@ Prefab:
     - target: {fileID: 224712392127867736, guid: c5567022b0fbd0349a395c8e5441adca,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 509.5
+      value: 518
       objectReference: {fileID: 0}
     - target: {fileID: 224712392127867736, guid: c5567022b0fbd0349a395c8e5441adca,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 286.5
+      value: 291.5
       objectReference: {fileID: 0}
     - target: {fileID: 224712392127867736, guid: c5567022b0fbd0349a395c8e5441adca,
         type: 2}
