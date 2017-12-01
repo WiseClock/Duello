@@ -4306,22 +4306,22 @@ Prefab:
     - target: {fileID: 224920872874517800, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: -15
+      value: 193.7885
       objectReference: {fileID: 0}
     - target: {fileID: 224435981427586510, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: -15
+      value: 193.7885
       objectReference: {fileID: 0}
     - target: {fileID: 224994022769317350, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: -15
+      value: 193.7885
       objectReference: {fileID: 0}
     - target: {fileID: 224059830181308802, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: -15
+      value: 193.7885
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0e66032aa09741d4ea4c57b975dd166f, type: 2}
@@ -4960,6 +4960,7 @@ GameObject:
   - component: {fileID: 757800566}
   - component: {fileID: 757800571}
   - component: {fileID: 757800572}
+  - component: {fileID: 757800573}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5056,6 +5057,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   profile: {fileID: 11400000, guid: 7a565ffec45c7ca4fb00d771dcdb8912, type: 2}
+--- !u!114 &757800573
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 757800565}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e91b87d10f4f9124394cd79dbce13b63, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TiltMode: 0
+  HorizontalMin: 355
+  HorizontalMax: 358
+  VerticalMin: 18
+  VerticalMax: 22
 --- !u!1 &766627031
 GameObject:
   m_ObjectHideFlags: 0
@@ -11060,7 +11077,7 @@ Transform:
   m_PrefabParentObject: {fileID: 400020, guid: a0179be775d865349b2c4bbbd6f83177, type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1584503931}
-  m_LocalRotation: {x: -0.3331818, y: 0.90969807, z: -0.10643454, w: -0.22385517}
+  m_LocalRotation: {x: -0.33318177, y: 0.90969795, z: -0.106434524, w: -0.22385514}
   m_LocalPosition: {x: 0.10129951, y: 0.037567426, z: -0.063280225}
   m_LocalScale: {x: 1, y: 0.99999994, z: 1}
   m_Children:
