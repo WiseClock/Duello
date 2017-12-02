@@ -118,7 +118,10 @@ public class finalLevelUIScript : MonoBehaviour
             switch (_currentSelection)
             {
                 case 0:
-                    _sceneOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+                    LoadingParameters.Captions = new[] { "This young man saved the Earth.", "Then he moved to our planet,", "and became our ancestor." };
+                    LoadingParameters.Speeches = new[] { "end_1", "end_2", "end_3" };
+                    LoadingParameters.NextSceneName = "MenuScene";
+                    _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Single);
                     break;
                 case 1:
                     _sceneOperation = SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Single);
