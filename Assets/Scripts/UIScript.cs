@@ -140,6 +140,7 @@ public class UIScript : MonoBehaviour
                     _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Single);
                     break;
                 case 1:
+                    ScoreManager.UpdateCurrentScoreOnRestart();
                     _sceneOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
                     break;
                 case 2:

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657886, g: 0.4964127, b: 0.57481724, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -2644,12 +2644,12 @@ Prefab:
     - target: {fileID: 224171438407163492, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 466.5
+      value: 290
       objectReference: {fileID: 0}
     - target: {fileID: 224171438407163492, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 291.5
+      value: 163
       objectReference: {fileID: 0}
     - target: {fileID: 224171438407163492, guid: 0e66032aa09741d4ea4c57b975dd166f,
         type: 2}
@@ -3980,6 +3980,11 @@ Prefab:
       propertyPath: Opponent
       value: 
       objectReference: {fileID: 1505517984}
+    - target: {fileID: 82489743412622686, guid: e72dc11d3d2b3cb4aa594fc6e8c31d30,
+        type: 2}
+      propertyPath: spreadCustomCurve.m_RotationOrder
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e72dc11d3d2b3cb4aa594fc6e8c31d30, type: 2}
   m_IsPrefabParent: 0
@@ -8160,12 +8165,12 @@ Prefab:
     - target: {fileID: 224712392127867736, guid: c5567022b0fbd0349a395c8e5441adca,
         type: 2}
       propertyPath: m_LocalPosition.x
-      value: 466.5
+      value: 290
       objectReference: {fileID: 0}
     - target: {fileID: 224712392127867736, guid: c5567022b0fbd0349a395c8e5441adca,
         type: 2}
       propertyPath: m_LocalPosition.y
-      value: 291.5
+      value: 163
       objectReference: {fileID: 0}
     - target: {fileID: 224712392127867736, guid: c5567022b0fbd0349a395c8e5441adca,
         type: 2}
@@ -8391,6 +8396,21 @@ Prefab:
     - target: {fileID: 114873618248385086, guid: c5567022b0fbd0349a395c8e5441adca,
         type: 2}
       propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114072563339500250, guid: c5567022b0fbd0349a395c8e5441adca,
+        type: 2}
+      propertyPath: m_FontData.m_HorizontalOverflow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114072563339500250, guid: c5567022b0fbd0349a395c8e5441adca,
+        type: 2}
+      propertyPath: m_FontData.m_VerticalOverflow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114682936311478820, guid: c5567022b0fbd0349a395c8e5441adca,
+        type: 2}
+      propertyPath: m_FontData.m_HorizontalOverflow
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
