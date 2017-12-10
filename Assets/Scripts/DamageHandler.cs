@@ -94,7 +94,7 @@ public class DamageHandler : MonoBehaviour {
 
         isHit = true;
 
-        if (health < 0) {
+        if (health <= 0) {
             health = 0;
             TimerScript.timerIsActive = false;
         }

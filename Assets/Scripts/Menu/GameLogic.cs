@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameLogic : MonoBehaviour
 {
-    public List<string> MenuItemScenes = new List<string> { "MainScene", "MainScene", "MainScene", "MainScene" };
+    public List<string> MenuItemScenes = new List<string> { "Prologue", "LevelZero", "HighScoreScene", "HighScoreScene" };
     public bool HighScoreScene = false;
     private AsyncOperation _sceneOperation;
     private bool _isNewSceneLoading = false;
@@ -54,6 +54,7 @@ public class GameLogic : MonoBehaviour
         blurMat.SetColor("_Color", new Color(128, 0, 0));
 
         Cursor.SetCursor(CursorTexture, Vector2.zero, CursorMode.Auto);
+        PlayerPrefs.SetInt("currentScoreDuello", 0);
     }
 
     void Update ()

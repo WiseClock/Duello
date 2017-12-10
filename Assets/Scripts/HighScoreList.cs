@@ -12,10 +12,10 @@ public class HighScoreList : MonoBehaviour {
 	void Start () {
 		for(int i = 1; i <= 5; i++)
         {
-            string highScore = "highscore" + i.ToString();
+            string highScore = "highScoreDuello" + i.ToString();
             highScores[i-1] = PlayerPrefs.GetInt(highScore, 0);
 
-            string highScoreDate = "highscoredate" + i.ToString();
+            string highScoreDate = "highScoreDateDuello" + i.ToString();
             highScoreDates[i - 1] = PlayerPrefs.GetString(highScoreDate, "1-Jan-2000 12:00:00 AM");
 
         }
