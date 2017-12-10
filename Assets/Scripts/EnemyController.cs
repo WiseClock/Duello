@@ -89,13 +89,13 @@ public class EnemyController : MonoBehaviour {
             {
                 if (navScript.targetNodeDirection < 0)
                 {
-                    transform.rotation = Quaternion.Euler(0, -125, 0);
+                    transform.rotation = Quaternion.Euler(0, -120, 0);
                     enemyColliders.transform.rotation = Quaternion.Euler(0, -125, 0);
                     enemyAttacks.transform.rotation = Quaternion.Euler(0, -125, 0);
                 }
                 else
                 {
-                    transform.rotation = Quaternion.Euler(0, 125, 0);
+                    transform.rotation = Quaternion.Euler(0, 120, 0);
                     enemyColliders.transform.rotation = Quaternion.Euler(0, 55, 0);
                     enemyAttacks.transform.rotation = Quaternion.Euler(0, 55, 0);
                 }
@@ -129,13 +129,13 @@ public class EnemyController : MonoBehaviour {
         {
             if (transform.position.x > navScript.targetNode.transform.position.x)
             {
-                Debug.Log("LeftMoving");
+                //Debug.Log("LeftMoving");
                 MoveLeft();
                 animator.SetFloat("Speed", 1);
             }
             else if (transform.position.x < navScript.targetNode.transform.position.x)
             {
-                Debug.Log("RightMoving");
+                //Debug.Log("RightMoving");
                 MoveRight();
                 animator.SetFloat("Speed", 1);
             }
