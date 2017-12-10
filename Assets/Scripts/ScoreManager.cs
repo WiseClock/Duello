@@ -4,7 +4,8 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
-
+    public GameObject GO_Score;
+    public GameObject GO_High;
     public static int healthScore;
     public static int timerScore;
     public static int totalScore;
@@ -15,12 +16,16 @@ public class ScoreManager : MonoBehaviour
     private static string highScoreDate;
     private static Text scoreText;
     private static Text highScoreText;
+    private static Text scoreText_GO;
+    private static Text highScoreText_GO;
     private static int currentScore;
 
     private void Start()
     {
         scoreText = GameObject.Find("ScoreText").GetComponent<Text>();
         highScoreText = GameObject.Find("HighScoreText").GetComponent<Text>();
+        scoreText_GO = GO_Score.GetComponent<Text>();
+        highScoreText_GO = GO_High.GetComponent<Text>();
     }
 
     void Awake()
@@ -85,6 +90,8 @@ public class ScoreManager : MonoBehaviour
             Debug.Log("Current Score [UpdateEndPanelText() if (timerScore == 0)]: " + currentScore);
         }
 
+        scoreText_GO.text = scoreText.text;
+
         // Display the current high score
         highScore = PlayerPrefs.GetInt("highScoreDuello1");
         highScoreDate = PlayerPrefs.GetString("highScoreDateDuello1");
@@ -100,7 +107,7 @@ public class ScoreManager : MonoBehaviour
         {
             highScoreText.text = "NO CURRENT HIGH SCORE AVAILABLE";
         }
-
+        highScoreText_GO.text = highScoreText.text;
     }
 
     public static void UpdateCurrentScoreOnRestart()
