@@ -142,8 +142,10 @@ public class EnemyScript : MonoBehaviour {
             agent.destination = player.transform.position;
 
         // freeze rotation if hit
-        if(!isHit)
+        if (isHit) anim.SetLayerWeight(1, 0.1f);
+        if (!isHit)
         {
+            anim.SetLayerWeight(1, 1f);
             transform.rotation = GetDirectionAngle();
         }
 

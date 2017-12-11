@@ -22,6 +22,8 @@ public class EnemyDamageHandler : MonoBehaviour {
     public Renderer bodyRend;
     private float damageHitTime, newTime;
 
+    private Animator anim;
+
     // Use this for initialization
     void Start () {
         body = gameObject.GetComponent<Rigidbody2D>();
@@ -30,6 +32,7 @@ public class EnemyDamageHandler : MonoBehaviour {
         es = GetComponent<EnemyScript>();
         _audioSource = GetComponent<AudioSource>();
 
+        anim = GetComponent<Animator>();
         //bodyRend = GetComponent<Renderer>();
 
     }
@@ -93,6 +96,7 @@ public class EnemyDamageHandler : MonoBehaviour {
         _audioSource.PlayOneShot(damageSound);
 
         isHit = true;
+        anim.SetTrigger("isHit");
 
         if (health < 0) {
             health = 0;

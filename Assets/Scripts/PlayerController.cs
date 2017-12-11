@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour {
         // if the player is hit freeze all controls
         if (!isHit)
         {
+            animator.SetLayerWeight(1, 1f);
             HandleInput();
             if (rb.velocity.y > 0)
             {
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviour {
                 //Debug.Log("Hittt");
                 isOnAir = false;
             }
-        }
+        }if (isHit) animator.SetLayerWeight(1,0.1f);
 
         // bonus end
         if (_jumpBonusFactor != 0 && _jumpBonusEnd != -1 && _jumpBonusEnd < Time.realtimeSinceStartup)
@@ -171,7 +172,7 @@ public class PlayerController : MonoBehaviour {
     private void HandleInput()
     {
 
-        if (Input.GetButtonDown("Fire1") && !checkAttackAction())//&& attackFreeze==false)
+        if (Input.GetButtonDown("Fire1") && !checkAttackAction())// && attackFreeze==false)
         {
             //attackColdDown = Time.time;
             animator.SetTrigger("Attack");
@@ -185,6 +186,7 @@ public class PlayerController : MonoBehaviour {
         }*/
         if(animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
+
         }
     
         if (Input.GetButtonDown("Jump"))
