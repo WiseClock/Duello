@@ -19,10 +19,13 @@ public class FighterScript : MonoBehaviour {
     private bool damagedFlag, pressFlag;
     private float inAction;
 
+    private Animator _animator;
     // Use this for initialization
     void Start () {
         _audioSource = GetComponent<AudioSource>();
         pc = GetComponent<PlayerController>();
+        _animator = GetComponent<Animator>();
+        damagedFlag = true;
     }
 	
 	
@@ -32,30 +35,33 @@ public class FighterScript : MonoBehaviour {
         if (_attackBonusFactor != 0 && _attackBonusEnd != -1 && _attackBonusEnd < Time.realtimeSinceStartup)
             _attackBonusFactor = 0;
 
-        if (Input.GetButtonDown("Fire1") && !pc.isHit)
+        if (Input.GetButtonDown("Fire1") && !pc.isHit && !checkAttackAction())
+        {
+            _audioSource.PlayOneShot(attack1);
+            inAction = Time.time;
+            damagedFlag = false;
+            //Debug.Log("Click");
+
+        }
+        if (Time.time - inAction > 0.25f && Time.time - inAction < 0.72f)
+        {
+            if (damagedFlag == false)
+            {
+                //Time.timeScale = 0;
+                damage = Mathf.RoundToInt(10 * (1 + _attackBonusFactor));
+                attack(attacks[0]);
+            }
+        }else if (Time.deltaTime - inAction > 0.8f)
+        {
+            pressFlag = true;
+        }
+
+        /*if (Input.GetButtonDown("Fire1") && !pc.isHit) 
         {
             damage = Mathf.RoundToInt(10 * (1 + _attackBonusFactor));
             _audioSource.PlayOneShot(attack1);
             attack(attacks[0]);
-        }
-        if (Input.GetButtonDown("Fire1")&&pressFlag==true)
-        {
-            inAction = Time.time;
-            damagedFlag = false;
-            pressFlag=false;
-
-        }
-        if (Time.time - inAction > 0.2f && Time.time - inAction < 0.65f)
-        {
-            if (damagedFlag == false)
-            {
-                damage = 10;
-                attack(attacks[0]);
-            }
-        }else if(Time.time - inAction > 0.8f)
-        {
-            pressFlag = true;
-        }
+        }*/
     }
 
     public void SetAttackBuff(object[] arguments)
@@ -78,5 +84,11 @@ public class FighterScript : MonoBehaviour {
             damagedFlag = true;
             c.SendMessageUpwards("TakeKnockback", knockback);
         }
+    }
+    private bool checkAttackAction()
+    {
+        if (_animator.GetCurrentAnimatorStateInfo(1).IsName("Attack"))
+            return true;
+        else return false;
     }
 }

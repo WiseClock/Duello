@@ -162,7 +162,7 @@ public class PlayerController : MonoBehaviour {
         {
             if (rb.velocity.y > 0)
             {
-                animator.SetBool("Jump", false);
+                //animator.SetBool("Jump", false);
                 rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.5f);  // divide vertical velocity in half making character fall
             }
         }
@@ -171,19 +171,19 @@ public class PlayerController : MonoBehaviour {
     private void HandleInput()
     {
 
-        if (Input.GetButtonDown("Fire1") && attackFreeze==false)
+        if (Input.GetButtonDown("Fire1") && !checkAttackAction())//&& attackFreeze==false)
         {
-            attackColdDown = Time.time;
+            //attackColdDown = Time.time;
             animator.SetTrigger("Attack");
-            attackFreeze = true;
+            //attackFreeze = true;
             // Debug.Log("attack on");
         }
-        if (Time.time - attackColdDown >= 0.6f && attackFreeze==true)
+        /*if (Time.time - attackColdDown >= 0.6f && attackFreeze==true)
         {
             attackFreeze = false;
             // Debug.Log("attack freeze");
-        }
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Standing Melee Attack Horizontal"))
+        }*/
+        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
         {
         }
     
@@ -249,5 +249,10 @@ public class PlayerController : MonoBehaviour {
         yield return new WaitForSeconds(1f);
         isHit = false;
     }
-
+    private bool checkAttackAction()
+    {
+        if (animator.GetCurrentAnimatorStateInfo(1).IsName("Attack"))
+            return true;
+        else return false;
+    }
 }
