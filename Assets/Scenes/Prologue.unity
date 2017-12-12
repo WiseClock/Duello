@@ -297,6 +297,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19b43d2ced04db44a8d258c329043523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  AsteroidPrefabs:
+  - {fileID: 1406471305907654, guid: 3f109a75c2fd2f44eb5b095441b839f4, type: 2}
+  - {fileID: 1766613563230658, guid: 4dd958fe8fab0554988d6f64d0f5cee9, type: 2}
+  - {fileID: 1520201449209166, guid: f08bcf23dfaf5614cbc2656b4db39cb5, type: 2}
 --- !u!1 &90748105
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,7 +590,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 4294967294
   m_IsActive: 1
 --- !u!154 &222398333
 TerrainCollider:
@@ -597,7 +601,7 @@ TerrainCollider:
   m_Material: {fileID: 0}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 30fe77a6bea6ea941882ab0cff55cffc, type: 2}
-  m_EnableTreeColliders: 1
+  m_EnableTreeColliders: 0
 --- !u!218 &222398334
 Terrain:
   m_ObjectHideFlags: 0
@@ -618,15 +622,15 @@ Terrain:
   m_HeightmapMaximumLOD: 0
   m_CastShadows: 1
   m_DrawHeightmap: 1
-  m_DrawTreesAndFoliage: 1
-  m_ReflectionProbeUsage: 1
+  m_DrawTreesAndFoliage: 0
+  m_ReflectionProbeUsage: 0
   m_MaterialType: 0
   m_LegacySpecular:
     serializedVersion: 2
     rgba: 4286545791
   m_LegacyShininess: 0.078125
   m_MaterialTemplate: {fileID: 0}
-  m_BakeLightProbesForTrees: 1
+  m_BakeLightProbesForTrees: 0
   m_ScaleInLightmap: 0.0512
   m_LightmapParameters: {fileID: 15203, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!4 &222398335

@@ -24,7 +24,7 @@ public class PrologueGameLoop : MonoBehaviour
     private GameObject _ships;
     private GameObject _asteroidPos;
 
-    private readonly List<GameObject> _asteroidPrefabs = new List<GameObject>();
+    public List<GameObject> AsteroidPrefabs = new List<GameObject>();
 
     private readonly System.Random _rand = new System.Random();
 
@@ -53,9 +53,9 @@ public class PrologueGameLoop : MonoBehaviour
         _ships = GameObject.Find("Ships");
         _asteroidPos = GameObject.Find("AsteroidPos");
 
-        _asteroidPrefabs.Add(Resources.Load<GameObject>("Prefabs/Prologue/Asteroid1"));
-        _asteroidPrefabs.Add(Resources.Load<GameObject>("Prefabs/Prologue/Asteroid2"));
-        _asteroidPrefabs.Add(Resources.Load<GameObject>("Prefabs/Prologue/Asteroid3"));
+        // _asteroidPrefabs.Add(Resources.Load<GameObject>("Prefabs/Prologue/Asteroid1"));
+        // _asteroidPrefabs.Add(Resources.Load<GameObject>("Prefabs/Prologue/Asteroid2"));
+        // _asteroidPrefabs.Add(Resources.Load<GameObject>("Prefabs/Prologue/Asteroid3"));
 
         _cameras[1].gameObject.SetActive(false);
         _cameras[2].gameObject.SetActive(false);
@@ -81,7 +81,7 @@ public class PrologueGameLoop : MonoBehaviour
                 _lastRecordedTime = Time.fixedTime;
                 _asteroidsCount++;
 
-                Object chosenPrefab = _asteroidPrefabs[_rand.Next(3)];
+                Object chosenPrefab = AsteroidPrefabs[_rand.Next(3)];
                 GameObject asteroid = (GameObject)Instantiate(chosenPrefab);
                 asteroid.transform.localScale = new Vector3(Random.value * 3 + 0.5f, Random.value * 3 + 0.5f, Random.value * 3 + 0.5f);
                 asteroid.transform.position = _asteroidPos.transform.position +
