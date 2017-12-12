@@ -171,6 +171,7 @@ public class UIScriptMultiplayer : MonoBehaviour
             switch (_currentSelection)
 	        {
                 case 0:
+                TimerScriptMultiplayer.timerIsActive = true;
 	                _sceneOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
                     break;
                 case 1:
