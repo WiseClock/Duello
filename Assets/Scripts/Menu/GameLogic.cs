@@ -40,6 +40,9 @@ public class GameLogic : MonoBehaviour
     private const int CAMERA_ANGLE_Z_MAX = 1;
     private const int LOGO_ANGLE_Y_MAX = 10;
 
+    private float _waitForLogo = 5f;
+    private static bool _firstLoad = true;
+
     void Start ()
 	{
 		_menu = GameObject.Find("MenuCanvas");
@@ -184,19 +187,29 @@ public class GameLogic : MonoBehaviour
             Material blurMat = _blur.GetComponent<Image>().material;
             float blurSize = blurMat.GetFloat("_Size");
             Color blurColor = blurMat.GetColor("_Color");
-            if (blurSize > 0) blurSize -= 0.1f;
+            if (blurSize > 0) blurSize -= 8 * Time.deltaTime;
             if (blurSize < 0) blurSize = 0;
             float colorR = blurColor.r;
             float colorG = blurColor.g;
             float colorB = blurColor.b;
-            if (colorR < 1) colorR += 0.01f;
-            if (colorG < 1) colorG += 0.01f;
-            if (colorB < 1) colorB += 0.01f;
+            if (colorR < 1) colorR += 0.8f * Time.deltaTime;
+            if (colorG < 1) colorG += 0.8f * Time.deltaTime;
+            if (colorB < 1) colorB += 0.8f * Time.deltaTime;
             if (colorR > 1) colorR = 1;
             if (colorG > 1) colorG = 1;
             if (colorB > 1) colorB = 1;
             blurColor = new Color(colorR, colorG, colorB);
 
+
+            if (_firstLoad && _waitForLogo > 0)
+            {
+                blurMat.SetFloat("_Size", 15);
+                blurMat.SetColor("_Color", Color.red);
+                _waitForLogo -= Time.deltaTime;
+                return;
+            }
+
+            _firstLoad = false;
             blurMat.SetFloat("_Size", blurSize);
             blurMat.SetColor("_Color", blurColor);
 
