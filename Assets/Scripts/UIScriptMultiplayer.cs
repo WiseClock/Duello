@@ -168,10 +168,10 @@ public class UIScriptMultiplayer : MonoBehaviour
 
 	    if (!_changingScene && Input.GetButtonDown("Submit"))
 	    {
+            TimerScriptMultiplayer.timerIsActive = true;
             switch (_currentSelection)
 	        {
                 case 0:
-                TimerScriptMultiplayer.timerIsActive = true;
 	                _sceneOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
                     break;
                 case 1:
@@ -181,7 +181,6 @@ public class UIScriptMultiplayer : MonoBehaviour
                         randomNumber = Random.Range(9, 13);
                     }
                     //Debug.Log("randomNumber = " + randomNumber);
-                    TimerScriptMultiplayer.timerIsActive = true;
                     _sceneOperation = SceneManager.LoadSceneAsync(randomNumber, LoadSceneMode.Single);
                     break;
                 case 2:
