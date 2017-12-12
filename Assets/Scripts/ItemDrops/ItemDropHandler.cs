@@ -6,6 +6,7 @@ using UnityEngine;
 public class ItemDropHandler : MonoBehaviour
 {
     private GameObject _player;
+    private GameObject _player2;
     private GameObject _enemy;
     private GameObject _blastZone;
     private int _angle = 0;
@@ -29,6 +30,7 @@ public class ItemDropHandler : MonoBehaviour
     void Start ()
     {
         _player = GameObject.Find("Player");
+        _player2 = GameObject.Find("Player2");
         _enemy = GameObject.Find("Enemy");
         _blastZone = GameObject.Find("BlastZone");
         
@@ -129,7 +131,7 @@ public class ItemDropHandler : MonoBehaviour
     {
         GameObject targetObject = collision.gameObject;
 
-        if (targetObject != _player && targetObject != _enemy && targetObject != _blastZone)
+        if (targetObject != _player && targetObject != _player2 && targetObject != _enemy && targetObject != _blastZone)
         {
             // should be landed on ground
             CancelInvoke("DestroyNoCollision");
@@ -140,7 +142,7 @@ public class ItemDropHandler : MonoBehaviour
         Destroy(gameObject);
         _onDestroyCallback(targetObject == _blastZone);
 
-        if (targetObject == _player || targetObject == _enemy)
+        if (targetObject == _player || targetObject == _player2 || targetObject == _enemy)
         {
             CancelInvoke("DestroyNoCollision");
             _onCollisionCallback(collision.gameObject);

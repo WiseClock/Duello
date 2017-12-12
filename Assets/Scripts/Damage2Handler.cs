@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DamageHandler : MonoBehaviour {
+public class Damage2Handler : MonoBehaviour {
 
     public AudioClip damageSound;
     private AudioSource _audioSource;
@@ -11,7 +11,7 @@ public class DamageHandler : MonoBehaviour {
     private Rigidbody2D oppponent;
     private int health = 100;
 
-    private PlayerController pc;
+    private Player2Controller pc;
 
     private float _resistanceFactor = 0;
     private float _resistanceEnd = -1;
@@ -28,7 +28,7 @@ public class DamageHandler : MonoBehaviour {
         body = gameObject.GetComponent<Rigidbody2D>();
         oppponent = Opponent.GetComponent<Rigidbody2D>();
 
-        pc = GetComponent<PlayerController>();
+        pc = GetComponent<Player2Controller>();
         _audioSource = GetComponent<AudioSource>();
 
         animator = GetComponent<Animator>();
@@ -97,7 +97,8 @@ public class DamageHandler : MonoBehaviour {
 
         isHit = true;
         //animator.ResetTrigger("Attack");
-        animator.SetTrigger("isHit");        
+        animator.SetTrigger("isHit");
+        
 
         if (health <= 0) {
             health = 0;

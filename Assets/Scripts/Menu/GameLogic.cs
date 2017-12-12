@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class GameLogic : MonoBehaviour
 {
-    public List<string> MenuItemScenes = new List<string> { "Prologue", "LevelZero", "HighScoreScene", "HighScoreScene" };
+    public List<string> MenuItemScenes = new List<string> { "Prologue", "MultiLevelZero", "HighScoreScene", "Credits" };
     public bool HighScoreScene = false;
     private AsyncOperation _sceneOperation;
     private bool _isNewSceneLoading = false;
@@ -55,6 +55,8 @@ public class GameLogic : MonoBehaviour
 
         Cursor.SetCursor(CursorTexture, Vector2.zero, CursorMode.Auto);
         PlayerPrefs.SetInt("currentScoreDuello", 0);
+        PlayerPrefs.SetInt("p1WinsDuello", 0);
+        PlayerPrefs.SetInt("p2WinsDuello", 0);
     }
 
     void Update ()

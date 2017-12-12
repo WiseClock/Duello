@@ -13,7 +13,7 @@ EditorBuildSettings:
     guid: e4daba691bcd3c7418e01f197deb0730
   - enabled: 1
     path: Assets/Scenes/Credits.unity
-    guid: 00000000000000000000000000000000
+    guid: 1cc16868e38725e43a15de3a6d1acb46
   - enabled: 1
     path: Assets/Scenes/Prologue.unity
     guid: 6f0fd4fac430b5647951a602a23a9729
@@ -32,3 +32,15 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HighScoreScene.unity
     guid: 1cc777da518bd0d4fb27307acbcb1d7c
+  - enabled: 1
+    path: Assets/Scenes/MultiLevelZero.unity
+    guid: b946641290a77be45a6613097b2380d1
+  - enabled: 1
+    path: Assets/Scenes/MultiLevelOne.unity
+    guid: 6ba24c37304a2a44fb4e5bef9b8c6dc4
+  - enabled: 1
+    path: Assets/Scenes/MultiLevelTwo.unity
+    guid: 14ecbe2a2ba51414283d4eb9b98996e6
+  - enabled: 1
+    path: Assets/Scenes/MultiLevelThree.unity
+    guid: 447df2281e8cd874684d6480d06e4a78
