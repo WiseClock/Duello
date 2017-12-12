@@ -111,6 +111,10 @@ public class UIScriptMultiplayer : MonoBehaviour
         }
 
         float moveVertical = Input.GetAxis("Vertical");
+        if (moveVertical == 0)
+        {
+            moveVertical = Input.GetAxis("Vertical2");
+        }
 
         int timeAfterSelecting = Mathf.RoundToInt((Time.fixedTime - _changeStartTime) * 1000);
 
@@ -176,6 +180,7 @@ public class UIScriptMultiplayer : MonoBehaviour
                         randomNumber = Random.Range(9, 13);
                     }
                     //Debug.Log("randomNumber = " + randomNumber);
+                    TimerScriptMultiplayer.timerIsActive = true;
                     _sceneOperation = SceneManager.LoadSceneAsync(randomNumber, LoadSceneMode.Single);
                     break;
                 case 2:

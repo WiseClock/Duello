@@ -62,7 +62,13 @@ public class GameLogic : MonoBehaviour
     void Update ()
 	{
 	    float moveHorizontal = Input.GetAxis("Horizontal");
+        if (moveHorizontal == 0) {
+            moveHorizontal = Input.GetAxis("Horizontal2");
+        }
 	    float moveVertical = Input.GetAxis("Vertical");
+        if (moveVertical == 0) {
+            moveVertical = Input.GetAxis("Vertical2");
+        }
         int menuItemCount = _menuItemHolder.transform.childCount;
 
         Camera.main.transform.eulerAngles = new Vector3(moveVertical * 5, moveHorizontal * -5, _cameraAngleZ);

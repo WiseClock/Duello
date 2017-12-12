@@ -98,7 +98,7 @@ public class EnemyDamageHandler : MonoBehaviour {
         isHit = true;
         anim.SetTrigger("isHit");
 
-        if (health < 0) {
+        if (health <= 0) {
             health = 0;
             TimerScript.timerIsActive = false;
         }
