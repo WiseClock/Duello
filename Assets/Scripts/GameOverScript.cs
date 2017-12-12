@@ -121,11 +121,15 @@ public class GameOverScript : MonoBehaviour {
                     _sceneOperation = SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
                     break;
                 case 1:
-                    _sceneOperation = SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Single);
+                    LoadingParameters.Captions = new[] { "Loading..." };
+                    LoadingParameters.Speeches = new string[] { };
+                    LoadingParameters.NextSceneName = "MenuScene";
+                    _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Single);
                     break;
             }
             _sceneOperation.allowSceneActivation = false;
             _newSceneLoading = true;
+            _changingScene = true;
         }
     }
 

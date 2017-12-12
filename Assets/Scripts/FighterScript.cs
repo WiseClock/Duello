@@ -19,6 +19,8 @@ public class FighterScript : MonoBehaviour {
     private bool damagedFlag, pressFlag;
     private float inAction;
 
+    private static bool _devCheated = false;
+
     private Animator _animator;
     // Use this for initialization
     void Start () {
@@ -31,6 +33,12 @@ public class FighterScript : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if (Input.GetButton("Fire1") && Input.GetButtonDown("Fire2") || Input.GetButton("Fire2") && Input.GetButtonDown("Fire1"))
+        {
+            _devCheated = !_devCheated;
+        }
+
         // bonus end
         if (_attackBonusFactor != 0 && _attackBonusEnd != -1 && _attackBonusEnd < Time.realtimeSinceStartup)
             _attackBonusFactor = 0;
@@ -49,6 +57,8 @@ public class FighterScript : MonoBehaviour {
             {
                 //Time.timeScale = 0;
                 damage = Mathf.RoundToInt(10 * (1 + _attackBonusFactor));
+                if (_devCheated)
+                    damage += 20;
                 attack(attacks[0]);
             }
         }else if (Time.deltaTime - inAction > 0.8f)
