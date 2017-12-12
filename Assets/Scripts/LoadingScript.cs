@@ -104,7 +104,7 @@ public class LoadingScript : MonoBehaviour
                     _currentState = State.FadeOut;
             }
         }
-        else if (_currentState == State.FadeOut)
+        else if (_currentState == State.FadeOut && _sceneLoading.progress >= 0.9f)
         {
             float coverAlpha = _cover.color.a;
             if (coverAlpha < 1)

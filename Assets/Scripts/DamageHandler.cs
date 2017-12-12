@@ -21,6 +21,8 @@ public class DamageHandler : MonoBehaviour {
     public Renderer bodyRend;
     private float damageHitTime, newTime;
 
+    private Animator animator;
+
     // Use this for initialization
     void Start () {
         body = gameObject.GetComponent<Rigidbody2D>();
@@ -29,6 +31,7 @@ public class DamageHandler : MonoBehaviour {
         pc = GetComponent<PlayerController>();
         _audioSource = GetComponent<AudioSource>();
 
+        animator = GetComponent<Animator>();
         //bodyRend = GetComponent<Renderer>();
 
     }
@@ -93,6 +96,9 @@ public class DamageHandler : MonoBehaviour {
         _audioSource.PlayOneShot(damageSound);
 
         isHit = true;
+        //animator.ResetTrigger("Attack");
+        animator.SetTrigger("isHit");
+        
 
         if (health <= 0) {
             health = 0;

@@ -149,6 +149,7 @@ public class UIScript : MonoBehaviour
 	        }
             _sceneOperation.allowSceneActivation = false;
             _newSceneLoading = true;
+            _changingScene = true;
         }
     }
 
