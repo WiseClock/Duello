@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class TimerScript : MonoBehaviour {
 
     public GameObject scorePanel;
+    public GameObject failPanel;
     public GameObject Player;
     public GameObject Enemy;
     public int timer;
@@ -15,6 +16,7 @@ public class TimerScript : MonoBehaviour {
     private DamageHandler player;
    // private EnemyScript enemy;
     private EnemyDamageHandler enemy;
+    private bool victory = true;
 
     // Use this for initialization
     void Start () {
@@ -45,24 +47,33 @@ public class TimerScript : MonoBehaviour {
                 // Tell ScoreManager the score
                 ScoreManager.timerScore = timer * 100;
                 ScoreManager.healthScore = player.getHealth() * 200;
+                victory = true;
             }
 
             if (timer <= 0 )
             {
                 // Losing End Game Logic Here
                 ScoreManager.timerScore = 0;
+                victory = false;
             }
 
             if (player.getHealth() <= 0)
             {
                 // Losing End Game Logic Here
                 ScoreManager.healthScore = 0;
+                victory = false;
             }
 
             ScoreManager.UpdateScore();
 
             // Show End Game Panel
-            scorePanel.SetActive(true);
+            if (victory == true)
+            {
+                scorePanel.SetActive(true);
+            } else {
+                failPanel.SetActive(true);
+            }
+            
             enabled = false;
         }
 	}
