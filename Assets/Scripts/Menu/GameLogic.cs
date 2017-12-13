@@ -102,8 +102,13 @@ public class GameLogic : MonoBehaviour
                 else if (Input.GetMouseButtonDown(0))
                 {
                     _audioSource.PlayOneShot(SceneChanging);
-                    LoadingParameters.Captions = new[] { "Loading...", "Still loading...", "We are trying very hard to load it.", "...", "Seriously, it's loading...",
-                        "But it takes time...", "Time is money,", "It takes money to load.", "...", "Sit tight.", "...", "I know it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
+                    if (_selectedMenuItemIndex == 0 && Application.platform == RuntimePlatform.PS4)
+                        LoadingParameters.Captions = new[] { "Loading...", "Still loading...", "We are trying very hard to load it.", "...", "Seriously, it's loading...",
+                            "But it takes time...", "Time is money,", "It takes money to load.", "I know it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
+                    else
+                        LoadingParameters.Captions = new[] { "Loading..." };
+                    if (_selectedMenuItemIndex == 1)
+                        TimerScriptMultiplayer.timerIsActive = true;
                     LoadingParameters.Speeches = new string[] {};
                     LoadingParameters.NextSceneName = MenuItemScenes[_selectedMenuItemIndex];
                     _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene");
@@ -147,8 +152,13 @@ public class GameLogic : MonoBehaviour
 	    if (Input.GetButtonDown("Submit") && (_selectedMenuItemIndex >= 0 && _selectedMenuItemIndex < MenuItemScenes.Count))
 	    {
             _audioSource.PlayOneShot(SceneChanging);
-            LoadingParameters.Captions = new[] { "Loading...", "Still loading...", "We are trying very hard to load it.", "...", "Seriously, it's loading...",
-                        "But it takes time...", "Time is money,", "It takes money to load.", "...", "Sit tight.", "...", "I know it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
+            if (_selectedMenuItemIndex == 0 && Application.platform == RuntimePlatform.PS4)
+                LoadingParameters.Captions = new[] { "Loading...", "Still loading...", "We are trying very hard to load it.", "...", "Seriously, it's loading...",
+                            "But it takes time...", "Time is money,", "It takes money to load.", "I know it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
+            else
+                LoadingParameters.Captions = new[] { "Loading..." };
+            if (_selectedMenuItemIndex == 1)
+                TimerScriptMultiplayer.timerIsActive = true;
             LoadingParameters.Speeches = new string[] { };
             LoadingParameters.NextSceneName = MenuItemScenes[_selectedMenuItemIndex];
             _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene");

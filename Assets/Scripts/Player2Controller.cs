@@ -171,7 +171,7 @@ public class Player2Controller : MonoBehaviour {
     private void HandleInput()
     {
 
-        if (Input.GetButtonDown("Fire2") && attackFreeze == false)
+        if (Input.GetButtonDown("Fire1p2") && attackFreeze == false)
         {
             attackColdDown = Time.time;
             animator.SetTrigger("Attack");

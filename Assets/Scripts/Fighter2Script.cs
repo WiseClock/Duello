@@ -34,7 +34,7 @@ public class Fighter2Script : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        if (Input.GetButton("Fire1") && Input.GetButtonDown("Fire2") || Input.GetButton("Fire2") && Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1p2") && Input.GetButtonDown("Fire2p2") || Input.GetButton("Fire2p2") && Input.GetButtonDown("Fire1p2"))
         {
             _devCheated = !_devCheated;
         }
@@ -43,13 +43,12 @@ public class Fighter2Script : MonoBehaviour {
         if (_attackBonusFactor != 0 && _attackBonusEnd != -1 && _attackBonusEnd < Time.realtimeSinceStartup)
             _attackBonusFactor = 0;
 
-        if (Input.GetButtonDown("Fire2") && !pc.isHit && !checkAttackAction())
+        if (Input.GetButtonDown("Fire1p2") && !pc.isHit && !checkAttackAction())
         {
             _audioSource.PlayOneShot(attack1);
             inAction = Time.time;
             damagedFlag = false;
             //Debug.Log("Click");
-
         }
         if (Time.time - inAction > 0.25f && Time.time - inAction < 0.72f)
         {
