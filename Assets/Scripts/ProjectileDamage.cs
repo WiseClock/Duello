@@ -31,10 +31,8 @@ public class ProjectileDamage : MonoBehaviour {
 
     void OnParticleCollision(GameObject other)
     {
-        Debug.Log("A");
         if (other.CompareTag("Enemy") && isPlayer)
         {
-            Debug.Log("B");
             //GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             other.SendMessageUpwards("TakeDamage", damage);
             other.SendMessageUpwards("TakeKnockback", knockback);
@@ -42,7 +40,6 @@ public class ProjectileDamage : MonoBehaviour {
         }
         else if (other.CompareTag("Player") && !isPlayer)
         {
-            Debug.Log("C");
             //GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             other.SendMessageUpwards("TakeDamage", damage);
             other.SendMessageUpwards("TakeKnockback", knockback);
@@ -51,7 +48,6 @@ public class ProjectileDamage : MonoBehaviour {
 
         if (!other.tag.Contains("Player") && !other.tag.Contains("Enemy") && !other.name.Contains("Projectile"))
         {
-            Debug.Log("D" + other.name);
             Destroy(transform.parent.parent.gameObject);
         }
     }

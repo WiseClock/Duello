@@ -27,7 +27,7 @@ public class GameOverScript : MonoBehaviour {
         _blurMask = GameObject.Find("BlurMask");
         _btnRestart = GameObject.Find("ButtonRestart_GO");
         _btnMainMenu = GameObject.Find("ButtonMainMenu_GO");
-        _selectionIndicator = GameObject.Find("ScoreButtonIndicator");
+        _selectionIndicator = GameObject.Find("failPanel/ScoreButtonIndicator");
         _enemy = GameObject.Find("Enemy");
 
         switch (_currentSelection)

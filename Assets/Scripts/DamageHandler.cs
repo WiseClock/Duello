@@ -38,6 +38,7 @@ public class DamageHandler : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
         // resistance bonus end
         if (_resistanceFactor != 0 && _resistanceEnd != -1 && _resistanceEnd < Time.realtimeSinceStartup)
             _resistanceFactor = 0;

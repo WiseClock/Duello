@@ -34,7 +34,7 @@ public class UIScript : MonoBehaviour
         _btnRestart = GameObject.Find("ButtonRestart");
         _btnMainMenu = GameObject.Find("ButtonMainMenu");
         _btnNextLevel = GameObject.Find("ButtonContinue");
-        _selectionIndicator = GameObject.Find("ScoreButtonIndicator");
+        _selectionIndicator = GameObject.Find("ScorePanel/ScoreButtonIndicator");
         _enemy = GameObject.Find("Enemy");
 
 

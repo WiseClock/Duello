@@ -28,7 +28,7 @@ public class finalLevelUIScript : MonoBehaviour
         _blurMask = GameObject.Find("BlurMask");
         _btnRestart = GameObject.Find("ButtonRestart");
         _btnMainMenu = GameObject.Find("ButtonMainMenu");
-        _selectionIndicator = GameObject.Find("ScoreButtonIndicator");
+        _selectionIndicator = GameObject.Find("ScorePanel/ScoreButtonIndicator");
         _enemy = GameObject.Find("Enemy");
 
         switch (_currentSelection)
