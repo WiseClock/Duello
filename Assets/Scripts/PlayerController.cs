@@ -41,6 +41,14 @@ public class PlayerController : MonoBehaviour {
     private float _speedBonusFactor = 0;
     private float _speedBonusEnd = -1;
 
+    public GameObject ballPrefab;
+    public Transform ballSpawn;
+    public GameObject UIRangedIndicator;
+    private int rangedweapon = 1;
+
+    private const float BALL_SPEED = 35.0f;
+    private bool isLeft = false;
+
 
     // Use this for initialization
     void Start ()
@@ -49,10 +57,13 @@ public class PlayerController : MonoBehaviour {
         animator = GetComponent<Animator>();
         Player = GameObject.Find("Player");
         attackFreeze = false;
-	}
+
+        
+    }
 
     void Update()
     {
+        
         // if the player is hit freeze all controls
         if (!isHit)
         {
@@ -79,7 +90,22 @@ public class PlayerController : MonoBehaviour {
                 //Debug.Log("Hittt");
                 isOnAir = false;
             }
-        }if (isHit) animator.SetLayerWeight(1,0.1f);
+
+
+            
+            if (Input.GetKeyDown(KeyCode.T) && rangedweapon > 0)
+            {
+                rangedweapon--;
+                ShootBall();
+
+                if(rangedweapon == 0)
+                {
+                    UIRangedIndicator.SetActive(false);
+                }
+            }
+
+        }
+        if (isHit) animator.SetLayerWeight(1,0.1f);
 
         // bonus end
         if (_jumpBonusFactor != 0 && _jumpBonusEnd != -1 && _jumpBonusEnd < Time.realtimeSinceStartup)
@@ -111,10 +137,35 @@ public class PlayerController : MonoBehaviour {
         float horizontal = Input.GetAxis("Horizontal");
         animator.SetFloat("Speed", horizontal * horizontal);
 
+        //ballSpawn.position = new Vector3(transform.position.x, transform.position.y + 1.2f, transform.position.z);
+
+        //Debug.Log(horizontal);
+
+        // check direction and rotate projectile spawn
+        if (horizontal > 0)
+        {
+            isLeft = false;
+        }
+
+        if (horizontal < 0)
+        {
+            isLeft = true;
+        }
+
+        if(!isLeft)
+        {
+            ballSpawn.position = new Vector3(transform.position.x + 0.5f, transform.position.y + 1.2f, transform.position.z);
+        }
+        else
+        {
+            ballSpawn.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 1.2f, transform.position.z);
+        }
+
+
         // check if player is grounded
         grounded = IsGrounded();
 
-        
+
         // once player has fallen below the platform, re-enable collisions with that platform
         if (isFalling && (gameObject.transform.position.y + (GetComponent<BoxCollider2D>().size.y / 2)) < currentPlatformYPos)
         {
@@ -138,11 +189,14 @@ public class PlayerController : MonoBehaviour {
         // determine movement speed based on horizontal input
         rb.velocity = new Vector2(horizontal * movementSpeed * (1 + _speedBonusFactor), rb.velocity.y);
 
+        
+
         // check direction and rotate player & weapon hitboxes accordingly
         if (horizontal > 0)
         {
             Player.transform.rotation=Quaternion.Euler(0, 120, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0, 125, 0);
+            ballSpawn.transform.rotation = Quaternion.Euler(0, 0, 0);
             //playerAttacks.transform.rotation = Quaternion.Euler(0, 125, 0);
 
         }
@@ -150,6 +204,7 @@ public class PlayerController : MonoBehaviour {
         {
             Player.transform.rotation = Quaternion.Euler(0, 235, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0,-55, 0);
+            ballSpawn.transform.rotation = Quaternion.Euler(0, 180, 0);
             //playerAttacks.transform.rotation = Quaternion.Euler(0, -55, 0);
         }
 
@@ -256,5 +311,23 @@ public class PlayerController : MonoBehaviour {
         if (animator.GetCurrentAnimatorStateInfo(1).IsName("Attack"))
             return true;
         else return false;
+    }
+
+
+    private void ShootBall()
+    {
+        // Create the Bullet from the Bullet Prefab
+        var ball = (GameObject)Instantiate(
+            ballPrefab,
+            ballSpawn.position,
+            ballSpawn.rotation);
+
+        ball.GetComponent<ProjectileDamage>().isPlayer = true;
+
+        // Add velocity to the bullet
+        ball.GetComponent<Rigidbody2D>().velocity = ball.transform.right * BALL_SPEED;
+
+        // Destroy the bullet after 2 seconds
+        Destroy(ball, 2.0f);
     }
 }
