@@ -3048,6 +3048,10 @@ Prefab:
       propertyPath: UIRangedIndicator
       value: 
       objectReference: {fileID: 1843795524}
+    - target: {fileID: 1334702947580186, guid: 2e9fabba801c758468e330fe22be357e, type: 2}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 2e9fabba801c758468e330fe22be357e, type: 2}
   m_IsPrefabParent: 0
@@ -4520,6 +4524,26 @@ Prefab:
         type: 2}
       propertyPath: m_LocalPosition.y
       value: -258.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 224378179743564298, guid: d4c9d2af0c7b40346b6d442e2bb408bb,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 193.7885
+      objectReference: {fileID: 0}
+    - target: {fileID: 224236231365324308, guid: d4c9d2af0c7b40346b6d442e2bb408bb,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 193.7885
+      objectReference: {fileID: 0}
+    - target: {fileID: 224035015358129582, guid: d4c9d2af0c7b40346b6d442e2bb408bb,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 193.7885
+      objectReference: {fileID: 0}
+    - target: {fileID: 224443422497514984, guid: d4c9d2af0c7b40346b6d442e2bb408bb,
+        type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 193.7885
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d4c9d2af0c7b40346b6d442e2bb408bb, type: 2}
