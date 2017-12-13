@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -39,9 +40,6 @@ public class GameLogic : MonoBehaviour
 
     private const int CAMERA_ANGLE_Z_MAX = 1;
     private const int LOGO_ANGLE_Y_MAX = 10;
-
-    private float _waitForLogo = 5f;
-    private static bool _firstLoad = true;
 
     void Start ()
 	{
@@ -96,7 +94,8 @@ public class GameLogic : MonoBehaviour
                 else if (Input.GetMouseButtonDown(0))
                 {
                     _audioSource.PlayOneShot(SceneChanging);
-                    LoadingParameters.Captions = new[] { "Loading..." };
+                    LoadingParameters.Captions = new[] { "Loading...", "Still loading...", "We are trying very hard to load it.", "...", "Seriously, it's loading...",
+                        "But it takes time...", "Time is money,", "It takes money to load.", "...", "Sit tight.", "...", "I know it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
                     LoadingParameters.Speeches = new string[] {};
                     LoadingParameters.NextSceneName = MenuItemScenes[_selectedMenuItemIndex];
                     _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene");
@@ -139,7 +138,9 @@ public class GameLogic : MonoBehaviour
 
 	    if (Input.GetButtonDown("Submit") && (_selectedMenuItemIndex >= 0 && _selectedMenuItemIndex < MenuItemScenes.Count))
 	    {
-            _audioSource.PlayOneShot(SceneChanging); LoadingParameters.Captions = new[] { "Loading..." };
+            _audioSource.PlayOneShot(SceneChanging);
+            LoadingParameters.Captions = new[] { "Loading...", "Still loading...", "We are trying very hard to load it.", "...", "Seriously, it's loading...",
+                        "But it takes time...", "Time is money,", "It takes money to load.", "...", "Sit tight.", "...", "I know it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
             LoadingParameters.Speeches = new string[] { };
             LoadingParameters.NextSceneName = MenuItemScenes[_selectedMenuItemIndex];
             _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene");
@@ -201,15 +202,13 @@ public class GameLogic : MonoBehaviour
             blurColor = new Color(colorR, colorG, colorB);
 
 
-            if (_firstLoad && _waitForLogo > 0)
+            if (!SplashScreen.isFinished)
             {
                 blurMat.SetFloat("_Size", 15);
                 blurMat.SetColor("_Color", Color.red);
-                _waitForLogo -= Time.deltaTime;
                 return;
             }
-
-            _firstLoad = false;
+            
             blurMat.SetFloat("_Size", blurSize);
             blurMat.SetColor("_Color", blurColor);
 
