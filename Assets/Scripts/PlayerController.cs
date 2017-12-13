@@ -141,14 +141,14 @@ public class PlayerController : MonoBehaviour {
         // check direction and rotate player & weapon hitboxes accordingly
         if (horizontal > 0)
         {
-            Player.transform.rotation=Quaternion.Euler(0, 120, 0);
+            Player.transform.rotation=Quaternion.Euler(0, 125, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0, 125, 0);
             //playerAttacks.transform.rotation = Quaternion.Euler(0, 125, 0);
 
         }
         else if(horizontal < 0)
         {
-            Player.transform.rotation = Quaternion.Euler(0, 235, 0);
+            Player.transform.rotation = Quaternion.Euler(0, 272, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0,-55, 0);
             //playerAttacks.transform.rotation = Quaternion.Euler(0, -55, 0);
         }
@@ -184,9 +184,9 @@ public class PlayerController : MonoBehaviour {
             attackFreeze = false;
             // Debug.Log("attack freeze");
         }*/
-        if(animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))
+        if(Input.GetButtonDown("Fire2")&&!checkAttackAction())
         {
-
+            animator.SetTrigger("Throw");
         }
     
         if (Input.GetButtonDown("Jump"))
@@ -253,7 +253,7 @@ public class PlayerController : MonoBehaviour {
     }
     private bool checkAttackAction()
     {
-        if (animator.GetCurrentAnimatorStateInfo(1).IsName("Attack"))
+        if (animator.GetCurrentAnimatorStateInfo(1).IsName("Attack") || animator.GetCurrentAnimatorStateInfo(1).IsName("Throw"))
             return true;
         else return false;
     }

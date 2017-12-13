@@ -223,13 +223,13 @@ public class EnemyScript : MonoBehaviour {
             if (agent.transform.position.x > player.transform.position.x)
             {
                 enemyColliders.transform.rotation = Quaternion.Euler(0, -125, 0);
-                enemyAttacks.transform.rotation = Quaternion.Euler(0, -125, 0);
-                return Quaternion.Euler(0, -125f, 0);
+                //enemyAttacks.transform.rotation = Quaternion.Euler(0, -125, 0);
+                return Quaternion.Euler(0, 272f, 0);
             }
             else
             {
                 enemyColliders.transform.rotation = Quaternion.Euler(0, 55, 0);
-                enemyAttacks.transform.rotation = Quaternion.Euler(0, 55, 0);
+                //enemyAttacks.transform.rotation = Quaternion.Euler(0, 55, 0);
                 return Quaternion.Euler(0, 125f, 0);
             }
         }
@@ -238,13 +238,13 @@ public class EnemyScript : MonoBehaviour {
             if (agent.desiredVelocity.x < 0)
             {
                 enemyColliders.transform.rotation = Quaternion.Euler(0, -125, 0);
-                enemyAttacks.transform.rotation = Quaternion.Euler(0, -125, 0);
-                return Quaternion.Euler(0, -125f, 0);
+                //enemyAttacks.transform.rotation = Quaternion.Euler(0, -125, 0);
+                return Quaternion.Euler(0, 272f, 0);
             }
             else
             {
                 enemyColliders.transform.rotation = Quaternion.Euler(0, 55, 0);
-                enemyAttacks.transform.rotation = Quaternion.Euler(0, 55, 0);
+                //enemyAttacks.transform.rotation = Quaternion.Euler(0, 55, 0);
                 return Quaternion.Euler(0, 125f, 0);
             }
         }
