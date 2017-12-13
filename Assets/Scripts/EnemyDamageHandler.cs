@@ -115,8 +115,9 @@ public class EnemyDamageHandler : MonoBehaviour {
         //body.AddForce(direction * -knockback, mode);
         //body.MovePosition((body.position + (direction * -knockback)) * Time.deltaTime);
         es.StartCoroutine(es.GetHit(direction * -knockback));
+        //Debug.Log(knockback);
         //body.AddForce(direction * -knockback, mode);
-
+        //Debug.Log(direction * -knockback);
         //ForceMode2D mode = ForceMode2D.Impulse;
         //body.AddForce(direction * -knockback, mode);
 

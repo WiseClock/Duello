@@ -53,6 +53,13 @@ public class EnemyScript : MonoBehaviour {
     private float _speedBonusFactor = 0;
     private float _speedBonusEnd = -1;
 
+    public GameObject ballPrefab;
+    public Transform ballSpawn;
+    public GameObject UIRangedIndicator;
+    private int rangedweapon = 1;
+
+    private const float BALL_SPEED = 35.0f;
+
     // Use this for initialization
     IEnumerator Start () {
         anim = GetComponent<Animator>();
@@ -138,6 +145,9 @@ public class EnemyScript : MonoBehaviour {
         // check if we are on a platform
         grounded = IsGrounded();
 
+
+        Debug.Log(grounded);
+
         if (agent.enabled == true)  // disable pathfinding when agent has been disabled
             agent.destination = player.transform.position;
 
@@ -161,6 +171,23 @@ public class EnemyScript : MonoBehaviour {
 
         attacking = false; // set this to false to avoid multiple attacks in a short period of time
 
+
+        if (GetComponent<EnemyDamageHandler>().getHealth() < 21 && rangedweapon > 0 && !isHit)
+        {
+            //wait until it has been long enough since the last attack
+            if (Time.time > nextAttack)
+            {
+                nextAttack = Time.time + attackRate; // reset attack cooldown
+                rangedweapon--;
+                ShootBall();
+
+                if (rangedweapon == 0)
+                {
+                    UIRangedIndicator.SetActive(false);
+                }
+            }
+        }
+
         // if within striking distance of player, attack
         if (Vector3.Distance(agent.destination, agent.transform.position) <= stoppingDistance + 0.1f && !isHit)
         {
@@ -173,6 +200,7 @@ public class EnemyScript : MonoBehaviour {
             }
         }
 
+  
         // if we are hit, the enemy will be in a stunned state, disable NavAgent functionality and enable rigidbody to handle physics
         if (isHit)
         {
@@ -181,6 +209,7 @@ public class EnemyScript : MonoBehaviour {
             rb.mass = 10000f; // high mass so the player cannot push us
             rb.drag = 1.25f;
             rb.AddForce(vKnockback, ForceMode2D.Impulse);
+
             anim.SetFloat("Speed", 0);
         }
         else
@@ -195,7 +224,6 @@ public class EnemyScript : MonoBehaviour {
                 agent.enabled = true;
                 vKnockback = Vector2.zero;
             }
-
         }
     }
 
@@ -218,18 +246,22 @@ public class EnemyScript : MonoBehaviour {
 
     Quaternion GetDirectionAngle()
     {
-        if(Vector3.Distance(agent.destination, agent.transform.position) <= stoppingDistance + 0.1f)
+        if (Vector3.Distance(agent.destination, agent.transform.position) <= stoppingDistance + 0.1f)
         {
             if (agent.transform.position.x > player.transform.position.x)
             {
                 enemyColliders.transform.rotation = Quaternion.Euler(0, -125, 0);
                 enemyAttacks.transform.rotation = Quaternion.Euler(0, -125, 0);
+                ballSpawn.rotation = Quaternion.Euler(0, 180, 0);
+                ballSpawn.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 1.2f, transform.position.z);
                 return Quaternion.Euler(0, -125f, 0);
             }
             else
             {
                 enemyColliders.transform.rotation = Quaternion.Euler(0, 55, 0);
                 enemyAttacks.transform.rotation = Quaternion.Euler(0, 55, 0);
+                ballSpawn.rotation = Quaternion.Euler(0, 0, 0);
+                ballSpawn.position = new Vector3(transform.position.x + 0.5f, transform.position.y + 1.2f, transform.position.z);
                 return Quaternion.Euler(0, 125f, 0);
             }
         }
@@ -239,12 +271,16 @@ public class EnemyScript : MonoBehaviour {
             {
                 enemyColliders.transform.rotation = Quaternion.Euler(0, -125, 0);
                 enemyAttacks.transform.rotation = Quaternion.Euler(0, -125, 0);
+                ballSpawn.rotation = Quaternion.Euler(0, 180, 0);
+                ballSpawn.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 1.2f, transform.position.z);
                 return Quaternion.Euler(0, -125f, 0);
             }
             else
             {
                 enemyColliders.transform.rotation = Quaternion.Euler(0, 55, 0);
                 enemyAttacks.transform.rotation = Quaternion.Euler(0, 55, 0);
+                ballSpawn.rotation = Quaternion.Euler(0, 0, 0);
+                ballSpawn.position = new Vector3(transform.position.x + 0.5f, transform.position.y + 1.2f, transform.position.z);
                 return Quaternion.Euler(0, 125f, 0);
             }
         }
@@ -349,6 +385,24 @@ public class EnemyScript : MonoBehaviour {
             }
         }
         return false;
+    }
+
+
+    private void ShootBall()
+    {
+        // Create the Bullet from the Bullet Prefab
+        var ball = (GameObject)Instantiate(
+            ballPrefab,
+            ballSpawn.position,
+            ballSpawn.rotation);
+
+        ball.GetComponent<ProjectileDamage>().isPlayer = false;
+
+        // Add velocity to the bullet
+        ball.GetComponent<Rigidbody2D>().velocity = ball.transform.right * BALL_SPEED;
+
+        // Destroy the bullet after 2 seconds
+        Destroy(ball, 10.0f);
     }
 
 }

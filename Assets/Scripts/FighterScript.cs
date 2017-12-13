@@ -22,6 +22,7 @@ public class FighterScript : MonoBehaviour {
     private static bool _devCheated = false;
 
     private Animator _animator;
+
     // Use this for initialization
     void Start () {
         _audioSource = GetComponent<AudioSource>();
@@ -101,4 +102,5 @@ public class FighterScript : MonoBehaviour {
             return true;
         else return false;
     }
+
 }
