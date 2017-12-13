@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class PrologueGameLoop : MonoBehaviour
 {
-    private readonly string[] _captions = { "Long, long ago, when we humans still live on the Earth.", "One day, we were attacked by some aliens.", "They were so powerful, and can even throw asteroids at us.", "A Hero, then, rose up." };
+    private readonly string[] _captions = { "Long, long ago, when we humans still lived on the Earth.", "One day, we were attacked by some aliens.", "They were so powerful, and can even throw asteroids at us.", "A hero, then, rose up." };
     private readonly string[] _speeches = { "pre_1", "pre_2", "pre_3", "pre_4" };
 
     private Text _caption;

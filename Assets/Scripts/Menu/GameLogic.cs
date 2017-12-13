@@ -103,8 +103,8 @@ public class GameLogic : MonoBehaviour
                 {
                     _audioSource.PlayOneShot(SceneChanging);
                     if (_selectedMenuItemIndex == 0 && Application.platform == RuntimePlatform.PS4)
-                        LoadingParameters.Captions = new[] { "Loading...", "Still loading...", "We are trying very hard to load it.", "...", "Seriously, it's loading...",
-                            "But it takes time...", "Time is money,", "It takes money to load.", "I know it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
+                        LoadingParameters.Captions = new[] { "Loading...", "Still loading...",  "...","We are trying very hard to load it.",
+                            "But it takes time...", "Time is money,", "So it takes money to load.", "We can see it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
                     else
                         LoadingParameters.Captions = new[] { "Loading..." };
                     if (_selectedMenuItemIndex == 1)
@@ -153,8 +153,8 @@ public class GameLogic : MonoBehaviour
 	    {
             _audioSource.PlayOneShot(SceneChanging);
             if (_selectedMenuItemIndex == 0 && Application.platform == RuntimePlatform.PS4)
-                LoadingParameters.Captions = new[] { "Loading...", "Still loading...", "We are trying very hard to load it.", "...", "Seriously, it's loading...",
-                            "But it takes time...", "Time is money,", "It takes money to load.", "I know it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
+                LoadingParameters.Captions = new[] { "Loading...", "Still loading...",  "...","We are trying very hard to load it.",
+                        "But it takes time...", "Time is money,", "So it takes money to load.", "We can see it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
             else
                 LoadingParameters.Captions = new[] { "Loading..." };
             if (_selectedMenuItemIndex == 1)
