@@ -62,6 +62,13 @@ public class UIScriptMultiplayer : MonoBehaviour
             return;
         }
 
+        float blurValue = _scorePanel.GetComponent<Image>().material.GetFloat("_Size");
+        if (blurValue < 10)
+            blurValue += Time.deltaTime * 8;
+        _scorePanel.GetComponent<Image>().material.SetFloat("_Size", blurValue);
+        if (blurValue < 10)
+            return;
+
         // Disable Player
         FighterScript playerFight = _player.GetComponent<FighterScript>();
         if (playerFight.enabled)

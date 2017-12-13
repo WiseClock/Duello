@@ -63,9 +63,16 @@ public class UIScript : MonoBehaviour
         if (!_scorePanel.activeSelf)
             return;
 
+        float blurValue = _scorePanel.GetComponent<Image>().material.GetFloat("_Size");
+        if (blurValue < 10)
+            blurValue += Time.deltaTime * 8;
+        _scorePanel.GetComponent<Image>().material.SetFloat("_Size", blurValue);
+        if (blurValue < 10)
+            return;
+
         // disable enemy
         // todo: disable player too
-	    EnemyFighterScript enemyAI = _enemy.GetComponent<EnemyFighterScript>();
+        EnemyFighterScript enemyAI = _enemy.GetComponent<EnemyFighterScript>();
 	    if (enemyAI.enabled)
 	        enemyAI.enabled = false;
         EnemyController enemyAnimation = _enemy.GetComponent<EnemyController>();

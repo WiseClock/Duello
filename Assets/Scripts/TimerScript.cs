@@ -76,6 +76,11 @@ public class TimerScript : MonoBehaviour {
             
             enabled = false;
         }
+        else
+        {
+            scorePanel.GetComponent<Image>().material.SetFloat("_Size", 0);
+            failPanel.GetComponent<Image>().material.SetFloat("_Size", 0);
+        }
 	}
 
     // Reduce the timer by 1 each second passed
