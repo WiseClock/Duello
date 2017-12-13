@@ -46,8 +46,10 @@ public class Player2Controller : MonoBehaviour {
     public GameObject UIRangedIndicator;
     private int rangedweapon = 1;
 
-    private const float BALL_SPEED = 35.0f;
+    private const float BALL_SPEED = 10;
     private bool isLeft = true;
+
+    private GameObject _projectile;
 
     // Use this for initialization
     void Start()
@@ -56,6 +58,8 @@ public class Player2Controller : MonoBehaviour {
         animator = GetComponent<Animator>();
         Player2 = GameObject.Find("Player2");
         attackFreeze = false;
+
+        _projectile = Resources.Load<GameObject>("Prefabs/RangedAttack/ProjectileSlow");
     }
 
     void Update()
@@ -295,11 +299,11 @@ public class Player2Controller : MonoBehaviour {
     {
         // Create the Bullet from the Bullet Prefab
         var ball = (GameObject)Instantiate(
-            ballPrefab,
+            _projectile,
             ballSpawn.position,
             ballSpawn.rotation);
 
-        ball.GetComponent<ProjectileDamage>().isPlayer = false;
+        ball.GetComponentInChildren<ProjectileDamage>().isPlayer = false;
 
         // Add velocity to the bullet
         ball.GetComponent<Rigidbody2D>().velocity = transform.forward * BALL_SPEED;

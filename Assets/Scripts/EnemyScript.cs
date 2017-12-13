@@ -58,10 +58,15 @@ public class EnemyScript : MonoBehaviour {
     public GameObject UIRangedIndicator;
     private int rangedweapon = 1;
 
-    private const float BALL_SPEED = 35.0f;
+    private const float BALL_SPEED = 10;
+
+    private GameObject _projectile;
 
     // Use this for initialization
-    IEnumerator Start () {
+    IEnumerator Start ()
+    {
+        _projectile = Resources.Load<GameObject>("Prefabs/RangedAttack/ProjectileSlow");
+
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         agent = GetComponent<NavMeshAgent>();
@@ -390,11 +395,11 @@ public class EnemyScript : MonoBehaviour {
     {
         // Create the Bullet from the Bullet Prefab
         var ball = (GameObject)Instantiate(
-            ballPrefab,
+            _projectile,
             ballSpawn.position,
             ballSpawn.rotation);
 
-        ball.GetComponent<ProjectileDamage>().isPlayer = false;
+        ball.GetComponentInChildren<ProjectileDamage>().isPlayer = false;
 
         // Add velocity to the bullet
         ball.GetComponent<Rigidbody2D>().velocity = transform.forward * BALL_SPEED;
