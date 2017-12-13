@@ -187,7 +187,23 @@ public class UIScriptMultiplayer : MonoBehaviour
                     {
                         randomNumber = Random.Range(9, 13);
                     }
-                    string newSceneName = SceneManager.GetSceneAt(randomNumber).name;
+                    string newSceneName = "";
+                    switch (randomNumber)
+                    {
+                        case 9:
+                            newSceneName = "MultiLevelZero";
+                            break;
+                        case 10:
+                            newSceneName = "MultiLevelOne";
+                            break;
+                        case 11:
+                            newSceneName = "MultiLevelTwo";
+                            break;
+                        case 12:
+                            newSceneName = "MultiLevelThree";
+                            break;
+                    }
+                    
                     LoadingParameters.Captions = new[] { "Loading..." };
                     LoadingParameters.Speeches = new string[] { };
                     LoadingParameters.NextSceneName = newSceneName;
