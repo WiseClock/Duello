@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -101,7 +102,8 @@ public class GameLogic : MonoBehaviour
                 else if (Input.GetMouseButtonDown(0))
                 {
                     _audioSource.PlayOneShot(SceneChanging);
-                    LoadingParameters.Captions = new[] { "Loading..." };
+                    LoadingParameters.Captions = new[] { "Loading...", "Still loading...", "We are trying very hard to load it.", "...", "Seriously, it's loading...",
+                        "But it takes time...", "Time is money,", "It takes money to load.", "...", "Sit tight.", "...", "I know it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
                     LoadingParameters.Speeches = new string[] {};
                     LoadingParameters.NextSceneName = MenuItemScenes[_selectedMenuItemIndex];
                     _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene");
@@ -144,7 +146,9 @@ public class GameLogic : MonoBehaviour
 
 	    if (Input.GetButtonDown("Submit") && (_selectedMenuItemIndex >= 0 && _selectedMenuItemIndex < MenuItemScenes.Count))
 	    {
-            _audioSource.PlayOneShot(SceneChanging); LoadingParameters.Captions = new[] { "Loading..." };
+            _audioSource.PlayOneShot(SceneChanging);
+            LoadingParameters.Captions = new[] { "Loading...", "Still loading...", "We are trying very hard to load it.", "...", "Seriously, it's loading...",
+                        "But it takes time...", "Time is money,", "It takes money to load.", "...", "Sit tight.", "...", "I know it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
             LoadingParameters.Speeches = new string[] { };
             LoadingParameters.NextSceneName = MenuItemScenes[_selectedMenuItemIndex];
             _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene");
@@ -192,19 +196,27 @@ public class GameLogic : MonoBehaviour
             Material blurMat = _blur.GetComponent<Image>().material;
             float blurSize = blurMat.GetFloat("_Size");
             Color blurColor = blurMat.GetColor("_Color");
-            if (blurSize > 0) blurSize -= 0.1f;
+            if (blurSize > 0) blurSize -= 8 * Time.deltaTime;
             if (blurSize < 0) blurSize = 0;
             float colorR = blurColor.r;
             float colorG = blurColor.g;
             float colorB = blurColor.b;
-            if (colorR < 1) colorR += 0.01f;
-            if (colorG < 1) colorG += 0.01f;
-            if (colorB < 1) colorB += 0.01f;
+            if (colorR < 1) colorR += 0.8f * Time.deltaTime;
+            if (colorG < 1) colorG += 0.8f * Time.deltaTime;
+            if (colorB < 1) colorB += 0.8f * Time.deltaTime;
             if (colorR > 1) colorR = 1;
             if (colorG > 1) colorG = 1;
             if (colorB > 1) colorB = 1;
             blurColor = new Color(colorR, colorG, colorB);
 
+
+            if (!SplashScreen.isFinished)
+            {
+                blurMat.SetFloat("_Size", 15);
+                blurMat.SetColor("_Color", Color.red);
+                return;
+            }
+            
             blurMat.SetFloat("_Size", blurSize);
             blurMat.SetColor("_Color", blurColor);
 

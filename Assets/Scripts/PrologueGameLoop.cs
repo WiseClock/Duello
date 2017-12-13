@@ -24,7 +24,7 @@ public class PrologueGameLoop : MonoBehaviour
     private GameObject _ships;
     private GameObject _asteroidPos;
 
-    private readonly List<GameObject> _asteroidPrefabs = new List<GameObject>();
+    private List<GameObject> _asteroidPrefabs = new List<GameObject>();
 
     private readonly System.Random _rand = new System.Random();
 
