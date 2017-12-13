@@ -31,6 +31,8 @@ public class PrologueGameLoop : MonoBehaviour
     private float _lastRecordedTime = 0;
     private int _asteroidsCount = 0;
 
+    private bool _loadingGame = false;
+
     void Start ()
 	{
 	    _caption = GameObject.Find("Caption").GetComponent<Text>();
@@ -63,6 +65,15 @@ public class PrologueGameLoop : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetButton("Fire2") && Input.GetButton("Jump") && !_loadingGame)
+        {
+            _loadingGame = true;
+            LoadingParameters.Captions = new[] { "In Canada, there was a school called BCIT.", "Our hero started his journey here." };
+            LoadingParameters.Speeches = new[] { "zero_1", "zero_2" };
+            LoadingParameters.NextSceneName = "LevelZero";
+            SceneManager.LoadScene("LoadingScene");
+        }
+
         switch (_currentIndex)
         {
             case -1:
@@ -148,7 +159,8 @@ public class PrologueGameLoop : MonoBehaviour
                 _cover.color = new Color(_cover.color.r, _cover.color.g, _cover.color.b, alpha);
 	            if (alpha >= 1)
 	            {
-	                LoadingParameters.Captions = new[] { "In Canada, there was a school called BCIT.", "Our hero started his journey here." };
+                    _loadingGame = true;
+                    LoadingParameters.Captions = new[] { "In Canada, there was a school called BCIT.", "Our hero started his journey here." };
 	                LoadingParameters.Speeches = new[] { "zero_1", "zero_2" };
 	                LoadingParameters.NextSceneName = "LevelZero";
                     SceneManager.LoadScene("LoadingScene");

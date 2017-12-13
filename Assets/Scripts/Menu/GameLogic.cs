@@ -102,7 +102,7 @@ public class GameLogic : MonoBehaviour
                 else if (Input.GetMouseButtonDown(0))
                 {
                     _audioSource.PlayOneShot(SceneChanging);
-                    if (_selectedMenuItemIndex == 0 && Application.platform == RuntimePlatform.PS4)
+                    if (MenuItemScenes[_selectedMenuItemIndex].Equals("Prologue") && Application.platform == RuntimePlatform.PS4)
                         LoadingParameters.Captions = new[] { "Loading...", "Still loading...",  "...","We are trying very hard to load it.",
                             "But it takes time...", "Time is money,", "So it takes money to load.", "We can see it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
                     else
@@ -152,7 +152,7 @@ public class GameLogic : MonoBehaviour
 	    if (Input.GetButtonDown("Submit") && (_selectedMenuItemIndex >= 0 && _selectedMenuItemIndex < MenuItemScenes.Count))
 	    {
             _audioSource.PlayOneShot(SceneChanging);
-            if (_selectedMenuItemIndex == 0 && Application.platform == RuntimePlatform.PS4)
+            if (MenuItemScenes[_selectedMenuItemIndex].Equals("Prologue") && Application.platform == RuntimePlatform.PS4)
                 LoadingParameters.Captions = new[] { "Loading...", "Still loading...",  "...","We are trying very hard to load it.",
                         "But it takes time...", "Time is money,", "So it takes money to load.", "We can see it takes long...", "But you know...", "It's PS4.", "Should be up soon...", "Enjoy." };
             else
