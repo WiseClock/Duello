@@ -180,8 +180,11 @@ public class UIScriptMultiplayer : MonoBehaviour
                     {
                         randomNumber = Random.Range(9, 13);
                     }
-                    //Debug.Log("randomNumber = " + randomNumber);
-                    _sceneOperation = SceneManager.LoadSceneAsync(randomNumber, LoadSceneMode.Single);
+                    string newSceneName = SceneManager.GetSceneAt(randomNumber).name;
+                    LoadingParameters.Captions = new[] { "Loading..." };
+                    LoadingParameters.Speeches = new string[] { };
+                    LoadingParameters.NextSceneName = newSceneName;
+                    _sceneOperation = SceneManager.LoadSceneAsync("LoadingScene", LoadSceneMode.Single);
                     break;
                 case 2:
                     _sceneOperation = SceneManager.LoadSceneAsync("MenuScene", LoadSceneMode.Single);
