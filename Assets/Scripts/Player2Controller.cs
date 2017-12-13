@@ -41,6 +41,13 @@ public class Player2Controller : MonoBehaviour {
     private float _speedBonusFactor = 0;
     private float _speedBonusEnd = -1;
 
+    public GameObject ballPrefab;
+    public Transform ballSpawn;
+    public GameObject UIRangedIndicator;
+    private int rangedweapon = 1;
+
+    private const float BALL_SPEED = 35.0f;
+    private bool isLeft = true;
 
     // Use this for initialization
     void Start()
@@ -78,6 +85,18 @@ public class Player2Controller : MonoBehaviour {
                 //Debug.Log("Hittt");
                 isOnAir = false;
             }
+
+            if (Input.GetButtonDown("Fire2p2")  && rangedweapon > 0)
+            {
+                rangedweapon--;
+                ShootBall();
+                animator.SetTrigger("Throw");
+
+                if (rangedweapon == 0)
+                {
+                    UIRangedIndicator.SetActive(false);
+                }
+            }
         }
 
         // bonus end
@@ -109,6 +128,27 @@ public class Player2Controller : MonoBehaviour {
     {
         float horizontal = Input.GetAxis("Horizontal2");
         animator.SetFloat("Speed", horizontal * horizontal);
+
+
+        // check direction and rotate projectile spawn
+        if (horizontal > 0)
+        {
+            isLeft = false;
+        }
+
+        if (horizontal < 0)
+        {
+            isLeft = true;
+        }
+
+        if (!isLeft)
+        {
+            ballSpawn.position = new Vector3(transform.position.x + 0.5f, transform.position.y + 1.2f, transform.position.z);
+        }
+        else
+        {
+            ballSpawn.position = new Vector3(transform.position.x - 0.5f, transform.position.y + 1.2f, transform.position.z);
+        }
 
         // check if player is grounded
         grounded = IsGrounded();
@@ -143,12 +183,14 @@ public class Player2Controller : MonoBehaviour {
             Player2.transform.rotation = Quaternion.Euler(0, 120, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0, 125, 0);
             //playerAttacks.transform.rotation = Quaternion.Euler(0, 125, 0);
+            ballSpawn.transform.rotation = Quaternion.Euler(0, 0, 0);
 
         }
         else if (horizontal < 0)
         {
             Player2.transform.rotation = Quaternion.Euler(0, 235, 0);
             playerColliders.transform.rotation = Quaternion.Euler(0, -55, 0);
+            ballSpawn.transform.rotation = Quaternion.Euler(0, 180, 0);
             //playerAttacks.transform.rotation = Quaternion.Euler(0, -55, 0);
         }
 
@@ -247,5 +289,22 @@ public class Player2Controller : MonoBehaviour {
         rb.AddForce(knockback, ForceMode2D.Impulse);
         yield return new WaitForSeconds(1f);
         isHit = false;
+    }
+
+    private void ShootBall()
+    {
+        // Create the Bullet from the Bullet Prefab
+        var ball = (GameObject)Instantiate(
+            ballPrefab,
+            ballSpawn.position,
+            ballSpawn.rotation);
+
+        ball.GetComponent<ProjectileDamage>().isPlayer = false;
+
+        // Add velocity to the bullet
+        ball.GetComponent<Rigidbody2D>().velocity = transform.forward * BALL_SPEED;
+
+        // Destroy the bullet after 2 seconds
+        Destroy(ball, 2.0f);
     }
 }
