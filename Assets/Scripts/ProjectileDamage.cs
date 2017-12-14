@@ -10,6 +10,8 @@ public class ProjectileDamage : MonoBehaviour {
 
     public bool isPlayer = true;
 
+    public GameObject particle;
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.CompareTag("Enemy") && isPlayer)
@@ -26,5 +28,10 @@ public class ProjectileDamage : MonoBehaviour {
         }
 
         Destroy(gameObject);
+
+        if(particle != null)
+        {
+            Destroy(particle);
+        }
     }
 }

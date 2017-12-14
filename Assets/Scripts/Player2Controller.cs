@@ -45,8 +45,9 @@ public class Player2Controller : MonoBehaviour {
     public Transform ballSpawn;
     public GameObject UIRangedIndicator;
     private int rangedweapon = 1;
+    public GameObject particlePrefab;
 
-    private const float BALL_SPEED = 35.0f;
+    private const float BALL_SPEED = 10f;
     private bool isLeft = true;
 
     // Use this for initialization
@@ -293,18 +294,28 @@ public class Player2Controller : MonoBehaviour {
 
     private void ShootBall()
     {
+        var particle = (GameObject)Instantiate(
+            particlePrefab,
+            ballSpawn.position,
+            Quaternion.Euler(new Vector3(0f, 90f, 0f)));
+
+        Destroy(particle, 10.0f);
+
+
         // Create the Bullet from the Bullet Prefab
         var ball = (GameObject)Instantiate(
             ballPrefab,
             ballSpawn.position,
             ballSpawn.rotation);
 
-        ball.GetComponent<ProjectileDamage>().isPlayer = false;
+        ball.GetComponent<ProjectileDamage>().isPlayer = true;
+        ball.GetComponent<ProjectileDamage>().particle = particle;
 
         // Add velocity to the bullet
         ball.GetComponent<Rigidbody2D>().velocity = transform.forward * BALL_SPEED;
 
         // Destroy the bullet after 2 seconds
-        Destroy(ball, 2.0f);
+        Destroy(ball, 10.0f);
     }
+
 }

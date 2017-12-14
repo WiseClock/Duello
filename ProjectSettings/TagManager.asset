@@ -8,6 +8,7 @@ TagManager:
   - NavNode
   - HitBox
   - Enemy
+  - Particle
   layers:
   - Default
   - TransparentFX
